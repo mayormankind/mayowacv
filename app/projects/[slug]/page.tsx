@@ -78,7 +78,8 @@ export default async function ProjectDetails({
                   {project.period}
                 </span>
               </div>
-              <h1 className="text-5xl md:text-8xl font-extrabold md              {project.title}
+              <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight leading-[0.9] mb-6">
+                {project.title}
               </h1>
               <p className="text-white/50 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
                 {project.longDescription}
