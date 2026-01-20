@@ -112,7 +112,7 @@ export default async function ProjectDetails({
                 <Play className="text-white text-4xl" />
               </button>
             </div>
-            <div className="absolute bottom-6 left-6 flex gap-3">
+            <div className="absolute bottom-0 md:bottom-6 left-6 flex gap-3">
               <div className="px-4 py-2 bg-black/60 backdrop-blur-md rounded border border-white/10 flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 <span className="text-[10px] font-bold uppercase tracking-widest">
