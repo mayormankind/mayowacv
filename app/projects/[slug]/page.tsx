@@ -67,7 +67,7 @@ export default async function ProjectDetails({
   return (
     <>
       <section className="py-16 md:py-24 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 md:px-0">
+        <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
             <div className="max-w-3xl">
               <div className="flex items-center gap-4 mb-6">
@@ -78,8 +78,7 @@ export default async function ProjectDetails({
                   {project.period}
                 </span>
               </div>
-              <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight leading-[0.9] mb-6">
-                {project.title}
+              <h1 className="text-5xl md:text-8xl font-extrabold md              {project.title}
               </h1>
               <p className="text-white/50 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
                 {project.longDescription}
