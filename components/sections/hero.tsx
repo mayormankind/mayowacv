@@ -1,3 +1,4 @@
+//components/sections/hero.tsx
 import { ArrowRightIcon } from "lucide-react";
 import React from "react";
 import Link from "next/link";
@@ -21,7 +22,7 @@ export default function Hero() {
           <h1 className="text-white text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-[-0.04em]">
             Engineering{" "}
             <span className="text-underline-accent">Digital Products</span> from
-            Concept to Production.
+            Idea to Production.
           </h1>
           <p className="text-white/50 text-lg md:text-xl font-normal leading-relaxed max-w-xl mt-4">
             Delivering end-to-end full-stack solutions with Next.js and React.

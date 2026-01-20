@@ -1,9 +1,13 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
@@ -33,6 +37,8 @@ export default function Header() {
           Mayowa
         </h2>
       </div>
+
+      {/* Desktop Navigation */}
       <div className="hidden md:flex flex-1 justify-end gap-12 items-center">
         <div className="flex items-center gap-10">
           {navLinks.map((nav) => (
@@ -56,6 +62,40 @@ export default function Header() {
           Resume
         </button>
       </div>
+
+      {/* Mobile Menu Toggle */}
+      <button
+        className="md:hidden text-white p-2"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle menu"
+      >
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Mobile Menu Overlay */}
+      {isOpen && (
+        <div className="absolute top-full left-0 w-full bg-[#1A1A1A] border-b border-white/5 md:hidden flex flex-col p-6 gap-6 shadow-2xl animate-in fade-in slide-in-from-top-5 duration-200">
+          <div className="flex flex-col gap-4">
+            {navLinks.map((nav) => (
+              <Link
+                key={nav.href}
+                href={nav.href}
+                onClick={() => setIsOpen(false)}
+                className={`text-sm font-bold uppercase tracking-widest py-2 transition-colors ${
+                  isActive(nav.href)
+                    ? "text-primary"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                {nav.label}
+              </Link>
+            ))}
+          </div>
+          <button className="w-full flex cursor-pointer items-center justify-center rounded h-10 px-6 bg-surface border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+            Resume
+          </button>
+        </div>
+      )}
     </header>
   );
 }

@@ -1,3 +1,4 @@
+//components/sections/valueProps.tsx
 import React from "react";
 
 export default function ValueProps() {
