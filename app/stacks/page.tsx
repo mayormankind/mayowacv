@@ -7,6 +7,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tech Stack",
+  description:
+    "Explore the modern technologies and tools I use to build high-performance web applications.",
+};
 
 export default function StacksPage() {
   const dbStacks = [

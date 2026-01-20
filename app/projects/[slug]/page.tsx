@@ -3,12 +3,45 @@ import { ArrowUpRight, Play } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
+import { Metadata } from "next";
 
 export async function generateStaticParams() {
   const projects = getAllProjects();
   return projects.map((project) => ({
     slug: project.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
+
+  if (!project) {
+    return {
+      title: "Project Not Found",
+    };
+  }
+
+  return {
+    title: project.title,
+    description: project.shortDescription,
+    openGraph: {
+      title: project.title,
+      description: project.shortDescription,
+      images: [
+        {
+          url: project.heroImage,
+          width: 1200,
+          height: 630,
+          alt: project.title,
+        },
+      ],
+    },
+  };
 }
 
 export default async function ProjectDetails({
@@ -284,7 +317,7 @@ export default async function ProjectDetails({
               Check out {nextProject.title}, a {nextProject.subtitle} project.
             </p>
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-6 flex-col ">
             <Link href={`/projects/${nextProject.slug}`}>
               <button className="px-8 py-4 bg-primary text-white text-xs font-bold uppercase tracking-widest rounded hover:brightness-110 transition-all">
                 Next: {nextProject.title}

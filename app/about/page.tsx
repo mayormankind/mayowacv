@@ -2,6 +2,12 @@ import { CircleGauge, DraftingCompass, Rocket } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "Learn more about my engineering philosophy, background, and the values that drive my work.",
+};
 
 export default function page() {
   const Stacks = [

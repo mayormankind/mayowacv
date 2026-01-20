@@ -2,6 +2,13 @@ import { getAllProjects } from "@/lib/data";
 import { ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "A selection of technical case studies and full-stack applications.",
+};
 
 export default function ProjectsPage() {
   const projects = getAllProjects();
