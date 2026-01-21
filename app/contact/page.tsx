@@ -45,7 +45,9 @@ export default function ContactPage() {
               </p>
               <div className="flex items-end gap-4">
                 <div>
-                  <p className="text-white text-xl font-bold">Lagos, NG</p>
+                  <p className="text-white text-xl font-bold">
+                    Ibadan | Akure, NG
+                  </p>
                   <p className="text-white/40 text-sm">GMT +1</p>
                 </div>
                 <div className="h-10 w-px bg-white/5 mx-2"></div>
@@ -70,6 +72,7 @@ export default function ContactPage() {
                     key={social.label}
                     className="group flex items-center gap-2 text-white/60 hover:text-white transition-colors"
                     href={social.ref}
+                    target="_blank"
                   >
                     <span className="text-sm font-bold uppercase tracking-widest">
                       {social.label}

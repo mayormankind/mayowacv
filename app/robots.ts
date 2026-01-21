@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/private/",
     },
-    sitemap: "https://mayowacv.vercel.app/sitemap.xml",
+    sitemap: "https://mayowadevv.vercel.app/sitemap.xml",
   };
 }

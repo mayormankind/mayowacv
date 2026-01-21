@@ -10,7 +10,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mayowacv.vercel.app"),
+  metadataBase: new URL("https://mayowadevv.vercel.app"),
   title: {
     default: "Mayowa | Full-Stack Product Engineer",
     template: "%s | Mayowa",
@@ -29,11 +29,11 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://mayowacv.vercel.app",
+    url: "https://mayowadevv.vercel.app",
     siteName: "Mayowa Portfolio",
     images: [
       {
-        url: "/images/profile.png", // Ensure this image exists in public folder
+        url: "/images/profile.png",
         width: 1200,
         height: 630,
         alt: "Mayowa - Full Stack Product Engineer",
