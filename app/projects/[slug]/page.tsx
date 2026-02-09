@@ -67,7 +67,7 @@ export default async function ProjectDetails({
   return (
     <>
       <section className="py-16 md:py-24 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 md:px-0">
+        <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
             <div className="max-w-3xl">
               <div className="flex items-center gap-4 mb-6">
@@ -113,7 +113,7 @@ export default async function ProjectDetails({
                 <Play className="text-white text-4xl" />
               </button>
             </div>
-            <div className="absolute bottom-6 left-6 flex gap-3">
+            <div className="absolute bottom-0 md:bottom-6 left-6 flex gap-3">
               <div className="px-4 py-2 bg-black/60 backdrop-blur-md rounded border border-white/10 flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 <span className="text-[10px] font-bold uppercase tracking-widest">
