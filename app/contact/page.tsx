@@ -2,6 +2,7 @@ import { ArrowUpRight, Send, SendHorizonal } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Metadata } from "next";
+import { socials } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -10,14 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const socials = [
-    {
-      label: "LinkedIn",
-      ref: "https://www.linkedin.com/in/makinde-mayowa-4670a51bb",
-    },
-    { label: "Github", ref: "https://github.com/mayormankind" },
-    { label: "Twitter", ref: "https://github.com/RedMoonCoder" },
-  ];
   return (
     <div className="max-w-7xl mx-auto pt-12 md:pt-20 mb-8">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24">

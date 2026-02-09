@@ -92,6 +92,7 @@ export const projects: Project[] = [
     links: {
       live: "#",
       repo: "#",
+      demo: "#",
     },
     details: {
       challenge: {
@@ -355,6 +356,15 @@ export const projects: Project[] = [
     docs: [],
     techStack: ["Next.js", "TypeScript", "Node.js", "Supabase"],
   },
+];
+
+export const socials = [
+  {
+    label: "LinkedIn",
+    ref: "https://www.linkedin.com/in/makinde-mayowa-4670a51bb",
+  },
+  { label: "Twitter", ref: "https://github.com/RedMoonCoder" },
+  { label: "Github", ref: "https://github.com/mayormankind" },
 ];
 
 export function getAllProjects() {

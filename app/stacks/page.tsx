@@ -160,7 +160,7 @@ export default function StacksPage() {
           </div>
         </div>
         <div className="md:col-span-8 bg-primary/5 border border-primary/20 p-8 rounded relative overflow-hidden">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
+          <div className="flex flex-col items-start justify-between gap-8 relative z-10">
             <div className="max-w-md">
               <h3 className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em] mb-4">
                 Currently Exploring
@@ -174,24 +174,24 @@ export default function StacksPage() {
                 engagement.
               </p>
             </div>
-            <div className="flex gap-4">
-              <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
                 <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center bg-background-dark group hover:border-primary transition-colors cursor-help">
                   <span className="text-white font-bold">Ai</span>
                 </div>
                 <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest text-center">
-                  AI UI
+                  AI Automation
                 </span>
               </div>
-              <div className="flex flex-col items-center gap-2">
+              <div className="flex items-center gap-2">
                 <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center bg-background-dark group hover:border-primary transition-colors cursor-help">
                   <span className="text-white font-bold">Ed</span>
                 </div>
                 <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest text-center">
-                  Edge
+                  Edge Computing
                 </span>
               </div>
-              <div className="flex flex-col items-center gap-2">
+              <div className="flex items-center gap-2">
                 <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center bg-background-dark group hover:border-primary transition-colors cursor-help">
                   <span className="text-white font-bold">V7</span>
                 </div>

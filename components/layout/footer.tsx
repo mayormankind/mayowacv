@@ -1,3 +1,4 @@
+import { socials } from "@/lib/data";
 import Link from "next/link";
 import React from "react";
 
@@ -14,24 +15,16 @@ export default function Footer() {
         </p>
       </div>
       <div className="flex gap-8">
-        <Link
-          className="text-white/30 hover:text-primary transition-colors uppercase text-[10px] font-bold tracking-widest"
-          href="https://twitter.com/mayormankind"
-        >
-          Twitter
-        </Link>
-        <Link
-          className="text-white/30 hover:text-primary transition-colors uppercase text-[10px] font-bold tracking-widest"
-          href="https://linkedin.com/in/mayormankind"
-        >
-          LinkedIn
-        </Link>
-        <Link
-          className="text-white/30 hover:text-primary transition-colors uppercase text-[10px] font-bold tracking-widest"
-          href="https://github.com/mayormankind"
-        >
-          GitHub
-        </Link>
+        {socials.map((socail) => (
+          <Link
+            key={socail.label}
+            className="text-white/30 hover:text-primary transition-colors uppercase text-[10px] font-bold tracking-widest"
+            href={socail.ref}
+            target="_blank"
+          >
+            {socail.label}
+          </Link>
+        ))}
       </div>
     </footer>
   );
