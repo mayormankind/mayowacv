@@ -1,4 +1,5 @@
 // app/api/projects/route.ts
+
 import { supabase } from "@/lib/supabase/server";
 
 export async function GET() {
