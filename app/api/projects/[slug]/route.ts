@@ -1,12 +1,15 @@
+import { supabase } from "../../../../lib/supabase/server";
+
 // app/api/projects/[slug]/route.ts
 export async function GET(
   _: Request,
   { params }: { params: { slug: string } },
 ) {
+  const { slug } = await params;
   const { data, error } = await supabase
     .from("projects")
     .select("*")
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .eq("status", "published")
     .single();
 

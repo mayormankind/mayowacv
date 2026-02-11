@@ -59,7 +59,7 @@ export default function Header() {
           ))}
         </div>
         <a
-          href="/resume.pdf"
+          href="/assets/Makinde Mayowa CV.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="flex min-w-30 cursor-pointer items-center justify-center rounded h-10 px-6 bg-surface border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"

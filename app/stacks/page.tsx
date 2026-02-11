@@ -23,6 +23,14 @@ export default function StacksPage() {
     { label: "PostgreSQL", icon: Database },
     { label: "SQL", icon: HardDrive },
   ];
+  
+  const uiStacks = [
+    { label: "React", icon: Cloud },
+    { label: "Next.js", icon: Cloud },
+    { label: "Tailwind", icon: Database },
+    { label: "TypeScript", icon: Database },
+    { label: "", icon: HardDrive },
+  ];
 
   return (
     <div className="py-20">
