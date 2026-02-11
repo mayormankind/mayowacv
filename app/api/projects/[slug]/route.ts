@@ -3,7 +3,7 @@ import { supabase } from "../../../../lib/supabase/server";
 // app/api/projects/[slug]/route.ts
 export async function GET(
   _: Request,
-  { params }: { params: { slug: string } },
+  { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
   const { data, error } = await supabase
