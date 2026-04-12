@@ -1,4 +1,5 @@
-import { supabase } from "../../../../lib/supabase/server";
+import { supabase } from "@/lib/supabase/server";
+import { keysToCamel } from "@/lib/utils/case-transform";
 
 // app/api/projects/[slug]/route.ts
 export async function GET(
@@ -17,5 +18,5 @@ export async function GET(
     return Response.json({ error: "Not found" }, { status: 404 });
   }
 
-  return Response.json(data);
+  return Response.json(keysToCamel(data));
 }

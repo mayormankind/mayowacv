@@ -1,15 +1,46 @@
-import { getProjectBySlug, getAllProjects } from "@/lib/data";
+import {
+  getProjectBySlug as getMockProjectBySlug,
+  getAllProjects as getAllMockProjects,
+} from "@/lib/data";
 import { ArrowUpRight, Play } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 import { Metadata } from "next";
+import { supabase } from "@/lib/supabase/server";
+import { keysToCamel } from "@/lib/utils/case-transform";
+import Icon from "@/components/ui/Icon";
 
 export async function generateStaticParams() {
-  const projects = getAllProjects();
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
+  // Combine mock and dynamic projects for static generation
+  const mockProjects = getAllMockProjects();
+  const { data: dbProjects } = await supabase
+    .from("projects")
+    .select("slug")
+    .eq("status", "published");
+
+  const slugs = [
+    ...mockProjects.map((p) => ({ slug: p.slug })),
+    ...(dbProjects || []).map((p) => ({ slug: p.slug })),
+  ];
+
+  return slugs;
+}
+
+async function fetchProject(slug: string) {
+  // First check Supabase
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (data) {
+    return keysToCamel(data);
+  }
+
+  // Fallback to mock data
+  return getMockProjectBySlug(slug);
 }
 
 export async function generateMetadata({
@@ -18,7 +49,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await fetchProject(slug);
 
   if (!project) {
     return {
@@ -50,14 +81,23 @@ export default async function ProjectDetails({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await fetchProject(slug);
 
   if (!project) {
     notFound();
   }
 
   // Find next project for the bottom CTA (circular)
-  const allProjects = getAllProjects();
+  const mockProjects = getAllMockProjects();
+  const { data: dbProjects } = await supabase
+    .from("projects")
+    .select("*")
+    .eq("status", "published");
+  const allProjects = [
+    ...(dbProjects ? keysToCamel(dbProjects) : []),
+    ...mockProjects,
+  ];
+
   const currentIndex = allProjects.findIndex((p) => p.slug === slug);
   const nextProject =
     currentIndex !== -1 && currentIndex < allProjects.length - 1
@@ -177,9 +217,7 @@ export default async function ProjectDetails({
                 </div>
                 <div className="bg-surface border border-white/10 rounded-xl p-8 mb-12">
                   <div className="aspect-video bg-black/40 rounded border border-dashed border-white/20 flex flex-col items-center justify-center gap-4 text-center px-8">
-                    <span className="material-symbols-outlined text-white/20 text-6xl">
-                      schema
-                    </span>
+                    <Icon name="Network" className="text-white/20 size-16" />
                     <div>
                       <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest mb-2">
                         {project.architecture.title}
@@ -191,17 +229,26 @@ export default async function ProjectDetails({
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  {project.architecture.points.map((point, idx) => (
-                    <div key={idx} className="space-y-4">
-                      <h4 className="text-sm font-extrabold uppercase tracking-widest text-white/80 flex items-center gap-2">
-                        <point.icon className="text-primary text-lg" />
-                        {point.title}
-                      </h4>
-                      <p className="text-white/50 text-sm leading-relaxed">
-                        {point.description}
-                      </p>
-                    </div>
-                  ))}
+                  {project.architecture.points.map(
+                    (point: any, idx: number) => (
+                      <div key={idx} className="space-y-4">
+                        <h4 className="text-sm font-extrabold uppercase tracking-widest text-white/80 flex items-center gap-2">
+                          {typeof point.icon === "string" || point.iconName ? (
+                            <Icon
+                              name={point.iconName || point.icon}
+                              className="text-primary text-lg"
+                            />
+                          ) : (
+                            <point.icon className="text-primary text-lg" />
+                          )}
+                          {point.title}
+                        </h4>
+                        <p className="text-white/50 text-sm leading-relaxed">
+                          {point.description}
+                        </p>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
             )}
@@ -216,11 +263,16 @@ export default async function ProjectDetails({
                   <div className="h-1 w-20 bg-primary mb-8"></div>
                 </div>
                 <div className="space-y-12">
-                  {project.lessons.map((lesson, idx) => (
+                  {project.lessons.map((lesson: any, idx: number) => (
                     <div key={idx} className="flex gap-8 group">
                       <div className="flex-none">
                         <div className="size-12 rounded bg-surface border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                          <lesson.icon />
+                          {typeof lesson.icon === "string" ||
+                          lesson.iconName ? (
+                            <Icon name={lesson.iconName || lesson.icon} />
+                          ) : (
+                            <lesson.icon />
+                          )}
                         </div>
                       </div>
                       <div className="space-y-3">
@@ -272,14 +324,21 @@ export default async function ProjectDetails({
                     Documentation
                   </h4>
                   <div className="flex flex-col gap-3">
-                    {project.docs.map((doc, idx) => (
+                    {project.docs.map((doc: any, idx: number) => (
                       <a
                         key={idx}
                         className="flex items-center justify-between p-4 bg-surface border border-white/5 rounded hover:border-white/20 transition-all group"
                         href={doc.href}
                       >
                         <span className="text-sm font-bold">{doc.title}</span>
-                        <doc.icon className="text-white/30 group-hover:text-primary transition-colors" />
+                        {typeof doc.icon === "string" || doc.iconName ? (
+                          <Icon
+                            name={doc.iconName || doc.icon}
+                            className="text-white/30 group-hover:text-primary transition-colors"
+                          />
+                        ) : (
+                          <doc.icon className="text-white/30 group-hover:text-primary transition-colors" />
+                        )}
                       </a>
                     ))}
                   </div>

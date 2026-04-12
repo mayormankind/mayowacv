@@ -68,7 +68,7 @@ export default function Hero() {
                   Full-stack React &amp; Supabase Platform
                 </p>
               </div>
-              <span className="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">
+              <span className="text-primary group-hover:translate-x-1 transition-transform">
                 <ArrowRightIcon />
               </span>
             </div>

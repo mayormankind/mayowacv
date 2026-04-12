@@ -70,7 +70,7 @@ export default function ContactPage() {
                     <span className="text-sm font-bold uppercase tracking-widest">
                       {social.label}
                     </span>
-                    <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                    <span className="text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                       <ArrowUpRight />
                     </span>
                   </Link>
@@ -158,7 +158,7 @@ export default function ContactPage() {
                   type="submit"
                 >
                   Send Inquiry
-                  <SendHorizonal className="material-symbols-outlined text-lg" />
+                  <SendHorizonal className="text-lg" />
                 </button>
               </div>
             </form>
