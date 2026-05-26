@@ -1,6 +1,7 @@
 import {
   getProjectBySlug as getMockProjectBySlug,
   getAllProjects as getAllMockProjects,
+  Project,
 } from "@/lib/data";
 import { ArrowUpRight, Play } from "lucide-react";
 import Link from "next/link";
@@ -27,7 +28,7 @@ export async function generateStaticParams() {
   return slugs;
 }
 
-async function fetchProject(slug: string) {
+async function fetchProject(slug: string): Promise<Project | undefined> {
   // First check Supabase
   const { data, error } = await supabase
     .from("projects")
@@ -36,7 +37,7 @@ async function fetchProject(slug: string) {
     .single();
 
   if (data) {
-    return keysToCamel(data);
+    return keysToCamel(data) as Project;
   }
 
   // Fallback to mock data
@@ -93,8 +94,8 @@ export default async function ProjectDetails({
     .from("projects")
     .select("*")
     .eq("status", "published");
-  const allProjects = [
-    ...(dbProjects ? keysToCamel(dbProjects) : []),
+  const allProjects: Project[] = [
+    ...(dbProjects ? (keysToCamel(dbProjects) as Project[]) : []),
     ...mockProjects,
   ];
 
