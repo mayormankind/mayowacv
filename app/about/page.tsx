@@ -3,10 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Metadata } from "next";
+import JsonLd from "@/components/ui/JsonLd";
+import { buildPersonSchema, BASE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn more about my engineering philosophy, background, and the values that drive my work.",
+  description:
+    "Makinde Mayowa is a Senior Full-Stack Product Engineer based in Nigeria with 3+ years building SaaS platforms and scalable web applications using Next.js, React, and TypeScript.",
+  keywords: [
+    "About Makinde Mayowa",
+    "Full-Stack Engineer Nigeria",
+    "Product Engineer",
+    "Next.js developer Nigeria",
+    "React engineer",
+    "SaaS developer",
+    "TypeScript engineer",
+  ],
+  alternates: {
+    canonical: `${BASE_URL}/about`,
+  },
 };
 
 export default function page() {
@@ -27,6 +42,7 @@ export default function page() {
 
   return (
     <>
+      <JsonLd schema={buildPersonSchema()} />
       <div className="flex items-center justify-between pt-12 md:pt-20 mb-8">
         <div className="flex items-center gap-3">
           <span className="text-primary text-[10px] font-extrabold tracking-[0.3em] uppercase">

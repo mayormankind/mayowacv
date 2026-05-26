@@ -3,6 +3,8 @@ import Header from "@/components/layout/header";
 import "./globals.css";
 import { Manrope } from "next/font/google";
 import { Metadata } from "next";
+import JsonLd from "@/components/ui/JsonLd";
+import { buildPersonSchema, buildWebsiteSchema, OG_IMAGE, BASE_URL, AUTHOR_NAME, AUTHOR_HANDLE } from "@/lib/seo";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -10,7 +12,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mayowadevv.vercel.app"),
+  metadataBase: new URL(BASE_URL),
   title: {
     default: "Mayowa | Full-Stack Product Engineer",
     template: "%s | Mayowa",
@@ -25,15 +27,33 @@ export const metadata: Metadata = {
     "TypeScript",
     "SaaS Architecture",
     "Frontend Engineering",
+    "Software Engineer Nigeria",
+    "Makinde Mayowa",
+    "Node.js Developer",
+    "Supabase",
+    "Web Application Development",
   ],
+  authors: [{ name: AUTHOR_NAME, url: BASE_URL }],
+  creator: AUTHOR_NAME,
+  publisher: AUTHOR_NAME,
+  alternates: {
+    canonical: BASE_URL,
+  },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? {
+        verification: {
+          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+        },
+      }
+    : {}),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://mayowadevv.vercel.app",
+    url: BASE_URL,
     siteName: "Mayowa Portfolio",
     images: [
       {
-        url: "/images/profile.png",
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "Mayowa - Full Stack Product Engineer",
@@ -45,7 +65,8 @@ export const metadata: Metadata = {
     title: "Mayowa | Full-Stack Product Engineer",
     description:
       "Building scalable web applications and high-performance SaaS platforms.",
-    creator: "@RedMoonCoder",
+    creator: AUTHOR_HANDLE,
+    images: [OG_IMAGE],
   },
   robots: {
     index: true,
@@ -70,6 +91,8 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} bg-background text-white font-display`}
       >
+        <JsonLd schema={buildWebsiteSchema()} />
+        <JsonLd schema={buildPersonSchema()} />
         <div className="fixed inset-0 z-[-1] mesh-gradient" />
         <div className="flex min-h-screen flex-col">
           <Header />

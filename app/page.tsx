@@ -5,10 +5,22 @@ import { getAllProjects } from "@/lib/data";
 import { Metadata } from "next";
 import { supabase } from "@/lib/supabase/server";
 import { keysToCamel } from "@/lib/utils/case-transform";
+import { BASE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   description:
-    "Crafting digital experiences that merge technical excellence with visual storytelling.",
+    "Makinde Mayowa — Senior Full-Stack Product Engineer. Building scalable SaaS platforms, data-driven dashboards, and high-performance web applications from idea to production.",
+  keywords: [
+    "Full-Stack Engineer",
+    "Product Engineer",
+    "Next.js",
+    "React",
+    "SaaS Developer",
+    "Makinde Mayowa portfolio",
+  ],
+  alternates: {
+    canonical: BASE_URL,
+  },
 };
 
 export default async function HomePage() {

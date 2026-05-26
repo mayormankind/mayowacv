@@ -2,11 +2,23 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import ProjectCard from "@/components/sections/project/ProjectCard";
+import { BASE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "A selection of technical case studies and full-stack applications.",
+    "Portfolio of full-stack projects by Makinde Mayowa — SaaS platforms, ERP systems, fintech dashboards, and e-commerce engines built with Next.js, React, and TypeScript.",
+  keywords: [
+    "Full-Stack projects",
+    "Next.js portfolio",
+    "SaaS case studies",
+    "React projects",
+    "Web application portfolio",
+    "Makinde Mayowa projects",
+  ],
+  alternates: {
+    canonical: `${BASE_URL}/projects`,
+  },
 };
 
 export default function ProjectsPage() {
