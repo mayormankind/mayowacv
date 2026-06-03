@@ -3,6 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   const pathname = usePathname();
@@ -23,20 +25,14 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/5 px-6 md:px-20 py-6 sticky top-0 bg-background-dark/80 backdrop-blur-md z-50">
-      <div className="flex items-center gap-3">
+      <Link href="/" className="flex items-center gap-3">
         <div className="size-6 text-primary">
-          <svg
-            fill="currentColor"
-            viewBox="0 0 48 48"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z"></path>
-          </svg>
+          <Image src="/favicon.ico" alt="Mayowa" width={24} height={24} />
         </div>
-        <h2 className="text-white text-xl font-extrabold leading-tight tracking-tighter uppercase">
-          Mayowa
+        <h2 className="-ml-3 text-white text-xl font-extrabold leading-tight tracking-tighter uppercase">
+          ayowa
         </h2>
-      </div>
+      </Link>
 
       {/* Desktop Navigation */}
       <div className="hidden md:flex flex-1 justify-end gap-12 items-center">
@@ -58,14 +54,14 @@ export default function Header() {
             </Link>
           ))}
         </div>
-        <a
+        <Link
           href="/assets/Makinde Mayowa CV.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="flex min-w-30 cursor-pointer items-center justify-center rounded h-10 px-6 bg-surface border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
         >
           Resume
-        </a>
+        </Link>
       </div>
 
       {/* Mobile Menu Toggle */}
@@ -78,34 +74,55 @@ export default function Header() {
       </button>
 
       {/* Mobile Menu Overlay */}
-      {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-[#1A1A1A] border-b border-white/5 md:hidden flex flex-col p-6 gap-6 shadow-2xl animate-in fade-in slide-in-from-top-5 duration-200">
-          <div className="flex flex-col gap-4">
-            {navLinks.map((nav) => (
-              <Link
-                key={nav.href}
-                href={nav.href}
-                onClick={() => setIsOpen(false)}
-                className={`text-sm font-bold uppercase tracking-widest py-2 transition-colors ${
-                  isActive(nav.href)
-                    ? "text-primary"
-                    : "text-white/60 hover:text-white"
-                }`}
-              >
-                {nav.label}
-              </Link>
-            ))}
-          </div>
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full flex cursor-pointer items-center justify-center rounded h-10 px-6 bg-surface border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="absolute top-full left-0 w-full bg-[#1A1A1A] border-b border-white/5 md:hidden flex flex-col p-6 gap-6 shadow-2xl"
           >
-            Resume
-          </a>
-        </div>
-      )}
+            <div className="flex flex-col gap-2">
+              {navLinks.map((nav, i) => (
+                <motion.div
+                  key={nav.href}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.22, delay: i * 0.06, ease: "easeOut" }}
+                >
+                  <Link
+                    href={nav.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`block text-sm font-bold uppercase tracking-widest py-2 transition-colors ${
+                      isActive(nav.href)
+                        ? "text-primary"
+                        : "text-white/60 hover:text-white"
+                    }`}
+                  >
+                    {nav.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
+            >
+              <Link
+                href="/assets/Makinde Mayowa CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex cursor-pointer items-center justify-center rounded h-10 px-6 bg-surface border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+              >
+                Resume
+              </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

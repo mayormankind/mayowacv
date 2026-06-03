@@ -1,8 +1,8 @@
-// import { getAllProjects } from "@/lib/data";
 import Link from "next/link";
 import { Metadata } from "next";
 import ProjectCard from "@/components/sections/project/ProjectCard";
 import { BASE_URL } from "@/lib/seo";
+import AnimateIn from "@/components/ui/AnimateIn";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -22,13 +22,11 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  // const projects = getAllProjects();
-
   return (
     <>
-      <div className="max-w-4xl mb-20 pt-12 md:pt-20">
+      <AnimateIn direction="up" delay={0.1} className="max-w-4xl mb-20 pt-12 md:pt-20">
         <div className="flex items-center gap-3 mb-6">
-          <span className="w-8 h-px bg-primary"></span>
+          <span className="w-8 h-px bg-primary" />
           <span className="text-primary text-[10px] font-extrabold uppercase tracking-[0.4em]">
             Portfolio Overview
           </span>
@@ -44,25 +42,24 @@ export default function ProjectsPage() {
           deployment, focusing on high-performance SaaS platforms and
           data-driven dashboards.
         </p>
-      </div>
+      </AnimateIn>
       <ProjectCard />
-      <div className="mt-30 py-20 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-12">
+      <AnimateIn direction="up" delay={0} className="mt-30 py-20 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-12">
         <div>
-          <h2 className="text-3xl font-bold mb-4 tracking-tight">
-            Ready to ship?
-          </h2>
+          <h2 className="text-3xl font-bold mb-4 tracking-tight">Ready to ship?</h2>
           <p className="text-white/40 text-sm uppercase tracking-[0.2em]">
-            Now accepting full-stack opportunities for 2024
+            Now accepting full-stack opportunities for {new Date().getFullYear()}
           </p>
         </div>
         <div className="flex gap-4">
-          <Link href="/contact">
-            <button className="h-14 px-10 bg-primary text-white text-xs font-extrabold uppercase tracking-[0.2em] rounded-lg shadow-[0_0_30px_rgba(222,27,27,0.3)] hover:brightness-125 transition-all">
-              Initiate Project
-            </button>
+          <Link
+            href="/contact"
+            className="h-14 px-10 bg-primary text-white text-xs font-extrabold uppercase tracking-[0.2em] rounded-lg shadow-[0_0_30px_rgba(222,27,27,0.3)] hover:brightness-125 transition-all flex items-center"
+          >
+            Initiate Project
           </Link>
         </div>
-      </div>
+      </AnimateIn>
     </>
   );
 }

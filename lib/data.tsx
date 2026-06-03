@@ -23,6 +23,8 @@ export interface Project {
   longDescription: string;
   heroImage: string;
   tags: string[];
+  images?: string[];
+  demoVideoUrl?: string;
   links: {
     live: string;
     repo?: string;
@@ -363,7 +365,7 @@ export const socials = [
     label: "LinkedIn",
     ref: "https://www.linkedin.com/in/makinde-mayowa-4670a51bb",
   },
-  { label: "Twitter", ref: "https://github.com/RedMoonCoder" },
+  { label: "Twitter", ref: "https://x.com/RedMoonCoder" },
   { label: "Github", ref: "https://github.com/mayormankind" },
 ];
 

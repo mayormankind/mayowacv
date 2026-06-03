@@ -44,7 +44,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero />
+      <Hero latestProject={featuredProject} />
       <ValueProps />
       <FeaturedCaseStudy project={featuredProject} />
     </>

@@ -8,6 +8,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import { Metadata } from "next";
+import AnimateIn from "@/components/ui/AnimateIn";
 
 export const metadata: Metadata = {
   title: "Tech Stack",
@@ -25,18 +26,19 @@ export default function StacksPage() {
   ];
   
   const uiStacks = [
-    { label: "React", icon: Cloud },
-    { label: "Next.js", icon: Cloud },
-    { label: "Tailwind", icon: Database },
-    { label: "TypeScript", icon: Database },
-    { label: "", icon: HardDrive },
+    { label: "React" },
+    { label: "Next.js" },
+    { label: "Tailwind" },
+    { label: "TypeScript" },
+    { label: "JavaScript" },
+    { label: "Shadcn/UI" },
   ];
 
   return (
     <div className="py-20">
-      <div className="max-w-4xl mb-24">
+      <AnimateIn direction="up" delay={0.1} className="max-w-4xl mb-24">
         <div className="flex items-center gap-2 mb-6">
-          <span className="w-8 h-px bg-primary"></span>
+          <span className="w-8 h-px bg-primary" />
           <p className="text-primary text-[10px] font-extrabold uppercase tracking-[0.4em]">
             Expertise &amp; Stack
           </p>
@@ -46,13 +48,14 @@ export default function StacksPage() {
           <span className="text-underline-accent">Capabilities.</span>
         </h1>
         <p className="text-white/50 text-xl font-normal leading-relaxed max-w-2xl">
-          Specialized in high-performance web applications using the industry's
+          Specialized in high-performance web applications using the industry&apos;s
           most robust primitives. Focused on speed, security, and exceptional
           user experiences.
         </p>
-      </div>
+      </AnimateIn>
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-32">
-        <div className="md:col-span-8 skill-card group relative overflow-hidden">
+        <AnimateIn direction="up" delay={0} className="md:col-span-8">
+        <div className="skill-card group relative overflow-hidden h-full">
           <div className="absolute top-0 right-0 p-8 opacity-5 transition-opacity group-hover:opacity-10">
             <MonitorSmartphone className="w-32 h-32" />
           </div>
@@ -70,7 +73,15 @@ export default function StacksPage() {
                   using modern React ecosystems.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="px-4 py-2 bg-white/5 border border-white/10 rounded text-xs font-bold uppercase tracking-widest text-primary">
+                  {uiStacks.map((stack) => (
+                    <span
+                      key={stack.label}
+                      className="px-4 py-2 bg-white/5 border border-white/10 rounded text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors"
+                    >
+                      {stack.label}
+                    </span>
+                  ))}
+                  {/* <span className="px-4 py-2 bg-white/5 border border-white/10 rounded text-xs font-bold uppercase tracking-widest text-primary">
                     React
                   </span>
                   <span className="px-4 py-2 bg-white/5 border border-white/10 rounded text-xs font-bold uppercase tracking-widest">
@@ -81,7 +92,7 @@ export default function StacksPage() {
                   </span>
                   <span className="px-4 py-2 bg-white/5 border border-white/10 rounded text-xs font-bold uppercase tracking-widest">
                     TypeScript
-                  </span>
+                  </span> */}
                 </div>
               </div>
               <div className="flex flex-col gap-6">
@@ -118,7 +129,9 @@ export default function StacksPage() {
             </div>
           </div>
         </div>
-        <div className="md:col-span-4 skill-card border-l-primary/40">
+        </AnimateIn>
+        <AnimateIn direction="up" delay={0.15} className="md:col-span-4">
+        <div className="skill-card border-l-primary/40 h-full">
           <h3 className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em] mb-8">
             02 — Backend
           </h3>
@@ -142,7 +155,9 @@ export default function StacksPage() {
             )}
           </div>
         </div>
-        <div className="md:col-span-4 skill-card">
+        </AnimateIn>
+        <AnimateIn direction="up" delay={0.1} className="md:col-span-4">
+        <div className="skill-card h-full">
           <h3 className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em] mb-8">
             03 — Data Layer
           </h3>
@@ -167,7 +182,9 @@ export default function StacksPage() {
             ))}
           </div>
         </div>
-        <div className="md:col-span-8 bg-primary/5 border border-primary/20 p-8 rounded relative overflow-hidden">
+        </AnimateIn>
+        <AnimateIn direction="up" delay={0.15} className="md:col-span-8">
+        <div className="bg-primary/5 border border-primary/20 p-8 rounded relative overflow-hidden h-full">
           <div className="flex flex-col items-start justify-between gap-8 relative z-10">
             <div className="max-w-md">
               <h3 className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em] mb-4">
@@ -209,10 +226,12 @@ export default function StacksPage() {
               </div>
             </div>
           </div>
-          <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/10 blur-[80px] rounded-full"></div>
+          <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/10 blur-[80px] rounded-full" />
         </div>
+        </AnimateIn>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-20 border-t border-white/5">
+        <AnimateIn direction="up" delay={0}>
         <div className="flex flex-col gap-4">
           <p className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em]">
             Product Philosophy
@@ -223,6 +242,8 @@ export default function StacksPage() {
             complexity from the user."
           </p>
         </div>
+        </AnimateIn>
+        <AnimateIn direction="up" delay={0.15}>
         <div className="flex flex-col gap-4">
           <p className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em]">
             Development Workflow
@@ -242,9 +263,11 @@ export default function StacksPage() {
             </li>
           </ul>
         </div>
+        </AnimateIn>
+        <AnimateIn direction="up" delay={0.3}>
         <div className="flex flex-col gap-4">
           <p className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em]">
-            Let's Build
+            Let&apos;s Build
           </p>
           <p className="text-white/60 text-sm leading-relaxed">
             Ready to launch your next full-stack venture? Let's discuss how we
@@ -258,6 +281,7 @@ export default function StacksPage() {
             <ArrowRight className="text-sm text-primary transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
+        </AnimateIn>
       </div>
     </div>
   );

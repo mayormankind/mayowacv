@@ -3,7 +3,7 @@ import {
   getAllProjects as getAllMockProjects,
   Project,
 } from "@/lib/data";
-import { ArrowUpRight, Play } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -11,6 +11,9 @@ import { Metadata } from "next";
 import { supabase } from "@/lib/supabase/server";
 import { keysToCamel } from "@/lib/utils/case-transform";
 import Icon from "@/components/ui/Icon";
+import VideoPlayer from "@/components/ui/VideoPlayer";
+import ImageCarousel from "@/components/ui/ImageCarousel";
+import AnimateIn from "@/components/ui/AnimateIn";
 
 export async function generateStaticParams() {
   // Combine mock and dynamic projects for static generation
@@ -109,60 +112,63 @@ export default async function ProjectDetails({
     <>
       <section className="py-16 md:py-24 border-b border-white/5">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-4 mb-6">
-                <span className="px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.2em] rounded">
-                  {project.subtitle}
-                </span>
-                <span className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em]">
-                  {project.period}
-                </span>
+          <AnimateIn direction="up" delay={0.1}>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+              <div className="max-w-3xl">
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.2em] rounded">
+                    {project.subtitle}
+                  </span>
+                  <span className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em]">
+                    {project.period}
+                  </span>
+                </div>
+                <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight leading-[0.9] mb-6">
+                  {project.title}
+                </h1>
+                <p className="text-white/50 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
+                  {project.longDescription}
+                </p>
               </div>
-              <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight leading-[0.9] mb-6">
-                {project.title}
-              </h1>
-              <p className="text-white/50 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
-                {project.longDescription}
-              </p>
+              {project.links.live && project.links.live !== "#" && (
+                <div className="flex flex-col gap-4">
+                  <Link
+                    className="flex items-center gap-3 text-white group"
+                    href={project.links.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest">
+                      Live Experience
+                    </span>
+                    <ArrowUpRight className="text-primary group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <div className="h-px w-full bg-linear-to-r from-primary to-transparent" />
+                </div>
+              )}
             </div>
-            <div className="flex flex-col gap-4">
-              <Link
-                className="flex items-center gap-3 text-white group"
-                href={project.links.live}
-              >
-                <span className="text-[10px] font-extrabold uppercase tracking-widest">
-                  Live Experience
-                </span>
-                <ArrowUpRight className="text-primary group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <div className="h-px w-full bg-linear-to-r from-primary to-transparent"></div>
-            </div>
-          </div>
-          <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-surface group">
-            <div
-              className="absolute inset-0 bg-cover bg-center opacity-60"
-              style={{
-                backgroundImage: `url('${project.heroImage}')`,
-              }}
-            ></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button
-                title="play demo"
-                className="size-20 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-primary transition-colors group"
-              >
-                <Play className="text-white text-4xl" />
-              </button>
-            </div>
-            <div className="absolute bottom-0 md:bottom-6 left-6 flex gap-3">
-              <div className="px-4 py-2 bg-black/60 backdrop-blur-md rounded border border-white/10 flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span className="text-[10px] font-bold uppercase tracking-widest">
-                  Stable Production Release
-                </span>
+          </AnimateIn>
+
+          {/* Demo Video */}
+          <AnimateIn direction="up" delay={0.2}>
+            <VideoPlayer
+              videoUrl={project.demoVideoUrl || project.links.demo}
+              posterUrl={project.heroImage}
+            />
+          </AnimateIn>
+
+          {/* Screenshots Carousel */}
+          {project.images && project.images.length > 0 && (
+            <AnimateIn direction="up" delay={0.1} className="mt-16">
+              <div className="mb-6">
+                <h2 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-2">
+                  Project Screenshots
+                </h2>
+                <div className="h-px w-16 bg-primary" />
               </div>
-            </div>
-          </div>
+              <ImageCarousel images={project.images} title={project.title} />
+            </AnimateIn>
+          )}
         </div>
       </section>
 

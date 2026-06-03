@@ -5,6 +5,8 @@ import React from "react";
 import { Metadata } from "next";
 import JsonLd from "@/components/ui/JsonLd";
 import { buildPersonSchema, BASE_URL } from "@/lib/seo";
+import AnimateIn from "@/components/ui/AnimateIn";
+import TextLightUp from "@/components/ui/TextLightUp";
 
 export const metadata: Metadata = {
   title: "About",
@@ -43,66 +45,75 @@ export default function page() {
   return (
     <>
       <JsonLd schema={buildPersonSchema()} />
-      <div className="flex items-center justify-between pt-12 md:pt-20 mb-8">
-        <div className="flex items-center gap-3">
-          <span className="text-primary text-[10px] font-extrabold tracking-[0.3em] uppercase">
-            About Mayowa
-          </span>
-          <span className="w-8 h-1px bg-white/10"></span>
-          <span className="text-white/30 text-[10px] font-bold tracking-[0.3em] uppercase underline underline-offset-4">
-            01. Identity
-          </span>
-        </div>
-        <div className="flex h-8 items-center justify-center gap-x-2 rounded bg-white px-4">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-          </span>
-          <p className="text-black text-[10px] font-extrabold tracking-[0.2em] uppercase">
-            Available for Work
-          </p>
-        </div>
-      </div>
-      <section className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20 mb-32">
-        <div className="md:col-span-7">
-          <h1 className="text-white text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-[-0.04em] mb-10">
-            Shipping <span className="text-primary italic">human-centric</span>{" "}
-            solutions with precision.
-          </h1>
-          <div className="space-y-8">
-            <div className="border-l-2 border-primary pl-8">
-              <h3 className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em] mb-4">
-                Engineering Philosophy
-              </h3>
-              <p className="text-white/80 text-lg md:text-xl leading-relaxed max-w-2xl">
-                I build with the user in mind, ensuring every line of code
-                contributes to{" "}
-                <span className="text-white font-bold">meaningful value</span>.
-                I balance rapid shipping with long-term maintainability,
-                treating performance as a core component of the user experience.
-              </p>
-            </div>
-            <div className="pl-8">
-              <h3 className="text-white/40 text-[10px] font-extrabold uppercase tracking-[0.3em] mb-4">
-                Professional Background
-              </h3>
-              <p className="text-white/60 text-base leading-relaxed max-w-2xl mb-6">
-                With over 3 years as a product-minded full-stack engineer, I've
-                transformed complex business requirements into seamless digital
-                experiences. My approach centers on deep collaboration,
-                iterative development, and a mastery of modern
-                JavaScript/TypeScript ecosystems to solve real-world client
-                problems.
-              </p>
-              <p className="text-white/60 text-base leading-relaxed max-w-2xl">
-                I specialize in taking products from zero to one, scaling
-                applications that users love while maintaining a clean,
-                extensible codebase that teams can iterate on with confidence.
-              </p>
-            </div>
+      {/* Header row — fixed mobile: flex-wrap so badge drops below on small screens */}
+      <AnimateIn direction="down" delay={0}>
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-12 md:pt-20 mb-8">
+          <div className="flex items-center gap-3">
+            <span className="text-primary text-[10px] font-extrabold tracking-[0.3em] uppercase">
+              About Mayowa
+            </span>
+            <span className="w-8 h-px bg-white/10" />
+            <span className="text-white/30 text-[10px] font-bold tracking-[0.3em] uppercase underline underline-offset-4">
+              01. Identity
+            </span>
+          </div>
+          <div className="flex h-8 items-center justify-center gap-x-2 rounded bg-white px-4 shrink-0">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            <p className="text-black text-[10px] font-extrabold tracking-[0.2em] uppercase whitespace-nowrap">
+              Available for Work
+            </p>
           </div>
         </div>
-        <div className="md:col-span-5 flex flex-col items-center md:items-end">
+      </AnimateIn>
+
+      <section className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20 mb-32">
+        <div className="md:col-span-7">
+          <AnimateIn direction="up" delay={0.1}>
+            <h1 className="text-white text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-[-0.04em] mb-10">
+              Shipping <span className="text-primary italic">human-centric</span>{" "}
+              solutions with precision.
+            </h1>
+          </AnimateIn>
+          <div className="space-y-8">
+            <AnimateIn direction="up" delay={0.2}>
+              <div className="border-l-2 border-primary pl-8">
+                <h3 className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em] mb-4">
+                  Engineering Philosophy
+                </h3>
+                <p className="text-white/80 text-lg md:text-xl leading-relaxed max-w-2xl">
+                  I build with the user in mind, ensuring every line of code
+                  contributes to{" "}
+                  <span className="text-white font-bold">meaningful value</span>.
+                  I balance rapid shipping with long-term maintainability,
+                  treating performance as a core component of the user experience.
+                </p>
+              </div>
+            </AnimateIn>
+            <AnimateIn direction="up" delay={0.3}>
+              <div className="pl-8">
+                <h3 className="text-white/40 text-[10px] font-extrabold uppercase tracking-[0.3em] mb-4">
+                  Professional Background
+                </h3>
+                <TextLightUp
+                  className="text-base leading-relaxed max-w-2xl mb-6"
+                  delay={0.35}
+                >
+                  With over 3 years as a product-minded full-stack engineer, I&apos;ve transformed complex business requirements into seamless digital experiences. My approach centers on deep collaboration, iterative development, and a mastery of modern JavaScript/TypeScript ecosystems to solve real-world client problems.
+                </TextLightUp>
+                <TextLightUp
+                  className="text-base leading-relaxed max-w-2xl"
+                  delay={0.55}
+                >
+                  I specialize in taking products from zero to one, scaling applications that users love while maintaining a clean, extensible codebase that teams can iterate on with confidence.
+                </TextLightUp>
+              </div>
+            </AnimateIn>
+          </div>
+        </div>
+        <AnimateIn direction="left" delay={0.2} className="md:col-span-5 flex flex-col items-center md:items-end">
           <div className="relative w-full max-w-100 about-image-container group">
             <div className="aspect-4/5 bg-surface overflow-hidden grayscale hover:grayscale-0 transition-all duration-700">
               <Image
@@ -139,70 +150,80 @@ export default function page() {
               ))}
             </div>
           </div>
-        </div>
+        </AnimateIn>
       </section>
+
       <section className="grid grid-cols-1 md:grid-cols-4 gap-8 py-20 border-t border-white/5 mb-20">
-        <div className="md:col-span-1">
-          <h2 className="text-primary text-[12px] font-extrabold uppercase tracking-[0.3em] mb-4">
-            Values
-          </h2>
-        </div>
+        <AnimateIn direction="up" delay={0}>
+          <div className="md:col-span-1">
+            <h2 className="text-primary text-[12px] font-extrabold uppercase tracking-[0.3em] mb-4">
+              Values
+            </h2>
+          </div>
+        </AnimateIn>
         <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div className="space-y-4">
-            <Rocket className="material-symbols-outlined text-primary text-3xl" />
-            <h4 className="text-white font-bold text-lg uppercase tracking-tight">
-              Shipping Value
-            </h4>
-            <p className="text-white/50 text-sm leading-relaxed">
-              Focusing on outcomes over outputs. Deploying features that move
-              the needle for users and the business.
-            </p>
-          </div>
-          <div className="space-y-4">
-            <DraftingCompass className="material-symbols-outlined text-primary text-3xl" />
-            <h4 className="text-white font-bold text-lg uppercase tracking-tight">
-              Maintainable Growth
-            </h4>
-            <p className="text-white/50 text-sm leading-relaxed">
-              Writing clean, modular code that allows the product to evolve
-              without the friction of technical debt.
-            </p>
-          </div>
-          <div className="space-y-4">
-            <CircleGauge className="material-symbols-outlined text-primary text-3xl" />
-            <h4 className="text-white font-bold text-lg uppercase tracking-tight">
-              Perceived Performance
-            </h4>
-            <p className="text-white/50 text-sm leading-relaxed">
-              Optimizing for the critical rendering path to ensure a snappy,
-              high-quality experience on every device.
-            </p>
-          </div>
+          <AnimateIn direction="up" delay={0.1}>
+            <div className="space-y-4">
+              <Rocket className="material-symbols-outlined text-primary text-3xl" />
+              <h4 className="text-white font-bold text-lg uppercase tracking-tight">
+                Shipping Value
+              </h4>
+              <p className="text-white/50 text-sm leading-relaxed">
+                Focusing on outcomes over outputs. Deploying features that move
+                the needle for users and the business.
+              </p>
+            </div>
+          </AnimateIn>
+          <AnimateIn direction="up" delay={0.2}>
+            <div className="space-y-4">
+              <DraftingCompass className="material-symbols-outlined text-primary text-3xl" />
+              <h4 className="text-white font-bold text-lg uppercase tracking-tight">
+                Maintainable Growth
+              </h4>
+              <p className="text-white/50 text-sm leading-relaxed">
+                Writing clean, modular code that allows the product to evolve
+                without the friction of technical debt.
+              </p>
+            </div>
+          </AnimateIn>
+          <AnimateIn direction="up" delay={0.3}>
+            <div className="space-y-4">
+              <CircleGauge className="material-symbols-outlined text-primary text-3xl" />
+              <h4 className="text-white font-bold text-lg uppercase tracking-tight">
+                Perceived Performance
+              </h4>
+              <p className="text-white/50 text-sm leading-relaxed">
+                Optimizing for the critical rendering path to ensure a snappy,
+                high-quality experience on every device.
+              </p>
+            </div>
+          </AnimateIn>
         </div>
       </section>
-      <section className="mb-32">
+
+      <AnimateIn direction="up" delay={0} className="mb-32">
         <div className="bg-surface border border-white/5 p-12 md:p-20 relative overflow-hidden flex flex-col items-center text-center">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full" />
           <h2 className="text-white text-4xl md:text-5xl font-extrabold tracking-tight mb-8 relative z-10">
             Have a product idea that <br />
             needs expert execution?
           </h2>
           <div className="flex flex-wrap justify-center gap-6 relative z-10">
             <Link
-              href={"/contact"}
+              href="/contact"
               className="flex min-w-60 cursor-pointer items-center justify-center rounded h-14 px-8 bg-primary text-white text-sm font-extrabold uppercase tracking-widest hover:brightness-110 transition-all"
             >
               Start Collaboration
             </Link>
             <Link
-              href={"/projects"}
+              href="/projects"
               className="flex min-w-50 cursor-pointer items-center justify-center rounded h-14 px-8 bg-transparent border border-white/20 text-white text-sm font-extrabold uppercase tracking-widest hover:border-white transition-all"
             >
               View Projects
             </Link>
           </div>
         </div>
-      </section>
+      </AnimateIn>
     </>
   );
 }

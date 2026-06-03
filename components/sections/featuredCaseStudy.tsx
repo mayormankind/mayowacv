@@ -1,9 +1,12 @@
+"use client";
 import { Project } from "@/lib/data";
 import Link from "next/link";
 import React from "react";
+import AnimateIn from "@/components/ui/AnimateIn";
 
 export default function FeaturedCaseStudy({ project }: { project: Project }) {
   return (
+    <AnimateIn direction="up" delay={0}>
     <div className="p-4 md:p-8 bg-surface border border-white/5 rounded-xl mb-32 group relative overflow-hidden">
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] rounded-full"></div>
       <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
@@ -30,5 +33,6 @@ export default function FeaturedCaseStudy({ project }: { project: Project }) {
         </Link>
       </div>
     </div>
+    </AnimateIn>
   );
 }
