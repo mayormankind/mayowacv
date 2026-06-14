@@ -1,28 +1,16 @@
-import { getAllProjects } from "@/lib/data";
 import { supabase } from "@/lib/supabase/server";
 import { MetadataRoute } from "next";
 import { BASE_URL } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const mockProjects = getAllProjects();
-
   const { data: dbProjects } = await supabase
     .from("projects")
     .select("slug, updated_at")
     .eq("status", "published");
 
-  // Merge: DB projects take precedence over mock by slug
-  const projectMap = new Map<string, Date>();
-  mockProjects.forEach((p) => projectMap.set(p.slug, new Date()));
-  (dbProjects ?? []).forEach((p) =>
-    projectMap.set(p.slug, new Date(p.updated_at ?? Date.now()))
-  );
-
-  const projectUrls: MetadataRoute.Sitemap = Array.from(
-    projectMap.entries()
-  ).map(([slug, lastMod]) => ({
-    url: `${BASE_URL}/projects/${slug}`,
-    lastModified: lastMod,
+  const projectUrls: MetadataRoute.Sitemap = (dbProjects ?? []).map((p) => ({
+    url: `${BASE_URL}/projects/${p.slug}`,
+    lastModified: new Date(p.updated_at ?? Date.now()),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));

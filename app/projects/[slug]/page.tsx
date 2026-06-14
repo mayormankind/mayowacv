@@ -1,8 +1,4 @@
-import {
-  getProjectBySlug as getMockProjectBySlug,
-  getAllProjects as getAllMockProjects,
-  Project,
-} from "@/lib/data";
+import { Project } from "@/lib/data";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,24 +12,16 @@ import ImageCarousel from "@/components/ui/ImageCarousel";
 import AnimateIn from "@/components/ui/AnimateIn";
 
 export async function generateStaticParams() {
-  // Combine mock and dynamic projects for static generation
-  const mockProjects = getAllMockProjects();
   const { data: dbProjects } = await supabase
     .from("projects")
     .select("slug")
     .eq("status", "published");
 
-  const slugs = [
-    ...mockProjects.map((p) => ({ slug: p.slug })),
-    ...(dbProjects || []).map((p) => ({ slug: p.slug })),
-  ];
-
-  return slugs;
+  return (dbProjects || []).map((p) => ({ slug: p.slug }));
 }
 
 async function fetchProject(slug: string): Promise<Project | undefined> {
-  // First check Supabase
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("projects")
     .select("*")
     .eq("slug", slug)
@@ -43,8 +31,7 @@ async function fetchProject(slug: string): Promise<Project | undefined> {
     return keysToCamel(data) as Project;
   }
 
-  // Fallback to mock data
-  return getMockProjectBySlug(slug);
+  return undefined;
 }
 
 export async function generateMetadata({
@@ -92,15 +79,13 @@ export default async function ProjectDetails({
   }
 
   // Find next project for the bottom CTA (circular)
-  const mockProjects = getAllMockProjects();
   const { data: dbProjects } = await supabase
     .from("projects")
     .select("*")
     .eq("status", "published");
-  const allProjects: Project[] = [
-    ...(dbProjects ? (keysToCamel(dbProjects) as Project[]) : []),
-    ...mockProjects,
-  ];
+  const allProjects: Project[] = dbProjects
+    ? (keysToCamel(dbProjects) as Project[])
+    : [];
 
   const currentIndex = allProjects.findIndex((p) => p.slug === slug);
   const nextProject =

@@ -1,7 +1,7 @@
 import Hero from "@/components/sections/hero";
 import ValueProps from "@/components/sections/valueProps";
 import FeaturedCaseStudy from "@/components/sections/featuredCaseStudy";
-import { getAllProjects } from "@/lib/data";
+import Testimonials from "@/components/sections/testimonials";
 import { Metadata } from "next";
 import { supabase } from "@/lib/supabase/server";
 import { keysToCamel } from "@/lib/utils/case-transform";
@@ -32,21 +32,16 @@ export default async function HomePage() {
     .order("updated_at", { ascending: false })
     .limit(1);
 
-  let featuredProject;
-
-  if (dbProjects && dbProjects.length > 0) {
-    featuredProject = keysToCamel(dbProjects[0]);
-  } else {
-    // Fallback to mock data
-    const mockProjects = getAllProjects();
-    featuredProject = mockProjects[0];
-  }
+  const featuredProject = dbProjects && dbProjects.length > 0
+    ? keysToCamel(dbProjects[0])
+    : undefined;
 
   return (
     <>
       <Hero latestProject={featuredProject} />
       <ValueProps />
       <FeaturedCaseStudy project={featuredProject} />
+      <Testimonials />
     </>
   );
 }

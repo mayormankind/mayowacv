@@ -40,17 +40,16 @@ export default function Hero({ latestProject }: HeroProps) {
             {...fadeUp(0.2)}
             className="text-white text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-[-0.04em]"
           >
-            Engineering{" "}
-            <span className="text-underline-accent">Digital Products</span> from
-            Idea to Production.
+            I Build <span className="text-primary">SaaS Products</span> That
+            Scale From MVP to Market.
           </motion.h1>
           <motion.p
             {...fadeUp(0.35)}
             className="text-white/50 text-lg md:text-xl font-normal leading-relaxed max-w-xl mt-4"
           >
-            Delivering end-to-end full-stack solutions with Next.js and React.
-            Senior Software Engineer focused on turning complex business
-            requirements into polished, high-performing products.
+            Senior Full-Stack Engineer helping founders and product teams ship
+            high-performance web applications. Specializing in SaaS, fintech, and
+            e-commerce platforms that drive revenue and user growth.
           </motion.p>
         </div>
         <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-4 mt-4">
@@ -61,10 +60,10 @@ export default function Hero({ latestProject }: HeroProps) {
             Start a Project
           </Link>
           <Link
-            href="/projects"
+            href="/services"
             className="flex min-w-45 cursor-pointer items-center justify-center rounded h-14 px-8 bg-surface border border-white/5 text-white text-sm font-extrabold uppercase tracking-widest hover:border-white/20 transition-all"
           >
-            View Portfolio
+            View Services
           </Link>
         </motion.div>
       </div>

@@ -4,7 +4,8 @@ import Link from "next/link";
 import React from "react";
 import AnimateIn from "@/components/ui/AnimateIn";
 
-export default function FeaturedCaseStudy({ project }: { project: Project }) {
+export default function FeaturedCaseStudy({ project }: { project?: Project }) {
+  if (!project) return null;
   return (
     <AnimateIn direction="up" delay={0}>
     <div className="p-4 md:p-8 bg-surface border border-white/5 rounded-xl mb-32 group relative overflow-hidden">
