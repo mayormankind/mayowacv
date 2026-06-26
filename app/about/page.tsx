@@ -83,12 +83,13 @@ export default function page() {
                 <h3 className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em] mb-4">
                   Engineering Philosophy
                 </h3>
+                
                 <p className="text-white/80 text-lg md:text-xl leading-relaxed max-w-2xl">
-                  I build with the user in mind, ensuring every line of code
-                  contributes to{" "}
-                  <span className="text-white font-bold">meaningful value</span>.
-                  I balance rapid shipping with long-term maintainability,
-                  treating performance as a core component of the user experience.
+                  I build digital products that{" "}
+                  <span className="text-white font-bold">
+                    users love and businesses can actually scale
+                  </span>. I move fast while writing clean code that doesn’t create
+                  headaches down the road.
                 </p>
               </div>
             </AnimateIn>

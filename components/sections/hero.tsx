@@ -47,9 +47,7 @@ export default function Hero({ latestProject }: HeroProps) {
             {...fadeUp(0.35)}
             className="text-white/50 text-lg md:text-xl font-normal leading-relaxed max-w-xl mt-4"
           >
-            Senior Full-Stack Engineer helping founders and product teams ship
-            high-performance web applications. Specializing in SaaS, fintech, and
-            e-commerce platforms that drive revenue and user growth.
+            I help founders and product teams launch polished web applications that drive real revenue and user growth — specializing in SaaS and e-commerce.
           </motion.p>
         </div>
         <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-4 mt-4">
