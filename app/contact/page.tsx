@@ -47,10 +47,10 @@ export default function ContactPage() {
 
   return (
     <div className="max-w-7xl mx-auto pt-12 md:pt-20 mb-20">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
         {/* Left: Info panel */}
-        <AnimateIn direction="up" delay={0.1} className="lg:col-span-5 flex flex-col justify-between gap-12">
+        <AnimateIn direction="up" delay={0.1} className="lg:col-span-5 flex flex-col justify-between gap-12 md:gap-8">
           <div>
             <div className="inline-flex items-center gap-2 mb-8">
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
@@ -63,12 +63,11 @@ export default function ContactPage() {
               Digital <span className="text-primary">Products</span>.
             </h1>
             <p className="text-white/40 text-lg md:text-xl font-normal leading-relaxed max-w-md mb-12">
-              Specializing in scaling web applications and turning complex
-              requirements into high-performance product MVPs.
+              I’m currently available and excited to help you bring your product idea to life.
             </p>
           </div>
 
-          <div className="space-y-10">
+          <div className="space-y-5">
             {/* Direct contact */}
             <div className="space-y-4">
               <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">
