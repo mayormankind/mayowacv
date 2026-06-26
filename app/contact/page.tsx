@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { socials } from "@/lib/data";
 import AnimateIn from "@/components/ui/AnimateIn";
 
-const PROJECT_TYPES = ["Product MVP", "Full-stack Dev", "Scaling & Optm.", "Consultation"];
+const PROJECT_TYPES = ["Product MVP", "Full-stack Dev", "Scaling & Optimization", "Consultation"];
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -50,7 +50,7 @@ export default function ContactPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
         {/* Left: Info panel */}
-        <AnimateIn direction="up" delay={0.1} className="lg:col-span-5 flex flex-col justify-between gap-12 md:gap-8">
+        <AnimateIn direction="up" delay={0.1} className="lg:col-span-5 flex flex-col justify-between gap-8 md:gap-4">
           <div>
             <div className="inline-flex items-center gap-2 mb-8">
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
@@ -59,15 +59,15 @@ export default function ContactPage() {
               </span>
             </div>
             <h1 className="text-6xl md:text-8xl font-extrabold tracking-[-0.04em] leading-[0.9] mb-8">
-              Building <br />
-              Digital <span className="text-primary">Products</span>.
+              Let's Build <br />
+              Something<span className="text-primary">Great</span>.
             </h1>
             <p className="text-white/40 text-lg md:text-xl font-normal leading-relaxed max-w-md mb-12">
-              I’m currently available and excited to help you bring your product idea to life.
+              I’m currently available and ready to help you ship a high-quality digital product — whether it’s an MVP, full platform, or scaling an existing one.
             </p>
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-4">
             {/* Direct contact */}
             <div className="space-y-4">
               <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">
@@ -105,7 +105,7 @@ export default function ContactPage() {
             {/* Socials */}
             <div className="space-y-4">
               <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">
-                Digital Presence
+                Find me online
               </p>
               <div className="flex flex-wrap gap-6">
                 {socials.map((social) => (
@@ -198,7 +198,7 @@ export default function ContactPage() {
 
                 <div className="space-y-3">
                   <label className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em] ml-1">
-                    Tell me about your vision
+                    Tell me more about your project
                   </label>
                   <textarea
                     name="message"
@@ -206,7 +206,7 @@ export default function ContactPage() {
                     onChange={handleChange}
                     required
                     className="w-full bg-white/5 border border-white/20 rounded-lg py-4 px-6 text-white placeholder:text-white/20 resize-none outline-none focus:border-primary/50 transition-all duration-300"
-                    placeholder="Describe the digital product you're looking to build or scale..."
+                    placeholder="Describe the product you want to build or improve.."
                     rows={5}
                   />
                 </div>
