@@ -90,26 +90,6 @@ export default function ContactPage() {
               </a>
             </div>
 
-            {/* Calendly Booking */}
-            <div className="space-y-4">
-              <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">
-                Schedule a Call
-              </p>
-              <a
-                href="https://calendly.com/your-calendly-username"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white/60 hover:text-white transition-colors group"
-              >
-                <SendHorizonal className="w-4 h-4 text-primary" />
-                <span className="text-sm font-bold tracking-wide">Book 15-min Discovery</span>
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
-              <p className="text-white/30 text-xs">
-                Quick call to discuss your project needs
-              </p>
-            </div>
-
             {/* Location */}
             <div className="space-y-4">
               <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">

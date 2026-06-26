@@ -34,6 +34,13 @@ export default function StacksPage() {
     { label: "Shadcn/UI" },
   ];
 
+  const currentlyLearning = [
+    { label: "Performance optimization techniques", icon: HardDrive },
+    { label: "Advanced AI integrations", icon: Database },
+    { label: "Better developer experience tools", icon: Cloud },
+    { label: "Data Engineering", icon: Database },
+  ];
+
   return (
     <div className="py-20">
       <AnimateIn direction="up" delay={0.1} className="max-w-4xl mb-24">
@@ -81,18 +88,6 @@ export default function StacksPage() {
                       {stack.label}
                     </span>
                   ))}
-                  {/* <span className="px-4 py-2 bg-white/5 border border-white/10 rounded text-xs font-bold uppercase tracking-widest text-primary">
-                    React
-                  </span>
-                  <span className="px-4 py-2 bg-white/5 border border-white/10 rounded text-xs font-bold uppercase tracking-widest">
-                    Next.js
-                  </span>
-                  <span className="px-4 py-2 bg-white/5 border border-white/10 rounded text-xs font-bold uppercase tracking-widest">
-                    Tailwind
-                  </span>
-                  <span className="px-4 py-2 bg-white/5 border border-white/10 rounded text-xs font-bold uppercase tracking-widest">
-                    TypeScript
-                  </span> */}
                 </div>
               </div>
               <div className="flex flex-col gap-6">
@@ -200,30 +195,16 @@ export default function StacksPage() {
               </p>
             </div>
             <div className="flex flex-col gap-4">
+              {currentlyLearning.map(({ label, icon: Icon }) => (
               <div className="flex items-center gap-2">
                 <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center bg-background-dark group hover:border-primary transition-colors cursor-help">
-                  <span className="text-white font-bold">Ai</span>
+                  <Icon className="text-primary w-4 h-4" />
                 </div>
                 <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest text-center">
-                  AI Automation
+                  {label}
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center bg-background-dark group hover:border-primary transition-colors cursor-help">
-                  <span className="text-white font-bold">Ed</span>
-                </div>
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest text-center">
-                  Edge Computing
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center bg-background-dark group hover:border-primary transition-colors cursor-help">
-                  <span className="text-white font-bold">V7</span>
-                </div>
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest text-center">
-                  Next V15+
-                </span>
-              </div>
+              ))}
             </div>
           </div>
           <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/10 blur-[80px] rounded-full" />

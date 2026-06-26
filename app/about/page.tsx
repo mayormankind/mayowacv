@@ -52,10 +52,6 @@ export default function page() {
             <span className="text-primary text-[10px] font-extrabold tracking-[0.3em] uppercase">
               About Mayowa
             </span>
-            <span className="w-8 h-px bg-white/10" />
-            <span className="text-white/30 text-[10px] font-bold tracking-[0.3em] uppercase underline underline-offset-4">
-              01. Identity
-            </span>
           </div>
           <div className="flex h-8 items-center justify-center gap-x-2 rounded bg-white px-4 shrink-0">
             <span className="relative flex h-2 w-2">
@@ -102,13 +98,13 @@ export default function page() {
                   className="text-base leading-relaxed max-w-2xl mb-6"
                   delay={0.35}
                 >
-                  With over 3 years as a product-minded full-stack engineer, I&apos;ve transformed complex business requirements into seamless digital experiences. My approach centers on deep collaboration, iterative development, and a mastery of modern JavaScript/TypeScript ecosystems to solve real-world client problems.
+                  I’m a product-minded full-stack engineer who turns ideas into polished, revenue-driving web applications. With over 3 years of experience, I help founders and teams build products that users love and businesses can scale.
                 </TextLightUp>
                 <TextLightUp
                   className="text-base leading-relaxed max-w-2xl"
                   delay={0.55}
                 >
-                  I specialize in taking products from zero to one, scaling applications that users love while maintaining a clean, extensible codebase that teams can iterate on with confidence.
+                  I specialize in taking products from zero to one — moving fast without cutting corners, so you can launch with confidence and grow smoothly.
                 </TextLightUp>
               </div>
             </AnimateIn>
@@ -170,8 +166,7 @@ export default function page() {
                 Shipping Value
               </h4>
               <p className="text-white/50 text-sm leading-relaxed">
-                Focusing on outcomes over outputs. Deploying features that move
-                the needle for users and the business.
+                I focus on outcomes that matter — features that increase conversions, improve user satisfaction, and move your business forward.
               </p>
             </div>
           </AnimateIn>
@@ -179,11 +174,10 @@ export default function page() {
             <div className="space-y-4">
               <DraftingCompass className="material-symbols-outlined text-primary text-3xl" />
               <h4 className="text-white font-bold text-lg uppercase tracking-tight">
-                Maintainable Growth
+                Sustainable Growth
               </h4>
               <p className="text-white/50 text-sm leading-relaxed">
-                Writing clean, modular code that allows the product to evolve
-                without the friction of technical debt.
+                I write clean, organized code so your product can evolve easily as your team and customer base grow.
               </p>
             </div>
           </AnimateIn>
@@ -191,11 +185,10 @@ export default function page() {
             <div className="space-y-4">
               <CircleGauge className="material-symbols-outlined text-primary text-3xl" />
               <h4 className="text-white font-bold text-lg uppercase tracking-tight">
-                Perceived Performance
+                Smooth Experience
               </h4>
               <p className="text-white/50 text-sm leading-relaxed">
-                Optimizing for the critical rendering path to ensure a snappy,
-                high-quality experience on every device.
+                I obsess over speed and responsiveness so your users enjoy a fast, delightful product on any device.
               </p>
             </div>
           </AnimateIn>
