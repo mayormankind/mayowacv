@@ -47,7 +47,7 @@ export default function ContactPage() {
 
   return (
     <div className="max-w-7xl mx-auto pt-12 md:pt-20 mb-20">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
         {/* Left: Info panel */}
         <AnimateIn direction="up" delay={0.1} className="lg:col-span-5 flex flex-col justify-between gap-8 md:gap-4">
@@ -60,9 +60,9 @@ export default function ContactPage() {
             </div>
             <h1 className="text-6xl md:text-8xl font-extrabold tracking-[-0.04em] leading-[0.9] mb-8">
               Let's Build <br />
-              Something<span className="text-primary">Great</span>.
+              Something {" "}<span className="text-primary">Great</span>.
             </h1>
-            <p className="text-white/40 text-lg md:text-xl font-normal leading-relaxed max-w-md mb-12">
+            <p className="text-white/40 text-lg md:text-xl font-normal leading-relaxed max-w-md mb-8">
               I’m currently available and ready to help you ship a high-quality digital product — whether it’s an MVP, full platform, or scaling an existing one.
             </p>
           </div>
