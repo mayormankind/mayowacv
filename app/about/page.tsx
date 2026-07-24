@@ -9,9 +9,9 @@ import AnimateIn from "@/components/ui/AnimateIn";
 import TextLightUp from "@/components/ui/TextLightUp";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Mayowa Makinde | Full-Stack Product Engineer",
   description:
-    "Mayowa Makinde is a Senior Full-Stack Product Engineer based in Nigeria with 3+ years building SaaS platforms and scalable web applications using Next.js, React, and TypeScript.",
+    "Mayowa Makinde is a Full-Stack Product Engineer based in Nigeria with 3+ years building SaaS platforms and scalable web applications using Next.js, React, and TypeScript.",
   keywords: [
     "About Mayowa Makinde",
     "Full-Stack Engineer Nigeria",
