@@ -11,9 +11,9 @@ import TextLightUp from "@/components/ui/TextLightUp";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Makinde Mayowa is a Senior Full-Stack Product Engineer based in Nigeria with 3+ years building SaaS platforms and scalable web applications using Next.js, React, and TypeScript.",
+    "Mayowa Makinde is a Senior Full-Stack Product Engineer based in Nigeria with 3+ years building SaaS platforms and scalable web applications using Next.js, React, and TypeScript.",
   keywords: [
-    "About Makinde Mayowa",
+    "About Mayowa Makinde",
     "Full-Stack Engineer Nigeria",
     "Product Engineer",
     "Next.js developer Nigeria",
@@ -50,7 +50,7 @@ export default function page() {
         <div className="flex flex-wrap items-center justify-between gap-4 pt-12 md:pt-20 mb-8">
           <div className="flex items-center gap-3">
             <span className="text-primary text-[10px] font-extrabold tracking-[0.3em] uppercase">
-              About Mayowa
+              About Mayowa Makinde
             </span>
           </div>
           <div className="flex h-8 items-center justify-center gap-x-2 rounded bg-white px-4 shrink-0">

@@ -7,13 +7,14 @@ import AnimateIn from "@/components/ui/AnimateIn";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Portfolio of full-stack projects by Makinde Mayowa — SaaS platforms, ERP systems, fintech dashboards, and e-commerce engines built with Next.js, React, and TypeScript.",
+    "Portfolio of full-stack projects by Mayowa Makinde — SaaS platforms, ERP systems, and e-commerce engines built with Next.js, React, and TypeScript.",
   keywords: [
     "Full-Stack projects",
     "Next.js portfolio",
     "SaaS case studies",
     "React projects",
     "Web application portfolio",
+    "Mayowa Makinde projects",
     "Makinde Mayowa projects",
   ],
   alternates: {

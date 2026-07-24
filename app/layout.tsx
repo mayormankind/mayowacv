@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     "Frontend Engineering",
     "Software Engineer Nigeria",
     "Makinde Mayowa",
+    "Mayowa Makinde",
     "Node.js Developer",
     "Supabase",
     "Web Application Development",
