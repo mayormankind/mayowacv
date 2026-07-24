@@ -1,6 +1,6 @@
-export const BASE_URL = "https://mayowadevv.vercel.app";
+export const BASE_URL = "https://www.mayowamakinde.dev";
 export const SITE_NAME = "Mayowa Portfolio";
-export const AUTHOR_NAME = "Makinde Mayowa";
+export const AUTHOR_NAME = "Mayowa Makinde ";
 export const AUTHOR_HANDLE = "@RedMoonCoder";
 export const AUTHOR_LINKEDIN =
   "https://www.linkedin.com/in/makinde-mayowa-4670a51bb";
@@ -42,7 +42,7 @@ export function buildWebsiteSchema() {
     name: SITE_NAME,
     url: BASE_URL,
     description:
-      "Portfolio of Makinde Mayowa — Senior Full-Stack Product Engineer building scalable SaaS platforms and web applications.",
+      "Portfolio of Mayowa Makinde — Senior Full-Stack Product Engineer building scalable SaaS platforms and web applications.",
     author: {
       "@type": "Person",
       name: AUTHOR_NAME,
