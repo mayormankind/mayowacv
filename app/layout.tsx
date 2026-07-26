@@ -2,14 +2,25 @@ import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import "./globals.css";
 import { Manrope } from "next/font/google";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import JsonLd from "@/components/ui/JsonLd";
+import PWARegister from "@/components/ui/PWARegister";
 import { buildPersonSchema, buildWebsiteSchema, OG_IMAGE, BASE_URL, AUTHOR_NAME, AUTHOR_HANDLE } from "@/lib/seo";
 
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-display",
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0d0d0d" },
+    { media: "(prefers-color-scheme: light)", color: "#de1b1b" },
+  ],
+  width: "device-width",
+  initialScale: 1,
+  minimumScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -69,6 +80,14 @@ export const metadata: Metadata = {
     creator: AUTHOR_HANDLE,
     images: [OG_IMAGE],
   },
+  appleWebApp: {
+    capable: true,
+    title: "Mayowa.dev",
+    statusBarStyle: "black-translucent",
+  },
+  formatDetection: {
+    telephone: false,
+  },
   robots: {
     index: true,
     follow: true,
@@ -92,6 +111,7 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} bg-background text-white font-display`}
       >
+        <PWARegister />
         <JsonLd schema={buildWebsiteSchema()} />
         <JsonLd schema={buildPersonSchema()} />
         <div className="fixed inset-0 z-[-1] mesh-gradient" />
