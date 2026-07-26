@@ -15,7 +15,7 @@ export function buildPersonSchema() {
     url: BASE_URL,
     jobTitle: "Full-Stack Product Engineer",
     description:
-      "Senior Full-Stack Engineer with 3+ years specializing in high-performance SaaS platforms, data-driven dashboards, and scalable web applications using Next.js and React.",
+      "Full-Stack Engineer with 3+ years specializing in high-performance SaaS platforms, data-driven dashboards, and scalable web applications using Next.js and React.",
     sameAs: [AUTHOR_LINKEDIN, AUTHOR_GITHUB, `https://x.com/RedMoonCoder`],
     address: {
       "@type": "PostalAddress",
@@ -42,7 +42,7 @@ export function buildWebsiteSchema() {
     name: SITE_NAME,
     url: BASE_URL,
     description:
-      "Portfolio of Mayowa Makinde — Senior Full-Stack Product Engineer building scalable SaaS platforms and web applications.",
+      "Portfolio of Mayowa Makinde — Full-Stack Product Engineer building scalable SaaS platforms and web applications.",
     author: {
       "@type": "Person",
       name: AUTHOR_NAME,
