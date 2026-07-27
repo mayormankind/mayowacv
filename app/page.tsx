@@ -2,10 +2,12 @@ import Hero from "@/components/sections/hero";
 import ValueProps from "@/components/sections/valueProps";
 import FeaturedCaseStudy from "@/components/sections/featuredCaseStudy";
 import Testimonials from "@/components/sections/testimonials";
+import WorkingTogether from "@/components/sections/workingTogether";
 import { Metadata } from "next";
 import { supabase } from "@/lib/supabase/server";
 import { keysToCamel } from "@/lib/utils/case-transform";
 import { BASE_URL } from "@/lib/seo";
+import FinalCTA from "@/components/sections/finalCTA";
 
 export const metadata: Metadata = {
   description:
@@ -43,6 +45,8 @@ export default async function HomePage() {
       <ValueProps />
       <FeaturedCaseStudy project={featuredProject} />
       <Testimonials />
+      <WorkingTogether />
+      <FinalCTA />
     </>
   );
 }
