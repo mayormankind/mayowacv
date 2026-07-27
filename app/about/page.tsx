@@ -258,17 +258,15 @@ export default function AboutPage() {
             <AnimateIn direction="left" delay={0.2}>
               <div className="bg-surface border border-white/5 p-8">
                 <p className="text-white/40 text-[10px] font-extrabold uppercase tracking-[0.35em] mb-3">
-                  Years Active
+                  Years Building Products
                 </p>
                 <p className="text-white text-5xl font-extrabold tracking-tight">3+</p>
               </div>
             </AnimateIn>
             <AnimateIn direction="left" delay={0.3}>
               <div className="bg-surface border border-white/5 p-8">
-                <p className="text-white/40 text-[10px] font-extrabold uppercase tracking-[0.35em] mb-3">
-                  Products Shipped
-                </p>
-                <p className="text-white text-5xl font-extrabold tracking-tight">20+</p>
+                <p className="text-white/40 text-[10px] font-extrabold uppercase tracking-[0.35em] mb-3">Projects Delivered</p>
+                <p className="text-white text-5xl font-extrabold tracking-tight">10+</p>
               </div>
             </AnimateIn>
           </div>
