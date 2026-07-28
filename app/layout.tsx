@@ -51,30 +51,28 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BASE_URL,
   },
-  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-    ? {
-        verification: {
-          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-        },
-      }
-    : {}),
+  verification: {
+    google:
+      process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+      "riSiLc3z6j5hMruFmJVpPdJcY0-XLNNjqS1Epqj6gYQ",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: BASE_URL,
-    siteName: "Mayowa Portfolio",
+    siteName: "Mayowa Makinde Portfolio",
     images: [
       {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Mayowa - Full Stack Product Engineer",
+        alt: "Mayowa Makinde- Full Stack Product Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mayowa | Full-Stack Product Engineer",
+    title: "Mayowa Makinde | Full-Stack Product Engineer",
     description:
       "Building scalable web applications and high-performance SaaS platforms.",
     creator: AUTHOR_HANDLE,
