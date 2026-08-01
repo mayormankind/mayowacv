@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
-// import "./globals.css";
+import "./globals.css";
 import { Manrope } from "next/font/google";
 import { Metadata, Viewport } from "next";
 import JsonLd from "@/components/ui/JsonLd";
