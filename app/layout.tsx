@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
-import "./globals.css";
+// import "./globals.css";
 import { Manrope } from "next/font/google";
 import { Metadata, Viewport } from "next";
 import JsonLd from "@/components/ui/JsonLd";
@@ -77,6 +77,10 @@ export const metadata: Metadata = {
       "Building scalable web applications and high-performance SaaS platforms.",
     creator: AUTHOR_HANDLE,
     images: [OG_IMAGE],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/images/logo.png",
   },
   appleWebApp: {
     capable: true,
