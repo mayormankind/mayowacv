@@ -26,7 +26,7 @@ const services = [
     icon: Zap,
     title: "SaaS Development",
     description:
-      "Turn your SaaS idea into a revenue-generating product — fast. I handle everything from MVP to polished platform, including payments, user accounts, and admin tools.",
+      "Turn your SaaS idea into a revenue-generating product, fast. I handle everything from MVP to polished platform, including payments, user accounts, and admin tools.",
     features: [
       "Multi-tenant architecture",
       "Subscription billing (Stripe/Paystack)",

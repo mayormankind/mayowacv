@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { BASE_URL } from "@/lib/seo";
 import AnimateIn from "@/components/ui/AnimateIn";
 import { ArrowRight, Globe, ShoppingCart, CreditCard, Package, BarChart3, Zap, CheckCircle2 } from "lucide-react";
+import { TechIconCard } from "@/components/ui/TechStack";
 
 export const metadata: Metadata = {
   title: "E-Commerce Development Services",
@@ -194,12 +195,10 @@ export default function EcommercePage() {
               Modern technologies optimized for e-commerce performance.
             </p>
           </AnimateIn>
-          <div className="flex flex-wrap gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {techStack.map((tech, index) => (
               <AnimateIn key={index} direction="up" delay={index * 0.05}>
-                <span className="px-4 py-2 bg-surface border border-white/5 text-sm font-bold uppercase tracking-wider rounded-lg">
-                  {tech}
-                </span>
+                <TechIconCard name={tech} />
               </AnimateIn>
             ))}
           </div>

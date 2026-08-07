@@ -1,5 +1,7 @@
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
+import BrandStamp from "@/components/ui/BrandStamp";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import "./globals.css";
 import { Manrope } from "next/font/google";
 import { Metadata, Viewport } from "next";
@@ -121,6 +123,8 @@ export default function RootLayout({
           <Header />
           <main className="flex-1 px-6 md:px-20">{children}</main>
           <Footer />
+          <BrandStamp />
+          <ScrollToTop />
         </div>
       </body>
     </html>

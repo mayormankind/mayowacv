@@ -1,9 +1,15 @@
 "use client";
-import { ArrowUpRight, Mail, Phone, SendHorizonal, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { Linkedin, Twitter, Github, Mail, Phone, SendHorizonal, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { socials } from "@/lib/data";
 import AnimateIn from "@/components/ui/AnimateIn";
+
+const socialIconMap: Record<string, React.ElementType> = {
+  LinkedIn: Linkedin,
+  Twitter: Twitter,
+  Github: Github,
+};
 
 const PROJECT_TYPES = ["Product MVP", "Full-stack Dev", "Scaling & Optimization", "Consultation"];
 
@@ -47,85 +53,87 @@ export default function ContactPage() {
 
   return (
     <div className="max-w-7xl mx-auto pt-12 md:pt-20 mb-20">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:items-stretch">
 
         {/* Left: Info panel */}
-        <AnimateIn direction="up" delay={0.1} className="lg:col-span-5 flex flex-col justify-between gap-8 md:gap-4">
+        <AnimateIn direction="up" delay={0.1} className="lg:col-span-4 flex flex-col gap-10">
+          {/* Section label */}
+          <div className="flex items-center gap-4">
+            <span className="w-8 h-px bg-primary shrink-0" />
+            <span className="text-primary text-[10px] font-extrabold uppercase tracking-[0.4em]">
+              Contact
+            </span>
+          </div>
+
+          {/* Heading */}
           <div>
-            <div className="inline-flex items-center gap-2 mb-8">
-              <span className="size-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em]">
-                Open for collaboration
-              </span>
-            </div>
-            <h1 className="text-6xl md:text-8xl font-extrabold tracking-[-0.04em] leading-[0.9] mb-8">
-              Let's Build <br />
-              Something {" "}<span className="text-primary">Great</span>.
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-[-0.03em] leading-[1.1] mb-5">
+              Let&apos;s Build <br />
+              Something <span className="text-primary">Great</span>.
             </h1>
-            <p className="text-white/40 text-lg md:text-xl font-normal leading-relaxed max-w-md mb-8">
-              I’m currently available and ready to help you ship a high-quality digital product — whether it’s an MVP, full platform, or scaling an existing one.
+            <p className="text-white/45 text-sm leading-relaxed max-w-xs">
+              Open to contracts, full-time roles, and interesting projects.
+              If you have a problem worth solving, reach out.
             </p>
           </div>
 
-          <div className="space-y-4">
-            {/* Direct contact */}
-            <div className="space-y-4">
-              <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">
-                Direct Contact
-              </p>
-              <a
-                href="mailto:mayowamakinde23@gmail.com"
-                className="flex items-center gap-3 text-white/60 hover:text-white transition-colors group"
-              >
-                <Mail className="w-4 h-4 text-primary" />
-                <span className="text-sm font-bold tracking-wide">mayowamakinde23@gmail.com</span>
-              </a>
-              <a
-                href="tel:+2347040829383"
-                className="flex items-center gap-3 text-white/60 hover:text-white transition-colors group"
-              >
-                <Phone className="w-4 h-4 text-primary" />
-                <span className="text-sm font-bold tracking-wide">+234 704 082 9383</span>
-              </a>
-            </div>
+          {/* Direct contact */}
+          <div className="space-y-3">
+            <p className="text-white/20 text-[9px] font-bold uppercase tracking-[0.35em]">
+              Direct
+            </p>
+            <a
+              href="mailto:mayowamakinde23@gmail.com"
+              className="flex items-center gap-3 text-white/50 hover:text-white transition-colors"
+            >
+              <Mail className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-sm font-bold">mayowamakinde23@gmail.com</span>
+            </a>
+            <a
+              href="tel:+2347040829383"
+              className="flex items-center gap-3 text-white/50 hover:text-white transition-colors"
+            >
+              <Phone className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-sm font-bold">+234 704 082 9383</span>
+            </a>
+          </div>
 
-            {/* Location */}
-            <div className="space-y-4">
-              <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">
-                Current Location
-              </p>
-              <div className="flex items-end gap-4">
-                <div>
-                  <p className="text-white text-xl font-bold">Ibadan | Akure, NG</p>
-                  <p className="text-white/40 text-sm">GMT +1</p>
-                </div>
-              </div>
-            </div>
+          {/* Location */}
+          <div className="space-y-2">
+            <p className="text-white/20 text-[9px] font-bold uppercase tracking-[0.35em]">
+              Location
+            </p>
+            <p className="text-white text-base font-bold">Ibadan / Akure, NG</p>
+            <p className="text-white/40 text-xs">GMT +1</p>
+          </div>
 
-            {/* Socials */}
-            <div className="space-y-4">
-              <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">
-                Find me online
-              </p>
-              <div className="flex flex-wrap gap-6">
-                {socials.map((social) => (
+          {/* Social icons */}
+          <div className="space-y-3 mt-auto">
+            <p className="text-white/20 text-[9px] font-bold uppercase tracking-[0.35em]">
+              Find me online
+            </p>
+            <div className="flex items-center gap-5">
+              {socials.map((social) => {
+                const Icon = socialIconMap[social.label];
+                return (
                   <Link
                     key={social.label}
-                    className="group flex items-center gap-2 text-white/60 hover:text-white transition-colors"
                     href={social.ref}
                     target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="text-white/40 hover:text-white transition-colors"
                   >
-                    <span className="text-sm font-bold uppercase tracking-widest">{social.label}</span>
-                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    {Icon ? <Icon size={18} /> : <span className="text-xs font-bold">{social.label}</span>}
                   </Link>
-                ))}
-              </div>
+                );
+              })}
             </div>
           </div>
         </AnimateIn>
 
         {/* Right: Form */}
-        <AnimateIn direction="up" delay={0.25} className="lg:col-span-7">
+        <AnimateIn direction="up" delay={0.25} className="lg:col-span-8">
           <div className="bg-surface/50 backdrop-blur-sm border border-white/5 p-8 md:p-12 rounded-xl">
             {status === "success" ? (
               <div className="flex flex-col items-center justify-center gap-6 py-16 text-center">

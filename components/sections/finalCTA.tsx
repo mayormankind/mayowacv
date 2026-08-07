@@ -51,8 +51,8 @@ export default function FinalCTA() {
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           className="relative z-10 text-white/50 text-lg max-w-xl leading-relaxed mb-10"
         >
-          Whether you&apos;re validating an MVP, modernizing a platform, or
-          building something entirely new—let&apos;s talk.
+          Validating an MVP, modernizing a platform, or building something
+          entirely new? Let&apos;s talk.
         </motion.p>
 
         <motion.div

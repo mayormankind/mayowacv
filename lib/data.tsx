@@ -7,6 +7,7 @@ export interface Project {
   shortDescription: string;
   longDescription: string;
   heroImage: string;
+  logoImage?: string;
   tags: string[];
   images?: string[];
   demoVideoUrl?: string;

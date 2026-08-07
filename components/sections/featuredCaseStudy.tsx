@@ -12,6 +12,9 @@ export default function FeaturedCaseStudy({ project }: { project?: Project }) {
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] rounded-full"></div>
       <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
         <div className="flex-1">
+          <p className="text-white/40 text-[10px] font-extrabold uppercase tracking-[0.35em] mb-4">
+            01 — Latest Product
+          </p>
           <h2 className="text-white text-3xl font-extrabold leading-tight tracking-tight mb-4">
             {project.title}
           </h2>

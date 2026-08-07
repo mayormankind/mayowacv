@@ -1,8 +1,8 @@
 //components/sections/hero.tsx
 "use client";
-import { ArrowRightIcon } from "lucide-react";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Project } from "@/lib/data";
 
@@ -16,9 +16,10 @@ const fadeUp = (delay: number = 0) => ({
   transition: { duration: 0.7, delay, ease: "easeOut" as const },
 });
 
-export default function Hero({ latestProject }: HeroProps) {
+export default function Hero({ latestProject: _latestProject }: HeroProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-16 md:pt-20 pb-20">
+      {/* Ready to Ship badge — full row on desktop */}
       <motion.div
         {...fadeUp(0.1)}
         className="md:col-span-12 flex justify-start md:justify-end mb-4 md:mb-0"
@@ -34,7 +35,25 @@ export default function Hero({ latestProject }: HeroProps) {
         </div>
       </motion.div>
 
-      <div className="md:col-span-7 flex flex-col gap-8">
+      {/* Profile image — first on mobile, right column on desktop */}
+      <motion.div
+        {...fadeUp(0.3)}
+        className="order-2 md:order-none md:col-span-4 md:col-start-9 relative"
+      >
+        <div className="relative w-full aspect-[3/4] md:h-full md:min-h-[420px] overflow-hidden rounded-xl">
+          <Image
+            src="/images/profile.png"
+            alt="Mayowa Makinde"
+            fill
+            className="object-cover object-top"
+            priority
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-background-dark/60 via-transparent to-transparent" />
+        </div>
+      </motion.div>
+
+      {/* Left text column — second on mobile, left col on desktop */}
+      <div className="order-3 md:order-none md:col-span-7 flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <motion.h1
             {...fadeUp(0.2)}
@@ -47,7 +66,7 @@ export default function Hero({ latestProject }: HeroProps) {
             {...fadeUp(0.35)}
             className="text-white/50 text-lg md:text-xl font-normal leading-relaxed max-w-xl mt-4"
           >
-            I help founders and product teams launch polished web applications that drive real revenue and user growth — specializing in SaaS and e-commerce.
+            I help founders and product teams launch polished web applications that drive real revenue and user growth. SaaS and e-commerce are my main focus.
           </motion.p>
         </div>
         <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-4 mt-4">
@@ -65,45 +84,6 @@ export default function Hero({ latestProject }: HeroProps) {
           </Link>
         </motion.div>
       </div>
-
-      <motion.div
-        {...fadeUp(0.4)}
-        className="md:col-span-4 md:col-start-9 flex flex-col justify-end"
-      >
-        <div className="border-t border-white/10 pt-8 mt-12 md:mt-0">
-          <h2 className="text-white/40 text-xs font-bold uppercase tracking-[0.3em] mb-6">
-            01 — Latest Product
-          </h2>
-          {latestProject ? (
-            <Link href={`/projects/${latestProject.slug}`} className="group cursor-pointer block">
-              <div className="w-full bg-surface aspect-square rounded overflow-hidden mb-4 relative">
-                <div
-                  className="absolute inset-0 bg-center bg-cover transition-transform duration-700 group-hover:scale-105"
-                  style={{ backgroundImage: `url('${latestProject.heroImage}')` }}
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
-              </div>
-              <div className="flex justify-between items-start">
-                <div>
-                  <p className="text-white text-xl font-bold tracking-tight">
-                    {latestProject.title}
-                  </p>
-                  <p className="text-white/40 text-sm mt-1">
-                    {latestProject.subtitle}
-                  </p>
-                </div>
-                <span className="text-primary group-hover:translate-x-1 transition-transform">
-                  <ArrowRightIcon />
-                </span>
-              </div>
-            </Link>
-          ) : (
-            <div className="group cursor-pointer">
-              <div className="w-full bg-surface aspect-square rounded overflow-hidden mb-4 relative animate-pulse" />
-            </div>
-          )}
-        </div>
-      </motion.div>
     </div>
   );
 }

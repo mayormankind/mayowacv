@@ -77,7 +77,7 @@ const timeline = [
   },
   {
     milestone: "Built first client project",
-    detail: "Delivered a real product for a real person—realized this was what I wanted to do.",
+    detail: "Delivered a real product for a real person. Realized this was what I wanted to do.",
   },
   {
     milestone: "Started freelancing",
@@ -117,20 +117,21 @@ export default function AboutPage() {
 
       {/* ─── Section 1 · Hero ─────────────────────────────────────────────── */}
       <AnimateIn direction="down" delay={0}>
-        <div className="flex flex-wrap items-center justify-between gap-4 pt-12 md:pt-20 mb-8">
-          <div className="flex items-center gap-3">
-            <span className="text-primary text-[10px] font-extrabold tracking-[0.3em] uppercase">
-              About Mayowa Makinde
+        <div className="flex items-center justify-between pt-12 md:pt-20 mb-8">
+          <div className="flex items-center gap-4">
+            <span className="w-8 h-px bg-primary shrink-0" />
+            <span className="text-primary text-[10px] font-extrabold uppercase tracking-[0.4em]">
+              Makinde Mayowa
             </span>
           </div>
-          <div className="flex h-8 items-center justify-center gap-x-2 rounded bg-white px-4 shrink-0">
+          <div className="flex items-center gap-2.5">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <p className="text-black text-[10px] font-extrabold tracking-[0.2em] uppercase whitespace-nowrap">
-              Available for Work
-            </p>
+            <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-[0.3em]">
+              Available
+            </span>
           </div>
         </div>
       </AnimateIn>
@@ -158,8 +159,8 @@ export default function AboutPage() {
                   enjoyable to use.
                 </p>
                 <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl">
-                  For me, great engineering isn&apos;t just about shipping
-                  features—it&apos;s about creating{" "}
+                  For me, great engineering is never just about shipping
+                  features. It&apos;s about creating{" "}
                   <span className="text-white font-bold">
                     products people love using.
                   </span>
@@ -399,7 +400,7 @@ export default function AboutPage() {
           <AnimateIn direction="up" delay={0.1}>
             <p className="text-white/60 text-xl leading-relaxed">
               Building software is collaborative. Clients don&apos;t just hire
-              me because I write code—they hire me because they want a technical
+              me because I write code. They hire me because they want a technical
               partner who{" "}
               <span className="text-white font-semibold">
                 communicates clearly, thinks through product decisions,

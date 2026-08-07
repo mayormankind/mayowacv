@@ -9,6 +9,7 @@ import Link from "next/link";
 import React from "react";
 import { Metadata } from "next";
 import AnimateIn from "@/components/ui/AnimateIn";
+import { TechIconGrid } from "@/components/ui/TechStack";
 
 export const metadata: Metadata = {
   title: "Tech Stack",
@@ -17,28 +18,55 @@ export const metadata: Metadata = {
 };
 
 export default function StacksPage() {
-  const dbStacks = [
-    { label: "Supabase", icon: Cloud },
-    { label: "Firebase", icon: Cloud },
-    { label: "MongoDB", icon: Database },
-    { label: "PostgreSQL", icon: Database },
-    { label: "SQL", icon: HardDrive },
-  ];
+  // const dbStacks = [
+  //   { label: "Supabase", icon: Cloud },
+  //   { label: "Firebase", icon: Cloud },
+  //   { label: "MongoDB", icon: Database },
+  //   { label: "PostgreSQL", icon: Database },
+  //   { label: "SQL", icon: HardDrive },
+  // ];
   
-  const uiStacks = [
-    { label: "React" },
-    { label: "Next.js" },
-    { label: "Tailwind" },
-    { label: "TypeScript" },
-    { label: "JavaScript" },
-    { label: "Shadcn/UI" },
-  ];
+  // const uiStacks = [
+  //   { label: "React" },
+  //   { label: "Next.js" },
+  //   { label: "Tailwind" },
+  //   { label: "TypeScript" },
+  //   { label: "JavaScript" },
+  //   { label: "Shadcn/UI" },
+  // ];
 
-  const currentlyLearning = [
-    { label: "Performance optimization techniques", icon: HardDrive },
-    { label: "Advanced AI integrations", icon: Database },
-    { label: "Better developer experience tools", icon: Cloud },
-    { label: "Data Engineering", icon: Database },
+  // const currentlyLearning = [
+  //   { label: "Performance optimization techniques", icon: HardDrive },
+  //   { label: "Advanced AI integrations", icon: Database },
+  //   { label: "Better developer experience tools", icon: Cloud },
+  //   { label: "Data Engineering", icon: Database },
+  // ];
+
+  const toolsOfTrade = [
+    {
+      category: "Languages",
+      items: ["TypeScript", "JavaScript", "Python", "PHP"],
+    },
+    {
+      category: "Frontend",
+      items: ["React", "Next.js", "Tailwind CSS", "Preact"],
+    },
+    {
+      category: "Backend",
+      items: ["Node.js", "Express", "Firebase", "FastAPI"],
+    },
+    {
+      category: "Data",
+      items: ["PostgreSQL", "MongoDB", "Supabase", "Redis"],
+    },
+    {
+      category: "DevOps",
+      items: ["Docker", "Git", "GitHub Actions", "Linux"],
+    },
+    {
+      category: "Tools",
+      items: ["VS Code", "Postman", "Stripe", "Prisma"],
+    },
   ];
 
   return (
@@ -60,7 +88,30 @@ export default function StacksPage() {
           user experiences.
         </p>
       </AnimateIn>
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-32">
+
+      {/* Tools of the Trade */}
+      <AnimateIn direction="up" delay={0.15} className="mb-32 border-t border-white/5 pt-20">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-16">
+          <div>
+            <div className="flex items-center gap-2 mb-5">
+              <span className="w-8 h-px bg-primary" />
+              <p className="text-primary text-[10px] font-extrabold uppercase tracking-[0.4em]">
+                Stack
+              </p>
+            </div>
+            <h2 className="text-white text-4xl md:text-6xl font-extrabold leading-tight tracking-tighter">
+              Tools of the trade.
+            </h2>
+          </div>
+          <p className="text-white/40 text-sm leading-relaxed max-w-xs md:text-right self-end">
+            Proficient across the full stack,
+            <br /> opinionated about the backend.
+          </p>
+        </div>
+        <TechIconGrid categories={toolsOfTrade} />
+      </AnimateIn>
+
+      {/* <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-32">
         <AnimateIn direction="up" delay={0} className="md:col-span-8">
         <div className="skill-card group relative overflow-hidden h-full">
           <div className="absolute top-0 right-0 p-8 opacity-5 transition-opacity group-hover:opacity-10">
@@ -196,7 +247,7 @@ export default function StacksPage() {
             </div>
             <div className="flex flex-col gap-4">
               {currentlyLearning.map(({ label, icon: Icon }) => (
-              <div className="flex items-center gap-2">
+              <div key={label} className="flex items-center gap-2">
                 <div className="w-16 h-16 rounded-full border-2 border-primary/20 flex items-center justify-center bg-background-dark group hover:border-primary transition-colors cursor-help">
                   <Icon className="text-primary w-4 h-4" />
                 </div>
@@ -210,7 +261,7 @@ export default function StacksPage() {
           <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/10 blur-[80px] rounded-full" />
         </div>
         </AnimateIn>
-      </div>
+      </div> */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-20 border-t border-white/5">
         <AnimateIn direction="up" delay={0}>
         <div className="flex flex-col gap-4">

@@ -7,6 +7,7 @@ import {
   Code2,
   Rocket,
   Heart,
+  TrendingUp,
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
@@ -56,7 +57,7 @@ const stages = [
     Icon: Rocket,
     title: "Launch",
     description:
-      "Before release, everything is tested, optimized, and deployed using production-ready practices. Performance, responsiveness, and stability are treated as priorities—not afterthoughts.",
+      "Before release, everything is tested, optimized, and deployed using production-ready practices. Performance, responsiveness, and stability are treated as real priorities, not afterthoughts.",
     deliverables: [
       "Deployment",
       "QA testing",
@@ -75,6 +76,19 @@ const stages = [
       "Improvements",
       "Scaling",
       "Long-term partnership",
+    ],
+  },
+  {
+    number: "06",
+    Icon: TrendingUp,
+    title: "Iterate",
+    description:
+      "Real-world usage reveals what documentation cannot. I help analyse product performance, gather user signals, and implement targeted improvements that compound over time.",
+    deliverables: [
+      "Usage analytics",
+      "User feedback loops",
+      "Performance tuning",
+      "Feature evolution",
     ],
   },
 ];
@@ -242,8 +256,7 @@ export default function WorkingTogether() {
     <section className="py-24 border-t border-white/5">
       <SectionHeader />
 
-      {/* Desktop: horizontal row — Mobile: vertical stack */}
-      <div className="flex flex-col md:flex-row gap-px">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px">
         {stages.map((stage, index) => (
           <StageCard key={stage.number} stage={stage} index={index} />
         ))}

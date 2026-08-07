@@ -38,11 +38,11 @@ export default function ProjectCard() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 animate-pulse">
-        {[1, 2, 3, 4].map((i) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 animate-pulse">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
           <div
             key={i}
-            className="h-96 bg-white/5 rounded-xl border border-white/5"
+            className="h-72 bg-white/5 rounded-xl border border-white/5"
           ></div>
         ))}
       </div>
@@ -64,59 +64,74 @@ export default function ProjectCard() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       {projects.length === 0 && (
         <div className="col-span-full py-20 text-center border border-dashed border-white/10 rounded-xl bg-white/2">
           <p className="text-white/40 mb-4">No published projects found.</p>
         </div>
       )}
       {projects.map((project, i) => (
-        <AnimateIn key={project.slug} delay={i * 0.1} direction="up">
-          <div className="group project-card-hover border border-white/5 bg-surface/30 rounded-xl overflow-hidden flex flex-col h-full">
-            <div className="aspect-16/10 w-full relative overflow-hidden bg-black">
-              <div
-                className="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-700"
-                style={{ backgroundImage: `url('${project.heroImage}')` }}
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-surface to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, idx: number) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 bg-black/40 backdrop-blur-md border border-white/10 text-[9px] font-bold uppercase tracking-widest rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+        <AnimateIn key={project.slug} delay={i * 0.08} direction="up">
+          <div className="group border border-white/5 bg-surface/30 rounded-xl overflow-hidden flex flex-col h-full hover:border-white/10 transition-colors duration-300">
+            {/* Logo on white or hero image fallback */}
+            {project.logoImage ? (
+              <div className="w-full aspect-video bg-white flex items-center justify-center p-8">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={project.logoImage}
+                  alt={`${project.title} logo`}
+                  className="max-h-14 max-w-full object-contain"
+                />
               </div>
-            </div>
-            <div className="p-8 flex flex-col flex-1">
-              <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
-                {project.title}
-              </h3>
-              <p className="text-white/60 text-sm leading-relaxed mb-6">
-                {project.shortDescription}
-              </p>
-              <div className="flex flex-wrap gap-3 mb-8">
-                {project.techStack.slice(0, 4).map((tech, idx: number) => (
+            ) : (
+              <div className="aspect-video w-full relative overflow-hidden bg-black">
+                <div
+                  className="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-700"
+                  style={{ backgroundImage: `url('${project.heroImage}')` }}
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-surface to-transparent" />
+              </div>
+            )}
+
+            <div className="p-5 flex flex-col flex-1">
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1.5 mb-3">
+                {project.tags.slice(0, 2).map((tag, idx: number) => (
                   <span
                     key={idx}
-                    className="text-[10px] font-bold text-white/30 uppercase tracking-widest flex items-center gap-1.5"
+                    className="px-2 py-0.5 bg-white/5 border border-white/10 text-[8px] font-bold uppercase tracking-widest rounded-full text-white/50"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <h3 className="text-base font-bold mb-2 group-hover:text-primary transition-colors leading-tight">
+                {project.title}
+              </h3>
+              <p className="text-white/50 text-xs leading-relaxed mb-4 line-clamp-2">
+                {project.shortDescription}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.techStack.slice(0, 3).map((tech, idx: number) => (
+                  <span
+                    key={idx}
+                    className="text-[9px] font-bold text-white/30 uppercase tracking-widest flex items-center gap-1"
                   >
                     <span className="w-1 h-1 rounded-full bg-primary" />
                     {tech}
                   </span>
                 ))}
               </div>
-              <div className="mt-auto flex items-center gap-3">
+
+              <div className="mt-auto flex items-center gap-2">
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="flex-1 bg-white text-black h-12 rounded-lg text-[10px] font-extrabold uppercase tracking-widest hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2 group/btn"
+                  className="flex-1 bg-white text-black h-9 rounded-lg text-[9px] font-extrabold uppercase tracking-widest hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-1.5 group/btn"
                 >
                   Deep Dive
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
                 {project.links.live && project.links.live !== "#" && (
                   <a
@@ -124,9 +139,9 @@ export default function ProjectCard() {
                     target="_blank"
                     rel="noopener noreferrer"
                     title="View live project"
-                    className="w-12 h-12 rounded-lg border border-white/10 flex items-center justify-center hover:border-primary hover:text-primary transition-all group/live text-white/40"
+                    className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center hover:border-primary hover:text-primary transition-all group/live text-white/40"
                   >
-                    <ExternalLink className="w-4 h-4 group-hover/live:opacity-100 transition-opacity" />
+                    <ExternalLink className="w-3.5 h-3.5 group-hover/live:opacity-100 transition-opacity" />
                   </a>
                 )}
                 {project.links.repo && project.links.repo !== "#" && (
@@ -135,10 +150,10 @@ export default function ProjectCard() {
                     target="_blank"
                     rel="noopener noreferrer"
                     title="View on GitHub"
-                    className="w-12 h-12 rounded-lg border border-white/10 flex items-center justify-center hover:border-primary transition-all group/git"
+                    className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center hover:border-primary transition-all group/git"
                   >
                     <svg
-                      className="w-5 h-5 opacity-40 group-hover/git:opacity-100 transition-opacity"
+                      className="w-4 h-4 opacity-40 group-hover/git:opacity-100 transition-opacity"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                     >
@@ -151,21 +166,22 @@ export default function ProjectCard() {
           </div>
         </AnimateIn>
       ))}
-      <AnimateIn delay={0.2} direction="up">
-        <div className="group border border-dashed border-white/10 bg-white/2 rounded-xl overflow-hidden flex flex-col items-center justify-center p-12 text-center h-full">
-          <div className="size-16 rounded-full border border-white/10 flex items-center justify-center mb-6 group-hover:border-primary group-hover:bg-primary/5 transition-all">
+
+      {/* CTA card */}
+      <AnimateIn delay={0.15} direction="up">
+        <div className="group border border-dashed border-white/10 bg-white/2 rounded-xl overflow-hidden flex flex-col items-center justify-center p-10 text-center h-full min-h-64">
+          <div className="size-12 rounded-full border border-white/10 flex items-center justify-center mb-4 group-hover:border-primary group-hover:bg-primary/5 transition-all">
             <span className="text-white/20 group-hover:text-primary transition-colors">
-              <Plus />
+              <Plus className="w-5 h-5" />
             </span>
           </div>
-          <h3 className="text-xl font-bold mb-2">Build Your Vision</h3>
-          <p className="text-white/40 text-sm max-w-60 mb-8">
-            Looking for a senior engineer to architect your next high-performance
-            web product?
+          <h3 className="text-base font-bold mb-2">Build Your Vision</h3>
+          <p className="text-white/40 text-xs max-w-48 mb-6">
+            Looking for a senior engineer for your next high-performance web product?
           </p>
           <Link
             href="/contact"
-            className="px-8 h-12 rounded-lg bg-surface border border-white/10 text-white text-[10px] font-extrabold uppercase tracking-widest hover:border-primary hover:text-primary transition-all flex items-center"
+            className="px-6 h-9 rounded-lg bg-surface border border-white/10 text-white text-[9px] font-extrabold uppercase tracking-widest hover:border-primary hover:text-primary transition-all flex items-center"
           >
             Let&apos;s Connect
           </Link>
