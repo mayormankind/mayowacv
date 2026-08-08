@@ -18,11 +18,11 @@ const fadeUp = (delay: number = 0) => ({
 
 export default function Hero({ latestProject: _latestProject }: HeroProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-16 md:pt-20 pb-20">
-      {/* Ready to Ship badge — full row on desktop */}
+    <div className="flex flex-col md:flex-row md:items-center gap-8 pt-16 md:pt-20 pb-20">
+      {/* Ready to Ship badge */}
       {/* <motion.div
         {...fadeUp(0.1)}
-        className="md:col-span-12 flex justify-start md:justify-end mb-4 md:mb-0"
+        className="flex justify-start md:justify-end mb-4 md:mb-0"
       >
         <div className="flex h-8 items-center justify-center gap-x-2 rounded bg-white px-4">
           <span className="relative flex h-2 w-2">
@@ -35,25 +35,8 @@ export default function Hero({ latestProject: _latestProject }: HeroProps) {
         </div>
       </motion.div> */}
 
-      {/* Profile image — first on mobile, right column on desktop */}
-      <motion.div
-        {...fadeUp(0.3)}
-        className="order-2 md:order-none md:col-span-4 md:col-start-9 relative"
-      >
-        <div className="relative w-full aspect-[3/4] md:h-full md:min-h-[420px] overflow-hidden rounded-xl">
-          <Image
-            src="/images/profile.png"
-            alt="Mayowa Makinde"
-            fill
-            className="object-cover object-top"
-            priority
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-background-dark/60 via-transparent to-transparent" />
-        </div>
-      </motion.div>
-
-      {/* Left text column — second on mobile, left col on desktop */}
-      <div className="order-3 md:order-none md:col-span-7 flex flex-col gap-8">
+      {/* Left text column */}
+      <div className="order-2 md:order-1 flex-1 flex flex-col justify-center gap-8">
         <div className="flex flex-col gap-4">
           <motion.h1
             {...fadeUp(0.2)}
@@ -66,7 +49,9 @@ export default function Hero({ latestProject: _latestProject }: HeroProps) {
             {...fadeUp(0.35)}
             className="text-white/50 text-lg md:text-xl font-normal leading-relaxed max-w-xl mt-4"
           >
-            I help founders and product teams launch polished web applications that drive real revenue and user growth. SaaS and e-commerce are my main focus.
+            I help founders and product teams launch polished web applications
+            that drive real revenue and user growth. SaaS and e-commerce are
+            my main focus.
           </motion.p>
         </div>
         <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-4 mt-4">
@@ -84,6 +69,23 @@ export default function Hero({ latestProject: _latestProject }: HeroProps) {
           </Link>
         </motion.div>
       </div>
+
+      {/* Profile image */}
+      <motion.div
+        {...fadeUp(0.3)}
+        className="order-1 md:order-2 w-full md:w-[320px] lg:w-[360px] shrink-0"
+      >
+        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl">
+          <Image
+            src="/images/profile.png"
+            alt="Mayowa Makinde"
+            fill
+            className="object-cover object-top"
+            priority
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-background-dark/60 via-transparent to-transparent" />
+        </div>
+      </motion.div>
     </div>
   );
 }
