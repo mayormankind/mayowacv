@@ -35,7 +35,7 @@ export default function Header() {
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/5 px-6 md:px-20 py-6 sticky top-0 bg-background-dark/80 backdrop-blur-md z-50">
       <Link href="/" className="flex items-center gap-3">
         <div className="size-6 text-primary">
-          <Image src="/favicon.ico" alt="Mayowa" width={24} height={24} />
+          <Image src="/images/logo.png" alt="Mayowa" width={24} height={24} />
         </div>
         <h2 className="-ml-3 text-white text-xl font-extrabold leading-tight tracking-tighter uppercase">
           ayowa
@@ -108,7 +108,7 @@ export default function Header() {
               <div className="flex items-center justify-between mb-12">
                 <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
                   <div className="size-6 text-primary">
-                    <Image src="/favicon.ico" alt="Mayowa" width={24} height={24} />
+                    <Image src="/images/logo.png" alt="Mayowa" width={24} height={24} />
                   </div>
                   <h2 className="-ml-3 text-white text-xl font-extrabold leading-tight tracking-tighter uppercase">
                     ayowa

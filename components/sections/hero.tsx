@@ -73,7 +73,7 @@ export default function Hero({ latestProject: _latestProject }: HeroProps) {
       {/* Profile image */}
       <motion.div
         {...fadeUp(0.3)}
-        className="order-1 md:order-2 w-full md:w-[320px] lg:w-[360px] shrink-0"
+        className="order-1 md:order-2 w-full md:w-[320px] lg:w-[480px] shrink-0"
       >
         <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl">
           <Image

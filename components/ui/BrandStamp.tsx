@@ -14,16 +14,14 @@ export default function BrandStamp() {
 
       {/* Center: Brand signature */}
       <div className="flex items-center gap-5 md:gap-8 flex-1 justify-center z-10">
-        {/* <div className="size-14 md:size-20 bg-white/5 rounded-2xl border border-white/5 flex items-center justify-center shrink-0"> */}
-          <Image
-            src="/favicon.ico"
+          {/* <Image
+            src="/images/logo.png"
             alt="Mayowa"
-            width={42}
-            height={42}
-            className="opacity-90 md:w-11 md:h-11"
-          />
-        {/* </div> */}
-        <div className="flex items-baseline leading-none">
+            width={512}
+            height={512}
+            className="h-[clamp(2rem,10vw,8rem)] w-auto"
+          /> */}
+        <div className="flex items-center leading-none">
           <span className="text-[clamp(3rem,10vw,9rem)] font-extrabold tracking-[-0.04em] text-white">
             mayowa
           </span>
