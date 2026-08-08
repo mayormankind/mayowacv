@@ -20,7 +20,7 @@ export default function Hero({ latestProject: _latestProject }: HeroProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-16 md:pt-20 pb-20">
       {/* Ready to Ship badge — full row on desktop */}
-      <motion.div
+      {/* <motion.div
         {...fadeUp(0.1)}
         className="md:col-span-12 flex justify-start md:justify-end mb-4 md:mb-0"
       >
@@ -33,7 +33,7 @@ export default function Hero({ latestProject: _latestProject }: HeroProps) {
             Ready to Ship
           </p>
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Profile image — first on mobile, right column on desktop */}
       <motion.div

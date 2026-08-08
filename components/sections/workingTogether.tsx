@@ -238,10 +238,10 @@ function Callout() {
           Expect regular updates, collaborative feedback, and clear
           communication throughout the entire development cycle.
         </p>
+        
         <Link
           href="/contact"
-          className="inline-flex items-center gap-2 text-white font-extrabold text-sm
-                     uppercase tracking-widest hover:text-primary transition-colors duration-200 group"
+          className="inline-flex items-center gap-2 text-white font-extrabold text-sm uppercase tracking-widest bg-primary hover:bg-primary/90 transition-colors duration-200 group px-6 py-3"
         >
           Start Your Project
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
