@@ -1,3 +1,4 @@
+//app/sitemap.ts
 import { supabase } from "@/lib/supabase/server";
 import { MetadataRoute } from "next";
 import { BASE_URL } from "@/lib/seo";

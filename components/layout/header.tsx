@@ -32,54 +32,56 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/5 px-6 md:px-20 py-6 sticky top-0 bg-background-dark/80 backdrop-blur-md z-50">
-      <Link href="/" className="flex items-center gap-3">
-        <div className="size-6 text-primary">
-          <Image src="/images/logo.png" alt="Mayowa" width={24} height={24} />
-        </div>
-        <h2 className="-ml-3 text-white text-xl font-extrabold leading-tight tracking-tighter uppercase">
-          ayowa
-        </h2>
-      </Link>
-
-      {/* Desktop Navigation */}
-      <div className="hidden md:flex flex-1 justify-end gap-12 items-center">
-        <div className="flex items-center gap-10">
-          {navLinks.map((nav) => (
-            <Link
-              key={nav.href}
-              className={`relative text-xs font-bold uppercase tracking-widest transition-colors ${
-                isActive(nav.href)
-                  ? "text-white"
-                  : "text-white/60 hover:text-white"
-              }`}
-              href={nav.href}
-            >
-              {nav.label}
-              {isActive(nav.href) && (
-                <span className="absolute -bottom-2 left-0 h-px w-full bg-primary" />
-              )}
-            </Link>
-          ))}
-        </div>
-        <Link
-          href="/assets/Makinde Mayowa CV.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex min-w-30 cursor-pointer items-center justify-center rounded h-10 px-6 bg-surface border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
-        >
-          Resume
+    <>
+      <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/5 px-6 md:px-20 py-6 sticky top-0 bg-background-dark/80 backdrop-blur-md z-50">
+        <Link href="/" className="flex items-center gap-3">
+          <div className="size-6 text-primary">
+            <Image src="/images/logo.png" alt="Mayowa" width={24} height={24} />
+          </div>
+          <h2 className="-ml-3 text-white text-xl font-extrabold leading-tight tracking-tighter uppercase">
+            ayowa
+          </h2>
         </Link>
-      </div>
 
-      {/* Mobile Menu Toggle */}
-      <button
-        className="md:hidden text-white p-2"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle menu"
-      >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex flex-1 justify-end gap-12 items-center">
+          <div className="flex items-center gap-10">
+            {navLinks.map((nav) => (
+              <Link
+                key={nav.href}
+                className={`relative text-xs font-bold uppercase tracking-widest transition-colors ${
+                  isActive(nav.href)
+                    ? "text-white"
+                    : "text-white/60 hover:text-white"
+                }`}
+                href={nav.href}
+              >
+                {nav.label}
+                {isActive(nav.href) && (
+                  <span className="absolute -bottom-2 left-0 h-px w-full bg-primary" />
+                )}
+              </Link>
+            ))}
+          </div>
+          <Link
+            href="/assets/Makinde Mayowa CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-w-30 cursor-pointer items-center justify-center rounded h-10 px-6 bg-surface border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+          >
+            Resume
+          </Link>
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          className="md:hidden text-white p-2"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle menu"
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </header>
 
       {/* Mobile Menu — full-screen slide-in from right */}
       <AnimatePresence>
@@ -196,6 +198,6 @@ export default function Header() {
           </>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

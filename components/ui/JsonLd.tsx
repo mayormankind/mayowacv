@@ -1,3 +1,4 @@
+//components/ui/JsonLd.tsx
 export default function JsonLd({ schema }: { schema: object }) {
   return (
     <script

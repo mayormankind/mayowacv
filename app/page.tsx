@@ -6,8 +6,9 @@ import WorkingTogether from "@/components/sections/workingTogether";
 import { Metadata } from "next";
 import { supabase } from "@/lib/supabase/server";
 import { keysToCamel } from "@/lib/utils/case-transform";
-import { BASE_URL } from "@/lib/seo";
+import { BASE_URL, buildPersonSchema, buildWebsiteSchema } from "@/lib/seo";
 import FinalCTA from "@/components/sections/finalCTA";
+import JsonLd from "@/components/ui/JsonLd";
 
 export const metadata: Metadata = {
   description:
@@ -41,6 +42,8 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd schema={buildWebsiteSchema()} />
+      <JsonLd schema={buildPersonSchema()} />
       <Hero latestProject={featuredProject} />
       <ValueProps />
       <FeaturedCaseStudy project={featuredProject} />

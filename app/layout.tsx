@@ -50,9 +50,6 @@ export const metadata: Metadata = {
   authors: [{ name: AUTHOR_NAME, url: BASE_URL }],
   creator: AUTHOR_NAME,
   publisher: AUTHOR_NAME,
-  alternates: {
-    canonical: BASE_URL,
-  },
   verification: {
     google:
       process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
@@ -116,8 +113,6 @@ export default function RootLayout({
         className={`${manrope.variable} bg-background text-white font-display`}
       >
         <PWARegister />
-        <JsonLd schema={buildWebsiteSchema()} />
-        <JsonLd schema={buildPersonSchema()} />
         <div className="fixed inset-0 z-[-1] mesh-gradient" />
         <div className="flex min-h-screen flex-col">
           <Header />
