@@ -23,6 +23,7 @@ export function buildPersonSchema() {
       addressLocality: "Ibadan",
       addressCountry: "NG",
     },
+    image: OG_IMAGE,  
     knowsAbout: [
       "React",
       "Next.js",

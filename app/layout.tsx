@@ -5,9 +5,8 @@ import ScrollToTop from "@/components/ui/ScrollToTop";
 import "./globals.css";
 import { Manrope } from "next/font/google";
 import { Metadata, Viewport } from "next";
-import JsonLd from "@/components/ui/JsonLd";
 import PWARegister from "@/components/ui/PWARegister";
-import { buildPersonSchema, buildWebsiteSchema, OG_IMAGE, BASE_URL, AUTHOR_NAME, AUTHOR_HANDLE } from "@/lib/seo";
+import { OG_IMAGE, BASE_URL, AUTHOR_NAME, AUTHOR_HANDLE } from "@/lib/seo";
 
 const manrope = Manrope({
   subsets: ["latin"],
