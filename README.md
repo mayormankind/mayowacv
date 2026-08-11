@@ -143,21 +143,7 @@ mayowacv/
 
 ## Environment Variables
 
-Create a `.env.local` file in the project root:
-
-```env
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# Email (Gmail SMTP)
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_app_password
-SMTP_FROM=your_email@gmail.com
-
-# Optional: Google Search Console
-NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=your_verification_code
-```
+Copy `.env.example` to `.env.local` and fill in your real values. Do not commit `.env.local` to version control.
 
 ---
 
