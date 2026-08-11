@@ -13,11 +13,14 @@ import JsonLd from "@/components/ui/JsonLd";
 export const metadata: Metadata = {
   description:
     "Mayowa Makinde — Senior Full-Stack Product Engineer. Building scalable SaaS platforms, data-driven dashboards, and high-performance web applications from idea to production.",
+  title: "Mayowa Makinde | Full-Stack Product Engineer",
   keywords: [
     "Full-Stack Engineer",
     "Product Engineer",
     "Next.js",
     "React",
+    "Mayowa Makinde",
+    "Makinde Mayowa",
     "SaaS Developer",
     "Mayowa Makinde portfolio",
     "Makinde Mayowa portfolio",
