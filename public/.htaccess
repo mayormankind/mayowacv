@@ -1,0 +1,106 @@
+# ============================================================
+# .htaccess — SEO & Crawler Optimisation
+# Portfolio: mayowamakinde.dev
+# ============================================================
+
+# ──────────────────────────────────────────────────────────
+# 1. Enable mod_rewrite
+# ──────────────────────────────────────────────────────────
+Options +FollowSymLinks
+RewriteEngine On
+
+# ──────────────────────────────────────────────────────────
+# 2. Force HTTPS (www canonical)
+# ──────────────────────────────────────────────────────────
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redirect bare domain → www
+RewriteCond %{HTTP_HOST} ^mayowamakinde\.dev$ [NC]
+RewriteRule ^ https://www.mayowamakinde.dev%{REQUEST_URI} [L,R=301]
+
+# ──────────────────────────────────────────────────────────
+# 3. Compression (gzip) — speeds up crawl & Core Web Vitals
+# ──────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE application/xml application/xhtml+xml
+  AddOutputFilterByType DEFLATE image/svg+xml font/truetype font/opentype
+  AddOutputFilterByType DEFLATE application/font-woff application/font-woff2
+</IfModule>
+
+# ──────────────────────────────────────────────────────────
+# 4. Browser Caching — improves page speed score
+# ──────────────────────────────────────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Fonts — 1 year
+  ExpiresByType font/woff2                  "access plus 1 year"
+  ExpiresByType font/woff                   "access plus 1 year"
+  ExpiresByType application/font-woff2      "access plus 1 year"
+
+  # Images
+  ExpiresByType image/png                   "access plus 1 month"
+  ExpiresByType image/jpeg                  "access plus 1 month"
+  ExpiresByType image/webp                  "access plus 1 month"
+  ExpiresByType image/avif                  "access plus 1 month"
+  ExpiresByType image/svg+xml              "access plus 1 month"
+  ExpiresByType image/x-icon               "access plus 1 year"
+
+  # CSS / JS
+  ExpiresByType text/css                    "access plus 1 week"
+  ExpiresByType application/javascript      "access plus 1 week"
+
+  # HTML / XML
+  ExpiresByType text/html                   "access plus 1 hour"
+  ExpiresByType application/xml            "access plus 1 hour"
+  ExpiresByType application/json           "access plus 1 hour"
+</IfModule>
+
+# ──────────────────────────────────────────────────────────
+# 5. Security headers (SEO-relevant: prevent framing, sniffing)
+# ──────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+  # X-Robots-Tag — instruct all bots (including AI crawlers) to index fully
+  Header always set X-Robots-Tag "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+
+  # Tell crawlers this page has structured data
+  Header always set Link "</sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\""
+</IfModule>
+
+# ──────────────────────────────────────────────────────────
+# 6. Serve sitemap.xml with correct content-type
+# ──────────────────────────────────────────────────────────
+<FilesMatch "sitemap\.xml$">
+  <IfModule mod_headers.c>
+    Header set Content-Type "application/xml; charset=UTF-8"
+  </IfModule>
+</FilesMatch>
+
+# ──────────────────────────────────────────────────────────
+# 7. Block bad bots that harm crawl budget
+# ──────────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteCond %{HTTP_USER_AGENT} (AhrefsBot|MJ12bot|DotBot|SemrushBot|DataForSeoBot|BLEXBot) [NC]
+  RewriteRule .* - [F,L]
+</IfModule>
+
+# ──────────────────────────────────────────────────────────
+# 8. Explicitly ALLOW beneficial AI / search crawlers
+#    (These are allowed in robots.txt too — defence-in-depth)
+# ──────────────────────────────────────────────────────────
+# GPTBot (ChatGPT), OAI-SearchBot, PerplexityBot, ClaudeBot,
+# CCBot, anthropic-ai, Bingbot, Applebot, YouBot — all allowed
+# by the robots.txt rules.  No blocking needed here.
+
+# ──────────────────────────────────────────────────────────
+# 9. Charset
+# ──────────────────────────────────────────────────────────
+AddDefaultCharset UTF-8

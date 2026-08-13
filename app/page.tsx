@@ -6,14 +6,14 @@ import WorkingTogether from "@/components/sections/workingTogether";
 import { Metadata } from "next";
 import { supabase } from "@/lib/supabase/server";
 import { keysToCamel } from "@/lib/utils/case-transform";
-import { BASE_URL, buildPersonSchema, buildWebsiteSchema } from "@/lib/seo";
+import { BASE_URL, OG_IMAGE, buildPersonSchema, buildWebsiteSchema } from "@/lib/seo";
 import FinalCTA from "@/components/sections/finalCTA";
 import JsonLd from "@/components/ui/JsonLd";
 
 export const metadata: Metadata = {
+  title: "Mayowa Makinde | Full-Stack Product Engineer",
   description:
     "Mayowa Makinde — Senior Full-Stack Product Engineer. Building scalable SaaS platforms, data-driven dashboards, and high-performance web applications from idea to production.",
-  title: "Mayowa Makinde | Full-Stack Product Engineer",
   keywords: [
     "Full-Stack Engineer",
     "Product Engineer",
@@ -24,9 +24,31 @@ export const metadata: Metadata = {
     "SaaS Developer",
     "Mayowa Makinde portfolio",
     "Makinde Mayowa portfolio",
+    "Full-Stack developer Nigeria",
+    "React developer for hire",
   ],
   alternates: {
     canonical: BASE_URL,
+  },
+  openGraph: {
+    title: "Mayowa Makinde | Full-Stack Product Engineer",
+    description:
+      "Building scalable SaaS platforms, data-driven dashboards, and high-performance web applications from idea to production.",
+    url: BASE_URL,
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Mayowa Makinde — Full-Stack Product Engineer",
+      },
+    ],
+  },
+  twitter: {
+    title: "Mayowa Makinde | Full-Stack Product Engineer",
+    description:
+      "Building scalable SaaS platforms, data-driven dashboards, and high-performance web applications.",
+    images: [OG_IMAGE],
   },
 };
 

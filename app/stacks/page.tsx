@@ -10,11 +10,45 @@ import React from "react";
 import { Metadata } from "next";
 import AnimateIn from "@/components/ui/AnimateIn";
 import { TechIconGrid } from "@/components/ui/TechStack";
+import { BASE_URL, OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Tech Stack",
+  title: "Tech Stack | Tools & Technologies",
   description:
-    "Explore the modern technologies and tools I use to build high-performance web applications.",
+    "Explore the modern technologies Mayowa Makinde uses to build high-performance web applications — React, Next.js, TypeScript, Node.js, Supabase, PostgreSQL, and more.",
+  keywords: [
+    "Mayowa Makinde tech stack",
+    "React developer tools",
+    "Next.js development",
+    "TypeScript engineer",
+    "Full-Stack technologies",
+    "Node.js developer",
+    "Supabase developer",
+    "PostgreSQL developer",
+  ],
+  alternates: {
+    canonical: `${BASE_URL}/stacks`,
+  },
+  openGraph: {
+    title: "Tech Stack | Mayowa Makinde — Full-Stack Engineer",
+    description:
+      "The modern technologies and tools used to build high-performance SaaS platforms and web applications.",
+    url: `${BASE_URL}/stacks`,
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Mayowa Makinde Tech Stack",
+      },
+    ],
+  },
+  twitter: {
+    title: "Tech Stack | Mayowa Makinde",
+    description:
+      "Modern technologies for building high-performance SaaS platforms and web applications.",
+    images: [OG_IMAGE],
+  },
 };
 
 export default function StacksPage() {

@@ -17,7 +17,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import JsonLd from "@/components/ui/JsonLd";
-import { buildPersonSchema, BASE_URL } from "@/lib/seo";
+import { buildPersonSchema, buildProfilePageSchema, BASE_URL, OG_IMAGE } from "@/lib/seo";
 import AnimateIn from "@/components/ui/AnimateIn";
 
 export const metadata: Metadata = {
@@ -26,15 +26,39 @@ export const metadata: Metadata = {
     "Mayowa Makinde is a Full-Stack Product Engineer based in Nigeria with 3+ years building SaaS platforms and scalable web applications using Next.js, React, and TypeScript.",
   keywords: [
     "About Mayowa Makinde",
+    "Mayowa Makinde",
+    "Makinde Mayowa",
     "Full-Stack Engineer Nigeria",
     "Product Engineer",
     "Next.js developer Nigeria",
     "React engineer",
     "SaaS developer",
     "TypeScript engineer",
+    "Nigerian software engineer",
+    "software developer portfolio",
   ],
   alternates: {
     canonical: `${BASE_URL}/about`,
+  },
+  openGraph: {
+    title: "About Mayowa Makinde | Full-Stack Product Engineer",
+    description:
+      "Mayowa Makinde — Full-Stack Product Engineer based in Nigeria. 3+ years building SaaS platforms, dashboards, and scalable web applications.",
+    url: `${BASE_URL}/about`,
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Mayowa Makinde — Full-Stack Product Engineer",
+      },
+    ],
+  },
+  twitter: {
+    title: "About Mayowa Makinde | Full-Stack Product Engineer",
+    description:
+      "Full-Stack Product Engineer based in Nigeria. 3+ years building SaaS platforms and scalable web applications.",
+    images: [OG_IMAGE],
   },
 };
 
@@ -114,6 +138,7 @@ export default function AboutPage() {
   return (
     <>
       <JsonLd schema={buildPersonSchema()} />
+      <JsonLd schema={buildProfilePageSchema()} />
 
       {/* ─── Section 1 · Hero ─────────────────────────────────────────────── */}
       <AnimateIn direction="down" delay={0}>
@@ -140,6 +165,9 @@ export default function AboutPage() {
         <div className="md:col-span-7">
           <AnimateIn direction="up" delay={0.1}>
             <h1 className="text-white text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-[-0.04em] mb-10">
+              <span className="block text-primary text-2xl md:text-3xl font-extrabold tracking-widest uppercase mb-4">
+                Mayowa Makinde
+              </span>
               Shipping{" "}
               <span className="text-primary italic">human-centric</span>{" "}
               solutions with precision.
@@ -178,7 +206,7 @@ export default function AboutPage() {
           <div className="relative w-full max-w-100 about-image-container group">
             <div className="aspect-4/5 bg-surface overflow-hidden grayscale hover:grayscale-0 transition-all duration-700">
               <Image
-                alt="Mayowa Profile"
+                alt="Mayowa Makinde — Full-Stack Product Engineer based in Nigeria"
                 fill
                 className="object-cover"
                 src={"/images/profile.png"}

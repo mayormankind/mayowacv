@@ -42,7 +42,10 @@ export default function Hero({ latestProject: _latestProject }: HeroProps) {
             {...fadeUp(0.2)}
             className="text-white text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-[-0.04em]"
           >
-            I Build <span className="text-primary">SaaS Products</span> That
+            <span className="block text-primary text-2xl md:text-3xl font-extrabold tracking-widest uppercase mb-3">
+              Mayowa Makinde
+            </span>
+            Building <span className="text-primary">SaaS Products</span> That
             Scale From MVP to Market.
           </motion.h1>
           <motion.p
@@ -78,7 +81,7 @@ export default function Hero({ latestProject: _latestProject }: HeroProps) {
         <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl">
           <Image
             src="/images/profile.png"
-            alt="Mayowa Makinde"
+            alt="Mayowa Makinde — Full-Stack Product Engineer based in Nigeria"
             fill
             className="object-cover object-top"
             priority

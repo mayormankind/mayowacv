@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { BASE_URL } from "@/lib/seo";
+import { BASE_URL, OG_IMAGE } from "@/lib/seo";
 import AnimateIn from "@/components/ui/AnimateIn";
 import { ArrowRight, Zap, Shield, BarChart3, Users, Globe, Code } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Services | SaaS, E-Commerce & Fintech Development",
   description:
-    "Custom SaaS development, e-commerce solutions, and fintech application development. Senior Full-Stack Engineer helping founders build scalable web applications.",
+    "Custom SaaS development, e-commerce solutions, and fintech application development by Mayowa Makinde — Senior Full-Stack Engineer helping founders build scalable web applications.",
   keywords: [
     "SaaS development services",
     "Custom web application development",
@@ -15,9 +15,31 @@ export const metadata: Metadata = {
     "Fintech app development",
     "Software development Nigeria",
     "Remote software engineer",
+    "Mayowa Makinde services",
+    "full-stack development services",
   ],
   alternates: {
     canonical: `${BASE_URL}/services`,
+  },
+  openGraph: {
+    title: "Services | Mayowa Makinde — SaaS, E-Commerce & Fintech Development",
+    description:
+      "Custom SaaS development, e-commerce solutions, and fintech apps. Senior Full-Stack Engineer helping founders build scalable web products.",
+    url: `${BASE_URL}/services`,
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Mayowa Makinde — Software Development Services",
+      },
+    ],
+  },
+  twitter: {
+    title: "Services | Mayowa Makinde",
+    description:
+      "Custom SaaS development, e-commerce solutions, and fintech apps.",
+    images: [OG_IMAGE],
   },
 };
 

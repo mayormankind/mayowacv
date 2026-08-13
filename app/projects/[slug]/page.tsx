@@ -10,6 +10,13 @@ import Icon from "@/components/ui/Icon";
 import VideoPlayer from "@/components/ui/VideoPlayer";
 import ImageCarousel from "@/components/ui/ImageCarousel";
 import AnimateIn from "@/components/ui/AnimateIn";
+import JsonLd from "@/components/ui/JsonLd";
+import { BASE_URL, buildBreadcrumbSchema, buildSoftwareAppSchema } from "@/lib/seo";
+import dynamic from "next/dynamic";
+
+const MermaidDiagram = dynamic(() => import("@/components/ui/MermaidDiagram"), {
+  ssr: false,
+});
 
 export async function generateStaticParams() {
   const { data: dbProjects } = await supabase
@@ -49,19 +56,28 @@ export async function generateMetadata({
   }
 
   return {
-    title: project.title,
+    title: `${project.title} | Case Study`,
     description: project.shortDescription,
+    alternates: {
+      canonical: `${BASE_URL}/projects/${project.slug}`,
+    },
     openGraph: {
-      title: project.title,
+      title: `${project.title} | Mayowa Makinde — Case Study`,
       description: project.shortDescription,
+      url: `${BASE_URL}/projects/${project.slug}`,
       images: [
         {
           url: project.heroImage,
           width: 1200,
           height: 630,
-          alt: project.title,
+          alt: `${project.title} — Project by Mayowa Makinde`,
         },
       ],
+    },
+    twitter: {
+      title: `${project.title} | Mayowa Makinde`,
+      description: project.shortDescription,
+      images: [project.heroImage],
     },
   };
 }
@@ -95,6 +111,18 @@ export default async function ProjectDetails({
 
   return (
     <>
+      <JsonLd schema={buildBreadcrumbSchema([
+        { name: "Home", url: BASE_URL },
+        { name: "Projects", url: `${BASE_URL}/projects` },
+        { name: project.title, url: `${BASE_URL}/projects/${project.slug}` },
+      ])} />
+      <JsonLd schema={buildSoftwareAppSchema({
+        title: project.title,
+        shortDescription: project.shortDescription,
+        slug: project.slug,
+        techStack: project.techStack,
+        heroImage: project.heroImage,
+      })} />
       <section className="py-16 md:py-24 border-b border-white/5">
         <div className="max-w-7xl mx-auto">
           <AnimateIn direction="up" delay={0.1}>
@@ -208,17 +236,11 @@ export default async function ProjectDetails({
                   <div className="h-1 w-20 bg-primary mb-8"></div>
                 </div>
                 <div className="bg-surface border border-white/10 rounded-xl p-8 mb-12">
-                  <div className="aspect-video bg-black/40 rounded border border-dashed border-white/20 flex flex-col items-center justify-center gap-4 text-center px-8">
-                    <Icon name="Network" className="text-white/20 size-16" />
-                    <div>
-                      <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest mb-2">
-                        {project.architecture.title}
-                      </p>
-                      <p className="text-white/20 text-xs">
-                        {project.architecture.description}
-                      </p>
-                    </div>
-                  </div>
+                  <MermaidDiagram
+                    syntax={project.architecture.diagramSyntax ?? ""}
+                    title={project.architecture.title}
+                    description={project.architecture.description}
+                  />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                   {project.architecture.points.map(

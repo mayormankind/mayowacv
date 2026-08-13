@@ -2,11 +2,12 @@ import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import BrandStamp from "@/components/ui/BrandStamp";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import ViewTracker from "@/components/ui/ViewTracker";
 import "./globals.css";
 import { Manrope } from "next/font/google";
 import { Metadata, Viewport } from "next";
 import PWARegister from "@/components/ui/PWARegister";
-import { OG_IMAGE, BASE_URL, AUTHOR_NAME, AUTHOR_HANDLE } from "@/lib/seo";
+import { OG_IMAGE, BASE_URL, AUTHOR_NAME, AUTHOR_HANDLE, AUTHOR_EMAIL } from "@/lib/seo";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -26,11 +27,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Mayowa | Full-Stack Product Engineer",
-    template: "%s | Mayowa",
+    default: "Mayowa Makinde | Full-Stack Product Engineer",
+    template: "%s | Mayowa Makinde",
   },
   description:
-    "Senior Full-Stack Engineer specializing in building high-performance SaaS platforms, data-driven dashboards, and scalable web applications with Next.js and React.",
+    "Mayowa Makinde — Senior Full-Stack Engineer specializing in high-performance SaaS platforms, data-driven dashboards, and scalable web applications with Next.js and React.",
   keywords: [
     "Full Stack Engineer",
     "Product Engineer",
@@ -42,29 +43,38 @@ export const metadata: Metadata = {
     "Software Engineer Nigeria",
     "Mayowa Makinde",
     "Makinde Mayowa",
+    "Mayowa Makinde portfolio",
     "Node.js Developer",
     "Supabase",
     "Web Application Development",
+    "Full-Stack developer Nigeria",
   ],
   authors: [{ name: AUTHOR_NAME, url: BASE_URL }],
   creator: AUTHOR_NAME,
   publisher: AUTHOR_NAME,
+  category: "technology",
   verification: {
     google:
       process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
       "riSiLc3z6j5hMruFmJVpPdJcY0-XLNNjqS1Epqj6gYQ",
+  },
+  alternates: {
+    canonical: BASE_URL,
   },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: BASE_URL,
     siteName: "Mayowa Makinde Portfolio",
+    title: "Mayowa Makinde | Full-Stack Product Engineer",
+    description:
+      "Mayowa Makinde — Building high-performance SaaS platforms, dashboards, and scalable web applications with Next.js and React.",
     images: [
       {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Mayowa Makinde- Full Stack Product Engineer",
+        alt: "Mayowa Makinde — Full-Stack Product Engineer",
       },
     ],
   },
@@ -74,11 +84,13 @@ export const metadata: Metadata = {
     description:
       "Building scalable web applications and high-performance SaaS platforms.",
     creator: AUTHOR_HANDLE,
+    site: AUTHOR_HANDLE,
     images: [OG_IMAGE],
   },
   icons: {
     icon: "/favicon.ico",
     apple: "/images/logo.png",
+    shortcut: "/favicon.ico",
   },
   appleWebApp: {
     capable: true,
@@ -91,9 +103,11 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -112,6 +126,7 @@ export default function RootLayout({
         className={`${manrope.variable} bg-background text-white font-display`}
       >
         <PWARegister />
+        <ViewTracker />
         <div className="fixed inset-0 z-[-1] mesh-gradient" />
         <div className="flex min-h-screen flex-col">
           <Header />

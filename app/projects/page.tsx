@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import ProjectCard from "@/components/sections/project/ProjectCard";
-import { BASE_URL } from "@/lib/seo";
+import { BASE_URL, OG_IMAGE } from "@/lib/seo";
 import AnimateIn from "@/components/ui/AnimateIn";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Projects | Full-Stack Portfolio",
   description:
     "Portfolio of full-stack projects by Mayowa Makinde — SaaS platforms, ERP systems, and e-commerce engines built with Next.js, React, and TypeScript.",
   keywords: [
@@ -16,9 +16,31 @@ export const metadata: Metadata = {
     "Web application portfolio",
     "Mayowa Makinde projects",
     "Makinde Mayowa projects",
+    "SaaS development portfolio",
+    "full-stack case studies",
   ],
   alternates: {
     canonical: `${BASE_URL}/projects`,
+  },
+  openGraph: {
+    title: "Projects | Mayowa Makinde — Full-Stack Portfolio",
+    description:
+      "Full-stack projects portfolio — SaaS platforms, ERP systems, and e-commerce engines built with Next.js, React, and TypeScript.",
+    url: `${BASE_URL}/projects`,
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Mayowa Makinde Projects Portfolio",
+      },
+    ],
+  },
+  twitter: {
+    title: "Projects | Mayowa Makinde",
+    description:
+      "Full-stack projects portfolio — SaaS platforms, ERP systems, and e-commerce engines.",
+    images: [OG_IMAGE],
   },
 };
 

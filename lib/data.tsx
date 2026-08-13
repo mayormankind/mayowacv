@@ -43,6 +43,7 @@ export interface Project {
     subtitle: string;
     diagramType: string; // e.g., "schema", "flow"
     description: string;
+    diagramSyntax?: string; // Raw Mermaid syntax string
     points: {
       icon: any; // using any for Icon component type simplicity here
       title: string;
