@@ -17,7 +17,7 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Redirect bare domain → www
 RewriteCond %{HTTP_HOST} ^mayowamakinde\.dev$ [NC]
-RewriteRule ^ https://www.mayowamakinde.dev%{REQUEST_URI} [L,R=301]
+RewriteRule ^ https://mayowamakinde.dev%{REQUEST_URI} [L,R=301]
 
 # ──────────────────────────────────────────────────────────
 # 3. Compression (gzip) — speeds up crawl & Core Web Vitals

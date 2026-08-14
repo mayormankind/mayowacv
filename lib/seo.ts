@@ -1,5 +1,5 @@
 //lib/seo.ts
-export const BASE_URL = "https://www.mayowamakinde.dev";
+export const BASE_URL = "https://mayowamakinde.dev";
 export const SITE_NAME = "Mayowa Makinde";
 export const AUTHOR_NAME = "Mayowa Makinde";
 export const AUTHOR_HANDLE = "@RedMoonCoder";

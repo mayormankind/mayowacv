@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         has: [{ type: "host", value: "mayowadevv.vercel.app" }],
-        destination: "https://www.mayowamakinde.dev/:path*",
+        destination: "https://mayowamakinde.dev/:path*",
         permanent: true,
       },
     ];

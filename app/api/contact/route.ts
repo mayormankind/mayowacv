@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { NextRequest } from "next/server";
 
-const SITE_URL = "https://www.mayowamakinde.dev";
+const SITE_URL = "https://mayowamakinde.dev";
 const AUTHOR_NAME = "Mayowa Makinde";
 const AUTHOR_TITLE = "Full-Stack Product Engineer";
 const LOGO_URL = `${SITE_URL}/images/logo.png`;
