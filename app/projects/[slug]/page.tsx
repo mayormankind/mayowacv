@@ -12,11 +12,7 @@ import ImageCarousel from "@/components/ui/ImageCarousel";
 import AnimateIn from "@/components/ui/AnimateIn";
 import JsonLd from "@/components/ui/JsonLd";
 import { BASE_URL, buildBreadcrumbSchema, buildSoftwareAppSchema } from "@/lib/seo";
-import dynamic from "next/dynamic";
-
-const MermaidDiagram = dynamic(() => import("@/components/ui/MermaidDiagram"), {
-  ssr: false,
-});
+import MermaidDiagram from "@/components/ui/MermaidDiagram";
 
 export async function generateStaticParams() {
   const { data: dbProjects } = await supabase
