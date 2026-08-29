@@ -18,12 +18,12 @@ const stages = [
     Icon: Compass,
     title: "Discovery",
     description:
-      "We begin with your goals, product vision, users, timeline, and business requirements. This ensures we're solving the right problem before writing any code.",
+      "We unpack your vision, target users, and business goals to make sure we build the right product from day one.",
     deliverables: [
-      "Product discussion",
-      "Scope definition",
-      "Technical recommendations",
-      "Initial timeline",
+      "Concept discussion",
+      "Feature checklist",
+      "Project roadmap",
+      "Cost & time estimate",
     ],
   },
   {
@@ -31,12 +31,12 @@ const stages = [
     Icon: Layers,
     title: "Planning",
     description:
-      "Once requirements are clear, I define the technical architecture, choose the right stack, and break the project into manageable milestones. Every decision is made with long-term maintainability in mind.",
+      "I map out the project structure and choose the best tools to ensure your application is secure, fast, and easy to maintain.",
     deliverables: [
-      "Architecture",
-      "Database design",
-      "API planning",
-      "Milestones",
+      "App layout mapping",
+      "Data structure plan",
+      "Integration strategy",
+      "Weekly milestones",
     ],
   },
   {
@@ -44,12 +44,12 @@ const stages = [
     Icon: Code2,
     title: "Build",
     description:
-      "Development happens in short iterations with regular progress updates. You'll always know what's being built and have opportunities to provide feedback before launch.",
+      "I turn plans into software using short work cycles, giving you working test links to review as features are created.",
     deliverables: [
-      "Weekly progress",
-      "Live previews",
-      "Feature implementation",
-      "Continuous testing",
+      "Weekly progress demos",
+      "Live clickable previews",
+      "Core feature build",
+      "Functionality testing",
     ],
   },
   {
@@ -57,41 +57,29 @@ const stages = [
     Icon: Rocket,
     title: "Launch",
     description:
-      "Before release, everything is tested, optimized, and deployed using production-ready practices. Performance, responsiveness, and stability are treated as real priorities, not afterthoughts.",
+      "Your application goes through rigorous quality checks and performance tuning before we safely open it up to real users.",
     deliverables: [
-      "Deployment",
-      "QA testing",
-      "Performance optimization",
-      "Production release",
+      "Final quality checks",
+      "Speed optimization",
+      "Live release setups",
+      "Official public launch",
     ],
   },
   {
     number: "05",
     Icon: Heart,
-    title: "Support",
+    title: "Support & Growth",
     description:
-      "Launching is only the beginning. I remain available for improvements, new features, bug fixes, and future iterations as your product grows.",
+      "Launching is just the beginning; I stay on board to handle updates, track user habits, and add improvements as your business grows.",
     deliverables: [
-      "Maintenance",
-      "Improvements",
-      "Scaling",
-      "Long-term partnership",
-    ],
-  },
-  {
-    number: "06",
-    Icon: TrendingUp,
-    title: "Iterate",
-    description:
-      "Real-world usage reveals what documentation cannot. I help analyse product performance, gather user signals, and implement targeted improvements that compound over time.",
-    deliverables: [
-      "Usage analytics",
-      "User feedback loops",
-      "Performance tuning",
-      "Feature evolution",
+      "System maintenance",
+      "User usage analytics",
+      "Feature upgrades",
+      "Long-term support",
     ],
   },
 ];
+
 
 function StageCard({
   stage,

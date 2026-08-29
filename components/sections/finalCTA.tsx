@@ -41,8 +41,8 @@ export default function FinalCTA() {
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           className="relative z-10 text-white text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] mb-6"
         >
-          Have a product that needs{" "}
-          <span className="text-primary italic">expert execution?</span>
+          Have something{" "}
+          <span className="text-primary italic">worth building?</span>
         </motion.h2>
 
         <motion.p
@@ -51,8 +51,7 @@ export default function FinalCTA() {
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           className="relative z-10 text-white/50 text-lg max-w-xl leading-relaxed mb-10"
         >
-          Validating an MVP, modernizing a platform, or building something
-          entirely new? Let&apos;s talk.
+          Have an idea, a product that needs work, or a problem you're trying to solve? Tell me what you're working on. I'll help you figure out the next step.
         </motion.p>
 
         <motion.div
@@ -67,7 +66,7 @@ export default function FinalCTA() {
                        h-14 px-8 bg-primary text-white text-sm font-extrabold
                        uppercase tracking-widest cta-glow hover:brightness-110 transition-all rounded"
           >
-            Start a Project
+            Start a Chat
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link
@@ -77,7 +76,7 @@ export default function FinalCTA() {
                        text-sm font-extrabold uppercase tracking-widest
                        hover:border-white/40 transition-all rounded"
           >
-            View Case Studies
+            View My Work
           </Link>
         </motion.div>
       </motion.div>

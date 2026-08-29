@@ -45,30 +45,30 @@ export default function Hero({ latestProject: _latestProject }: HeroProps) {
             <span className="block text-primary text-2xl md:text-3xl font-extrabold tracking-widest uppercase mb-3">
               Mayowa Makinde
             </span>
-            Building <span className="text-primary">SaaS Products</span> That
-            Scale From MVP to Market.
+            {/* Building <span className="text-primary">SaaS Products</span> That
+            Scale From MVP to Market. */}
+            Give me the <span className="text-primary">Problem</span>. I'll figure
+            out the <span className="text-primary">Product</span>.
           </motion.h1>
           <motion.p
             {...fadeUp(0.35)}
             className="text-white/50 text-lg md:text-xl font-normal leading-relaxed max-w-xl mt-4"
           >
-            I help founders and product teams launch polished web applications
-            that drive real revenue and user growth. SaaS and e-commerce are
-            my main focus.
+            I'm Mayowa, a full-stack developer who turns ideas, messy requirements, and real-world problems into software people can actually use. I listen first, think through the problem, then build and deliver.
           </motion.p>
         </div>
         <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-4 mt-4">
+          <Link
+            href="/projects"
+            className="flex min-w-45 cursor-pointer items-center justify-center rounded h-14 px-8 bg-surface border border-white/5 text-white text-sm font-extrabold uppercase tracking-widest hover:border-white/20 transition-all"
+          >
+            View My Work
+          </Link>
           <Link
             href="/contact"
             className="flex min-w-50 cursor-pointer items-center justify-center rounded h-14 px-8 bg-primary text-white text-sm font-extrabold uppercase tracking-widest cta-glow hover:brightness-110 transition-all"
           >
             Start a Project
-          </Link>
-          <Link
-            href="/services"
-            className="flex min-w-45 cursor-pointer items-center justify-center rounded h-14 px-8 bg-surface border border-white/5 text-white text-sm font-extrabold uppercase tracking-widest hover:border-white/20 transition-all"
-          >
-            View Services
           </Link>
         </motion.div>
       </div>

@@ -1,33 +1,98 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import AnimateIn from "@/components/ui/AnimateIn";
-import { Quote } from "lucide-react";
+import { Quote, X, Play } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    role: "Founder, TechStart Inc.",
-    project: "SaaS MVP Development",
+    name: "Oyedokun Kehinde",
+    role: "CEO, Rexta Technologies",
     content:
-      "Mayowa transformed our rough concept into a fully functional MVP in just 6 weeks. His attention to detail and product mindset helped us launch 3 weeks ahead of schedule. The onboarding flow he built increased our trial-to-paid conversion by 35%.",
+      "Mayowa is a dependable engineer who takes ownership of his work. He understands requirements quickly, communicates clearly, and consistently delivers quality work on time. He's proactive, willing to take on complex problems, and has been a valuable contributor across the projects we've worked on.",
   },
   {
-    name: "David Chen",
-    role: "CTO, LogisticsPro",
-    project: "ERP System Overhaul",
+    name: "Asamu Caleb",
+    role: "CEO, Alcatech",
     content:
-      "We hired Mayowa to rebuild our legacy ERP system. He architected a microservices solution that reduced our billing errors by 90% and improved inventory accuracy to near perfection. His code is clean, well-documented, and easy for our team to maintain.",
-  },
-  {
-    name: "Amanda Okonkwo",
-    role: "Product Manager, PayFlow",
-    project: "Analytics Dashboard",
-    content:
-      "Mayowa built our merchant analytics dashboard from scratch. He optimized our database queries, reducing report load times from 5 seconds to under 200ms. Our merchant engagement with the insights module increased by 300% after the launch.",
+      "Mayowa is proactive, communicates well, keeps to time, and consistently delivers ahead of deadlines.",
+    videoUrl: "https://uxfkvbvtmwjfzwlgelbf.supabase.co/storage/v1/object/public/media/1787981680607-nfe9yt.mp4",
   },
 ];
 
+function VideoModal({
+  isOpen,
+  onClose,
+  videoUrl,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  videoUrl: string;
+}) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          onClick={onClose}
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
+
+          {/* Modal content */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="relative w-full max-w-3xl aspect-video bg-surface rounded-lg overflow-hidden border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all duration-200"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Video placeholder */}
+            {videoUrl ? (
+              <iframe
+                src={videoUrl}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-surface">
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4">
+                    <Play className="w-6 h-6 text-primary ml-1" />
+                  </div>
+                  <p className="text-white/40 text-sm">
+                    Video proof will be displayed here
+                  </p>
+                  <p className="text-white/20 text-xs mt-1">
+                    Add the video URL to enable playback
+                  </p>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 export default function Testimonials() {
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
   return (
     <section className="py-24 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 md:px-0">
@@ -39,38 +104,67 @@ export default function Testimonials() {
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-            What Clients Say
+            What It&apos;s Like to Work With Me
           </h2>
           <p className="text-white/50 text-lg max-w-2xl">
-            Results-driven partnerships with founders and product teams building
-            scalable digital products.
+            Good software comes from good collaboration. Here's what people I've worked with have to say.
           </p>
         </AnimateIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {testimonials.map((testimonial, index) => (
-            <AnimateIn key={index} direction="up" delay={index * 0.1}>
-              <div className="bg-surface border border-white/5 rounded-xl p-8 h-full flex flex-col">
-                <Quote className="text-primary/30 w-8 h-8 mb-6" />
+            <AnimateIn key={index} direction="up" delay={index * 0.15}>
+              <motion.div
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.3 }}
+                className="group bg-surface border border-white/5 rounded-xl p-8 h-full flex flex-col hover:border-primary/20 transition-all duration-500"
+              >
+                {/* Quote icon */}
+                <Quote className="text-primary/30 w-8 h-8 mb-6 group-hover:text-primary/50 transition-colors duration-300" />
+
+                {/* Testimonial content */}
                 <p className="text-white/80 text-sm leading-relaxed mb-8 flex-1">
                   {testimonial.content}
                 </p>
+
+                {/* Attribution and video */}
                 <div className="border-t border-white/5 pt-6">
-                  <p className="text-white font-bold text-base mb-1">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-white/40 text-xs uppercase tracking-wider mb-2">
-                    {testimonial.role}
-                  </p>
-                  <p className="text-primary text-[10px] font-bold uppercase tracking-wider">
-                    {testimonial.project}
-                  </p>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-white font-bold text-base mb-1">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-white/40 text-xs uppercase tracking-wider">
+                        {testimonial.role}
+                      </p>
+                    </div>
+
+                    {/* Video proof button */}
+                    {testimonial.videoUrl !== undefined && (
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setActiveVideo(testimonial.videoUrl || "")}
+                        className="flex items-center gap-2 px-3 py-2 rounded-md bg-primary/5 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-wider hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 shrink-0"
+                      >
+                        <Play className="w-3 h-3 fill-current" />
+                        Video proof
+                      </motion.button>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             </AnimateIn>
           ))}
         </div>
       </div>
+
+      {/* Video modal */}
+      <VideoModal
+        isOpen={!!activeVideo}
+        onClose={() => setActiveVideo(null)}
+        videoUrl={activeVideo || ""}
+      />
     </section>
   );
 }

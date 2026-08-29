@@ -2,7 +2,7 @@ import Hero from "@/components/sections/hero";
 import ValueProps from "@/components/sections/valueProps";
 import FeaturedCaseStudy from "@/components/sections/featuredCaseStudy";
 import Testimonials from "@/components/sections/testimonials";
-import WorkingTogether from "@/components/sections/workingTogether";
+import AboutPreview from "@/components/sections/aboutPreview";
 import { Metadata } from "next";
 import { supabase } from "@/lib/supabase/server";
 import { keysToCamel } from "@/lib/utils/case-transform";
@@ -73,7 +73,7 @@ export default async function HomePage() {
       <ValueProps />
       <FeaturedCaseStudy project={featuredProject} />
       <Testimonials />
-      <WorkingTogether />
+      <AboutPreview />
       <FinalCTA />
     </>
   );
