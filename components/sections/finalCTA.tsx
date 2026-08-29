@@ -66,7 +66,7 @@ export default function FinalCTA() {
                        h-14 px-8 bg-primary text-white text-sm font-extrabold
                        uppercase tracking-widest cta-glow hover:brightness-110 transition-all rounded"
           >
-            Start a Chat
+            Start a Project
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link

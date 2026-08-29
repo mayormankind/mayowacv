@@ -112,8 +112,8 @@ const timeline = [
     detail: "Shipped subscription platforms, dashboards, and multi-tenant applications end-to-end.",
   },
   {
-    milestone: "Working with founders and businesses today",
-    detail: "Partnering with ambitious teams to turn ideas into production-ready software.",
+    milestone: "Today",
+    detail: "Still building, still learning, and still looking for interesting problems to solve.",
   },
 ];
 
@@ -146,16 +146,7 @@ export default function AboutPage() {
           <div className="flex items-center gap-4">
             <span className="w-8 h-px bg-primary shrink-0" />
             <span className="text-primary text-[10px] font-extrabold uppercase tracking-[0.4em]">
-              Makinde Mayowa
-            </span>
-          </div>
-          <div className="flex items-center gap-2.5">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-[0.3em]">
-              Available
+              A little more about me
             </span>
           </div>
         </div>
@@ -168,9 +159,7 @@ export default function AboutPage() {
               <span className="block text-primary text-2xl md:text-3xl font-extrabold tracking-widest uppercase mb-4">
                 Mayowa Makinde
               </span>
-              Shipping{" "}
-              <span className="text-primary italic">human-centric</span>{" "}
-              solutions with precision.
+              I didn't fall in love with code. I fell in love with {" "} <span className="text-primary italic">building.</span>
             </h1>
           </AnimateIn>
 
@@ -178,20 +167,10 @@ export default function AboutPage() {
             <AnimateIn direction="up" delay={0.2}>
               <div className="border-l-2 border-primary pl-8 space-y-4">
                 <p className="text-white/80 text-lg md:text-xl leading-relaxed max-w-2xl">
-                  I&apos;m Mayowa, a full-stack product engineer who enjoys
-                  turning ambitious ideas into polished digital products.
+                  I'm Mayowa, a full-stack developer who enjoys taking problems, ideas, and sometimes messy requirements and turning them into software that works.
                 </p>
                 <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl">
-                  I partner with founders and businesses to build scalable
-                  software that&apos;s fast, maintainable, and genuinely
-                  enjoyable to use.
-                </p>
-                <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl">
-                  For me, great engineering is never just about shipping
-                  features. It&apos;s about creating{" "}
-                  <span className="text-white font-bold">
-                    products people love using.
-                  </span>
+                  I care about understanding what we're actually trying to solve before deciding how to build it. Whether I'm working on a client product, an internal tool, or something of my own, I like asking questions, figuring things out, and seeing an idea make its way from a conversation to something real that {" "}<span className="text-white font-bold">people love using.</span>
                 </p>
               </div>
             </AnimateIn>
@@ -253,17 +232,15 @@ export default function AboutPage() {
           <div className="md:col-span-7">
             <AnimateIn direction="up" delay={0.1}>
               <h2 className="text-white text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-10">
-                I Didn&apos;t Fall in Love{" "}
-                <span className="text-primary italic">with Code.</span>
-                <br />I Fell in Love with Building.
+                From curiosity to building things for {" "}
+                <span className="text-primary italic">real.</span>
               </h2>
             </AnimateIn>
 
             <div className="space-y-6 max-w-2xl">
               <AnimateIn direction="up" delay={0.2}>
                 <p className="text-white/60 text-lg leading-relaxed">
-                  What first attracted me to software wasn&apos;t programming itself.
-                  It was the ability to create something meaningful from an idea.
+                  What started as curiosity about how websites worked eventually became something much bigger: a fascination with being able to take an idea that exists only in someone's head and turn it into something tangible.
                 </p>
               </AnimateIn>
               <AnimateIn direction="up" delay={0.3}>
@@ -275,9 +252,7 @@ export default function AboutPage() {
               </AnimateIn>
               <AnimateIn direction="up" delay={0.4}>
                 <p className="text-white/80 text-lg leading-relaxed font-medium">
-                  Today I focus on helping founders transform concepts into
-                  production-ready software while keeping long-term
-                  maintainability at the center of every decision.
+                  Since then, I've worked across websites, applications, SaaS products, internal tools, and more complex systems — constantly learning, experimenting, and getting better at turning problems into products.
                 </p>
               </AnimateIn>
             </div>
@@ -326,7 +301,7 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Section 4 · Beyond Development ─────────────────────────────── */}
-      <section className="py-24 border-t border-white/5 mb-8">
+      <section className="py-16 border-t border-white/5 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20">
           <div className="md:col-span-6">
             <AnimateIn direction="up" delay={0}>
@@ -334,15 +309,10 @@ export default function AboutPage() {
                 Beyond Writing Code
               </h2>
               <p className="text-white/55 text-lg leading-relaxed mb-6">
-                Technology evolves constantly, which is why I enjoy continuously
-                learning, exploring new tools, and understanding how successful
-                digital products are built.
+                Software keeps changing, and honestly, that's one of the things I enjoy about it. There's always something new to understand, experiment with, or take apart just to see how it works.
               </p>
               <p className="text-white/55 text-lg leading-relaxed">
-                Outside development I enjoy studying product design,
-                experimenting with AI-powered workflows, following modern
-                interface design trends, and refining the small details that
-                make software feel intuitive.{" "}
+                Outside development I'm interested in product design, AI, interfaces, developer tools, and the small details that make software feel good to use. I'm also a singer, so music naturally has a place in my life outside development.{" "}
                 <span className="text-white font-semibold">
                   Curiosity is one of the strongest tools I bring into every project.
                 </span>
@@ -377,7 +347,7 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Section 5 · Professional Timeline ───────────────────────────── */}
-      <section className="py-24 border-t border-white/5 mb-8">
+      <section className="py-16 border-t border-white/5 mb-8">
         <AnimateIn direction="up" delay={0} className="mb-14">
           <div className="flex items-center gap-4 mb-6">
             <span className="w-8 h-px bg-primary shrink-0" />
@@ -413,43 +383,6 @@ export default function AboutPage() {
               </AnimateIn>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ─── Section 6 · Why Clients Enjoy Working With Me ───────────────── */}
-      <section className="py-24 border-t border-white/5 mb-8">
-        <AnimateIn direction="up" delay={0} className="mb-14">
-          <h2 className="text-white text-3xl md:text-4xl font-extrabold tracking-tight">
-            More Than Just Development
-          </h2>
-        </AnimateIn>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start">
-          <AnimateIn direction="up" delay={0.1}>
-            <p className="text-white/60 text-xl leading-relaxed">
-              Building software is collaborative. Clients don&apos;t just hire
-              me because I write code. They hire me because they want a technical
-              partner who{" "}
-              <span className="text-white font-semibold">
-                communicates clearly, thinks through product decisions,
-              </span>{" "}
-              and cares about long-term success.
-            </p>
-          </AnimateIn>
-
-          <AnimateIn direction="left" delay={0.2}>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-              {checklist.map((item, i) => (
-                <li key={i} className="flex items-center gap-3">
-                  <CheckCircle2
-                    className="text-primary w-4 h-4 shrink-0"
-                    strokeWidth={2}
-                  />
-                  <span className="text-white/70 text-sm font-medium">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </AnimateIn>
         </div>
       </section>
 
