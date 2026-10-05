@@ -1,29 +1,37 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Linkedin, Twitter, Github } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { socials } from "@/lib/data";
-
-const socialIconMap: Record<string, React.ElementType> = {
-  LinkedIn: Linkedin,
-  Twitter: Twitter,
-  Github: Github,
-};
+import SocialIcon from "@/components/ui/SocialIcon";
 
 export default function Header() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setIsOpen(false);
+  }
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isOpen]);
 
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Stack", href: "/stacks" },
     { label: "Services", href: "/services" },
     { label: "Projects", href: "/projects" },
-    { label: "Contact", href: "/contact" },
   ];
 
   const isActive = (href: string) => {
@@ -33,8 +41,8 @@ export default function Header() {
 
   return (
     <>
-      <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/5 px-6 md:px-20 py-6 sticky top-0 bg-background-dark/80 backdrop-blur-md z-50">
-        <Link href="/" className="flex items-center gap-3">
+      <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 px-6 md:px-20 py-6 sticky top-0 bg-background-dark/90 backdrop-blur-md z-50">
+        <Link href="/" aria-label="Mayowa, home" className="flex items-center gap-3">
           <div className="size-6 text-primary">
             <Image src="/images/logo.png" alt="Mayowa" width={24} height={24} />
           </div>
@@ -49,6 +57,7 @@ export default function Header() {
             {navLinks.map((nav) => (
               <Link
                 key={nav.href}
+                aria-current={isActive(nav.href) ? "page" : undefined}
                 className={`relative text-xs font-bold uppercase tracking-widest transition-colors ${
                   isActive(nav.href)
                     ? "text-white"
@@ -62,22 +71,31 @@ export default function Header() {
                 )}
               </Link>
             ))}
+            <Link
+              href="/assets/mayowa-makinde-cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 text-xs font-bold uppercase tracking-widest hover:text-white transition-colors"
+            >
+              Resume
+            </Link>
           </div>
-          <Link
-            href="/assets/Makinde Mayowa CV.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex min-w-30 cursor-pointer items-center justify-center rounded h-10 px-6 bg-surface border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
-          >
-            Resume
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link
+              href="/contact"
+              className="flex min-h-11 cursor-pointer items-center justify-center rounded-md px-6 bg-primary text-white text-xs font-extrabold uppercase tracking-widest cta-glow hover:brightness-110 transition-all"
+            >
+              Contact
+            </Link>
+          </div>
         </div>
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden text-white p-2"
+          className="md:hidden text-white p-2.5"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
+          aria-expanded={isOpen}
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -108,7 +126,7 @@ export default function Header() {
             >
               {/* Signature name + close */}
               <div className="flex items-center justify-between mb-12">
-                <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
+                <Link href="/" onClick={() => setIsOpen(false)} aria-label="Mayowa, home" className="flex items-center gap-3">
                   <div className="size-6 text-primary">
                     <Image src="/images/logo.png" alt="Mayowa" width={24} height={24} />
                   </div>
@@ -137,6 +155,7 @@ export default function Header() {
                     <Link
                       href={nav.href}
                       onClick={() => setIsOpen(false)}
+                      aria-current={isActive(nav.href) ? "page" : undefined}
                       className={`flex items-center justify-between py-4 border-b border-white/5 text-sm font-bold uppercase tracking-widest transition-colors group ${
                         isActive(nav.href) ? "text-primary" : "text-white/50 hover:text-white"
                       }`}
@@ -155,14 +174,22 @@ export default function Header() {
                   transition={{ duration: 0.25, delay: 0.1 + navLinks.length * 0.06, ease: "easeOut" }}
                   className="mt-6"
                 >
-                  <Link
-                    href="/assets/Makinde Mayowa CV.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex cursor-pointer items-center justify-center rounded h-11 px-6 bg-surface border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
-                  >
-                    Resume
-                  </Link>
+                  <div className="flex flex-col gap-4">
+                    <Link
+                      href="/contact"
+                      className="w-full flex cursor-pointer items-center justify-center rounded-md min-h-11 px-6 bg-primary text-white text-xs font-extrabold uppercase tracking-widest cta-glow hover:brightness-110 transition-all"
+                    >
+                      Contact
+                    </Link>
+                    <Link
+                      href="/assets/mayowa-makinde-cv.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex cursor-pointer items-center justify-center rounded-md min-h-11 px-6 border border-white/15 text-white/70 text-xs font-bold uppercase tracking-widest hover:border-white/40 hover:text-white transition-all"
+                    >
+                      Resume
+                    </Link>
+                  </div>
                 </motion.div>
               </nav>
 
@@ -177,21 +204,18 @@ export default function Header() {
                   Connect
                 </p>
                 <div className="flex items-center gap-5">
-                  {socials.map((s) => {
-                    const Icon = socialIconMap[s.label];
-                    return (
-                      <a
-                        key={s.label}
-                        href={s.ref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={s.label}
-                        className="text-white/40 hover:text-white transition-colors"
-                      >
-                        {Icon ? <Icon size={18} /> : <span className="text-xs font-bold">{s.label}</span>}
-                      </a>
-                    );
-                  })}
+                  {socials.map((s) => (
+                    <a
+                      key={s.id}
+                      href={s.ref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${s.label} (opens in a new tab)`}
+                      className="text-white/60 hover:text-white transition-colors p-2.5"
+                    >
+                      <SocialIcon id={s.id} size={18} />
+                    </a>
+                  ))}
                 </div>
               </motion.div>
             </motion.div>
