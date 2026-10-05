@@ -9,14 +9,6 @@ export const metadata: Metadata = {
   title: "E-Commerce Development Services",
   description:
     "Custom e-commerce development services. Build high-performance storefronts with headless commerce, payment gateway integration, and inventory management.",
-  keywords: [
-    "E-commerce development",
-    "Custom online store development",
-    "Headless commerce development",
-    "Shopify custom development",
-    "E-commerce website developer",
-    "Online store development Nigeria",
-  ],
   alternates: {
     canonical: `${BASE_URL}/services/ecommerce`,
   },

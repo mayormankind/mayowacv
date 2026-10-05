@@ -48,12 +48,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly",
       priority: 0.8,
     },
-    {
-      url: `${BASE_URL}/stacks`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
     // Services sub-pages
     {
       url: `${BASE_URL}/services/saas`,
@@ -63,12 +57,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${BASE_URL}/services/ecommerce`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.85,
-    },
-    {
-      url: `${BASE_URL}/services/fintech`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.85,

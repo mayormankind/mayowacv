@@ -9,14 +9,6 @@ export const metadata: Metadata = {
   title: "SaaS Development Services",
   description:
     "Custom SaaS development services. Build scalable subscription-based platforms with multi-tenant architecture, billing integration, and real-time collaboration features.",
-  keywords: [
-    "SaaS development company",
-    "Custom SaaS development",
-    "Multi-tenant SaaS architecture",
-    "Subscription billing integration",
-    "SaaS MVP development",
-    "SaaS developer Nigeria",
-  ],
   alternates: {
     canonical: `${BASE_URL}/services/saas`,
   },
