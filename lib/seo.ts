@@ -1,9 +1,11 @@
 //lib/seo.ts
+import { SITE } from "@/lib/site-config";
+
 export const BASE_URL = "https://mayowamakinde.dev";
 export const SITE_NAME = "Mayowa Makinde";
 export const AUTHOR_NAME = "Mayowa Makinde";
 export const AUTHOR_HANDLE = "@RedMoonCoder";
-export const AUTHOR_EMAIL = "mayowamakinde23@gmail.com";
+export const AUTHOR_EMAIL = SITE.email;
 export const AUTHOR_LINKEDIN =
   "https://www.linkedin.com/in/makinde-mayowa-4670a51bb";
 export const AUTHOR_GITHUB = "https://github.com/mayormankind";

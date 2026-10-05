@@ -64,12 +64,26 @@ export interface Project {
   techStack: string[];
 }
 
-export const socials = [
+export type SocialId = "linkedin" | "x" | "github" | "instagram";
+
+export interface Social {
+  id: SocialId;
+  label: string;
+  ref: string;
+}
+
+export const socials: Social[] = [
   {
+    id: "linkedin",
     label: "LinkedIn",
     ref: "https://www.linkedin.com/in/makinde-mayowa-4670a51bb",
   },
-  { label: "Twitter", ref: "https://x.com/RedMoonCoder" },
-  { label: "Github", ref: "https://github.com/mayormankind" },
+  { id: "x", label: "X (Twitter)", ref: "https://x.com/RedMoonCoder" },
+  { id: "github", label: "GitHub", ref: "https://github.com/mayormankind" },
+  {
+    id: "instagram",
+    label: "Instagram",
+    ref: "https://www.instagram.com/mankind_dev",
+  },
 ];
 
