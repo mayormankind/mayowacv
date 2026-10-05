@@ -8,7 +8,6 @@ interface AnimateInProps {
   delay?: number;
   direction?: "up" | "down" | "left" | "right" | "none";
   duration?: number;
-  as?: string;
 }
 
 const directionMap = {
