@@ -1,46 +1,9 @@
 //components/sections/valueProps.tsx
 "use client";
 import React from "react";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-
-const directionMap = {
-  up: { y: 40, x: 0 },
-  down: { y: -40, x: 0 },
-  left: { y: 0, x: 40 },
-  right: { y: 0, x: -40 },
-  none: { y: 0, x: 0 },
-};
-
-function AnimateIn({
-  children,
-  className,
-  delay = 0,
-  direction = "up",
-  duration = 0.65,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-  direction?: "up" | "down" | "left" | "right" | "none";
-  duration?: number;
-}) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
-  const offset = directionMap[direction];
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, ...offset }}
-      animate={isInView ? { opacity: 1, y: 0, x: 0 } : { opacity: 0, ...offset }}
-      transition={{ duration, delay, ease: "easeOut" }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
+import { motion } from "framer-motion";
+import AnimateIn from "@/components/ui/AnimateIn";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 const values = [
   {
@@ -97,61 +60,40 @@ const coreStacks = [
 export default function ValueProps() {
   return (
     <section className="py-24 border-t border-white/5 relative overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-[120px] pointer-events-none" />
+      {/* Background accent — pre-rendered gradient, cheap to paint */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(ellipse_600px_300px_at_50%_0%,rgba(222,27,27,0.05),transparent_70%)] pointer-events-none"
+      />
 
       {/* Section header */}
       <AnimateIn delay={0} className="mb-16">
-        <div className="flex items-center gap-4 mb-4">
-          <div className="h-px w-12 bg-primary/50" />
-          <span className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em]">
-            How I Work
-          </span>
-        </div>
-        <h2 className="text-white text-3xl md:text-4xl font-bold tracking-tight">
-          My approach
-        </h2>
+        <SectionHeader eyebrow="How I Work" title="My approach" />
       </AnimateIn>
 
       {/* Value cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative">
-        {/* Connecting line */}
-        <div className="hidden lg:block absolute top-12 left-[16.5%] right-[16.5%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
         {values.map((value, index) => (
           <AnimateIn key={value.number} delay={0.1 + index * 0.15} direction="up">
-            <motion.div
-              whileHover={{ y: -4, transition: { duration: 0.3 } }}
-              className="group relative bg-surface/50 backdrop-blur-sm border border-white/5 rounded-lg p-8 h-full transition-all duration-500 hover:border-primary/30 hover:bg-surface/80"
-            >
-              {/* Hover glow effect */}
-              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-primary/5 to-transparent" />
-              </div>
-
+            <div className="relative bg-surface border border-white/5 rounded-lg p-8 h-full transition-colors duration-500 hover:border-white/15">
               {/* Number badge */}
               <div className="relative flex items-start justify-between mb-6">
-                <motion.span
-                  className="text-5xl font-black text-white/5 group-hover:text-primary/10 transition-colors duration-500 select-none"
-                >
+                <span className="text-5xl font-extrabold text-white/5 select-none">
                   {value.number}
-                </motion.span>
-                <div className="w-10 h-10 rounded-md bg-white/5 border border-white/5 flex items-center justify-center text-white/40 group-hover:text-primary group-hover:border-primary/20 transition-all duration-500">
+                </span>
+                <div className="w-10 h-10 rounded-md bg-white/5 border border-white/5 flex items-center justify-center text-white/40">
                   {value.icon}
                 </div>
               </div>
 
               {/* Content */}
-              <h3 className="text-white font-semibold text-lg mb-3 group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-white font-semibold text-lg mb-3">
                 {value.title}
               </h3>
-              <p className="text-white/50 text-sm leading-relaxed group-hover:text-white/60 transition-colors duration-300">
+              <p className="text-white/65 text-sm leading-relaxed">
                 {value.description}
               </p>
-
-              {/* Bottom accent line */}
-              <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent group-hover:via-primary/30 transition-all duration-500" />
-            </motion.div>
+            </div>
           </AnimateIn>
         ))}
       </div>
@@ -162,7 +104,7 @@ export default function ValueProps() {
           {/* Divider with label */}
           <div className="flex items-center gap-4 mb-8">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/10" />
-            <span className="text-white/30 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <span className="text-white/60 text-xs font-bold uppercase tracking-[0.25em]">
               Core Technologies
             </span>
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/10" />
@@ -177,8 +119,7 @@ export default function ValueProps() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.7 + id * 0.05, duration: 0.4 }}
-                whileHover={{ scale: 1.05, borderColor: "rgba(222, 27, 27, 0.4)" }}
-                className="px-4 py-2 bg-surface/60 border border-white/5 text-white/40 text-[11px] font-semibold uppercase tracking-wider rounded cursor-default transition-colors duration-300 hover:text-white/70"
+                className="px-4 py-2 bg-surface border border-white/5 text-white/70 text-[11px] font-semibold uppercase tracking-wider rounded"
               >
                 {stack}
               </motion.span>

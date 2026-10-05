@@ -184,7 +184,7 @@ function SectionHeader() {
         className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] mb-6"
       >
         What It&apos;s Like{" "}
-        <span className="text-primary italic">Working Together.</span>
+        <span className="text-primary">Working Together.</span>
       </motion.h2>
 
       <motion.p

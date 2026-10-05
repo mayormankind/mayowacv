@@ -9,24 +9,16 @@ import { keysToCamel } from "@/lib/utils/case-transform";
 import { BASE_URL, OG_IMAGE, buildPersonSchema, buildWebsiteSchema } from "@/lib/seo";
 import FinalCTA from "@/components/sections/finalCTA";
 import JsonLd from "@/components/ui/JsonLd";
+import type { Project } from "@/lib/data";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Mayowa Makinde | Full-Stack Product Engineer",
+  title: {
+    absolute: "Mayowa Makinde | Full-Stack Product Engineer",
+  },
   description:
-    "Mayowa Makinde — Senior Full-Stack Product Engineer. Building scalable SaaS platforms, data-driven dashboards, and high-performance web applications from idea to production.",
-  keywords: [
-    "Full-Stack Engineer",
-    "Product Engineer",
-    "Next.js",
-    "React",
-    "Mayowa Makinde",
-    "Makinde Mayowa",
-    "SaaS Developer",
-    "Mayowa Makinde portfolio",
-    "Makinde Mayowa portfolio",
-    "Full-Stack developer Nigeria",
-    "React developer for hire",
-  ],
+    "Mayowa Makinde — Full-Stack Product Engineer. Building scalable SaaS platforms, data-driven dashboards, and high-performance web applications from idea to production.",
   alternates: {
     canonical: BASE_URL,
   },
@@ -53,27 +45,25 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  // Fetch the latest published project from Supabase
+  // Fetch the most recently created published projects from Supabase
   const { data: dbProjects } = await supabase
     .from("projects")
-    .select("*")
+    .select("id, slug, title, short_description, hero_image")
     .eq("status", "published")
-    .order("updated_at", { ascending: false })
-    .limit(1);
+    .order("created_at", { ascending: false })
+    .limit(3);
 
-  const featuredProject = dbProjects && dbProjects.length > 0
-    ? keysToCamel(dbProjects[0])
-    : undefined;
+  const featuredProjects: Project[] | undefined = dbProjects?.map(keysToCamel);
 
   return (
     <>
       <JsonLd schema={buildWebsiteSchema()} />
       <JsonLd schema={buildPersonSchema()} />
-      <Hero latestProject={featuredProject} />
+      <Hero />
+      <FeaturedCaseStudy projects={featuredProjects} />
       <ValueProps />
-      <FeaturedCaseStudy project={featuredProject} />
-      <Testimonials />
       <AboutPreview />
+      <Testimonials />
       <FinalCTA />
     </>
   );

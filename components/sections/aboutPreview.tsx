@@ -1,8 +1,9 @@
 "use client";
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Button from "@/components/ui/Button";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 export default function AboutPreview() {
   const ref = useRef(null);
@@ -10,51 +11,39 @@ export default function AboutPreview() {
 
   return (
     <section ref={ref} className="py-24 border-t border-white/5 relative overflow-hidden">
-      {/* Background accent */}
+      {/* Background accent — pre-rendered gradient, cheap to paint */}
       <div
         aria-hidden
-        className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/[0.03] blur-[120px] rounded-full pointer-events-none"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_500px_300px_at_100%_100%,rgba(222,27,27,0.05),transparent_70%)] pointer-events-none"
       />
 
-      <div className="max-w-4xl mx-auto px-6 md:px-0">
+      <div className="max-w-4xl mx-auto md:px-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, ease: "easeOut" }}
-          className="relative bg-surface border border-white/5 rounded-xl p-10 md:p-16"
+          className="relative bg-surface border border-white/5 rounded-xl p-8 md:p-16"
         >
           {/* Subtle top accent line */}
           <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
-          {/* Section label */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="flex items-center gap-4 mb-6"
           >
-            <span className="w-8 h-px bg-primary" />
-            <span className="text-primary text-[10px] font-extrabold uppercase tracking-[0.4em]">
-              About
-            </span>
+            <SectionHeader
+              eyebrow="About"
+              title="The developer behind the work."
+            />
           </motion.div>
-
-          {/* Heading */}
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="text-white text-3xl md:text-5xl font-extrabold tracking-tight mb-6"
-          >
-            The developer behind the work.
-          </motion.h2>
 
           {/* Bio text */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            className="text-white/60 text-base md:text-lg leading-relaxed mb-10 max-w-3xl"
+            className="text-white/65 text-base md:text-lg leading-relaxed mb-10 mt-6 max-w-3xl"
           >
             I&apos;m Mayowa, a full-stack developer who enjoys turning ideas, complex
             requirements, and real-world problems into software people can actually use.
@@ -69,13 +58,15 @@ export default function AboutPreview() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
           >
-            <Link
+            <Button
               href="/about"
-              className="group inline-flex items-center gap-3 h-12 px-6 bg-transparent border border-white/15 text-white text-sm font-bold uppercase tracking-widest hover:border-primary/50 hover:text-primary transition-all duration-300 rounded"
+              variant="secondary"
+              size="md"
+              className="group"
             >
               More About Me
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
+            </Button>
           </motion.div>
         </motion.div>
       </div>

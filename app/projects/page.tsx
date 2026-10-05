@@ -8,17 +8,6 @@ export const metadata: Metadata = {
   title: "Projects | Full-Stack Portfolio",
   description:
     "Portfolio of full-stack projects by Mayowa Makinde — SaaS platforms, ERP systems, and e-commerce engines built with Next.js, React, and TypeScript.",
-  keywords: [
-    "Full-Stack projects",
-    "Next.js portfolio",
-    "SaaS case studies",
-    "React projects",
-    "Web application portfolio",
-    "Mayowa Makinde projects",
-    "Makinde Mayowa projects",
-    "SaaS development portfolio",
-    "full-stack case studies",
-  ],
   alternates: {
     canonical: `${BASE_URL}/projects`,
   },

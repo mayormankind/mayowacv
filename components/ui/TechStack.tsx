@@ -1,4 +1,5 @@
 import React from "react";
+import type { TechCategory } from "@/lib/data/stack";
 
 type DeviconEntry = {
   path: string;
@@ -49,17 +50,17 @@ export function TechIconCard({ name }: { name: string }) {
   const entry = deviconMap[name];
 
   const cardBase =
-    "flex flex-col items-center justify-center gap-3 p-4 bg-white/[0.03] border border-white/[0.07] rounded-xl hover:scale-95 active:scale-90 transition-transform duration-200 cursor-default";
+    "flex flex-col items-center justify-center gap-3 p-4 bg-white/[0.03] border border-white/[0.07] rounded-md h-full";
 
   if (!entry) {
     return (
       <div className={cardBase}>
         <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10">
-          <span className="text-primary text-sm font-extrabold">
+          <span className="text-primary text-sm font-extrabold" aria-hidden>
             {name.slice(0, 2).toUpperCase()}
           </span>
         </div>
-        <span className="text-white/50 text-[11px] font-medium text-center leading-tight">
+        <span className="text-white/70 text-xs font-medium text-center leading-tight">
           {name}
         </span>
       </div>
@@ -73,37 +74,37 @@ export function TechIconCard({ name }: { name: string }) {
 
   return (
     <div className={cardBase}>
+      {/* Decorative — the name is already announced next to the icon */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={url}
-        alt={name}
+        alt=""
         width={40}
         height={40}
         className={`w-10 h-10 object-contain${entry.invert ? " brightness-0 invert opacity-80" : ""}`}
       />
-      <span className="text-white/50 text-[11px] font-medium text-center leading-tight">
+      <span className="text-white/70 text-xs font-medium text-center leading-tight">
         {name}
       </span>
     </div>
   );
 }
 
-type TechCategory = {
-  category: string;
-  items: string[];
-};
-
 export function TechIconGrid({ categories }: { categories: TechCategory[] }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
       {categories.map(({ category, items }) => (
         <div key={category} className="flex flex-col gap-3">
-          <p className="text-white/30 text-[9px] font-extrabold uppercase tracking-[0.3em] mb-1">
+          <p className="text-white/65 text-xs font-bold uppercase tracking-[0.25em] mb-1">
             {category}
           </p>
-          {items.map((item) => (
-            <TechIconCard key={item} name={item} />
-          ))}
+          <ul className="flex flex-col gap-3">
+            {items.map((item) => (
+              <li key={item}>
+                <TechIconCard name={item} />
+              </li>
+            ))}
+          </ul>
         </div>
       ))}
     </div>
