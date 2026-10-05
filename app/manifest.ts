@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Mayowa Makinde — Full-Stack Product Engineer",
-    short_name: "Mayowa.dev",
+    short_name: "Makinde.dev",
     description:
       "Portfolio of Mayowa Makinde — building scalable SaaS platforms, dashboards, and web applications with Next.js and React.",
     start_url: "/",

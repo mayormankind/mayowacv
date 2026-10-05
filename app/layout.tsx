@@ -7,11 +7,13 @@ import "./globals.css";
 import { Manrope } from "next/font/google";
 import { Metadata, Viewport } from "next";
 import PWARegister from "@/components/ui/PWARegister";
+import MotionProvider from "@/components/ui/MotionProvider";
 import { OG_IMAGE, BASE_URL, AUTHOR_NAME, AUTHOR_HANDLE, AUTHOR_EMAIL } from "@/lib/seo";
 
 const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-manrope",
+  display: "swap",
 });
 
 export const viewport: Viewport = {
@@ -31,24 +33,7 @@ export const metadata: Metadata = {
     template: "%s | Mayowa Makinde",
   },
   description:
-    "Mayowa Makinde — Senior Full-Stack Engineer specializing in high-performance SaaS platforms, data-driven dashboards, and scalable web applications with Next.js and React.",
-  keywords: [
-    "Full Stack Engineer",
-    "Product Engineer",
-    "React Developer",
-    "Next.js Developer",
-    "TypeScript",
-    "SaaS Architecture",
-    "Frontend Engineering",
-    "Software Engineer Nigeria",
-    "Mayowa Makinde",
-    "Makinde Mayowa",
-    "Mayowa Makinde portfolio",
-    "Node.js Developer",
-    "Supabase",
-    "Web Application Development",
-    "Full-Stack developer Nigeria",
-  ],
+    "Mayowa Makinde — Full-Stack Product Engineer specializing in high-performance SaaS platforms, data-driven dashboards, and scalable web applications with Next.js and React.",
   authors: [{ name: AUTHOR_NAME, url: BASE_URL }],
   creator: AUTHOR_NAME,
   publisher: AUTHOR_NAME,
@@ -94,7 +79,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "Mayowa.dev",
+    title: "MayowaMakinde.dev",
     statusBarStyle: "black-translucent",
   },
   formatDetection: {
@@ -121,20 +106,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={manrope.variable}>
       <body
-        className={`${manrope.variable} bg-background text-white font-display`}
+        className="bg-background text-white font-display"
       >
         <PWARegister />
         <ViewTracker />
         <div className="fixed inset-0 z-[-1] mesh-gradient" />
-        <div className="flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1 px-6 md:px-20">{children}</main>
-          <Footer />
-          <BrandStamp />
-          <ScrollToTop />
-        </div>
+        <MotionProvider>
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1 px-6 md:px-20">{children}</main>
+            <Footer />
+            <BrandStamp />
+            <ScrollToTop />
+          </div>
+        </MotionProvider>
       </body>
     </html>
   );

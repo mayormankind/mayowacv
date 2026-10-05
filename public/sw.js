@@ -1,10 +1,9 @@
-const CACHE_NAME = "mayowa-portfolio-v1";
+const CACHE_NAME = "mayowa-portfolio-v2";
 
 const PRECACHE_URLS = [
   "/",
   "/about",
   "/projects",
-  "/stacks",
   "/contact",
   "/images/logo.png",
   "/images/profile.png",

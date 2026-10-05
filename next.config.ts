@@ -2,10 +2,19 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [new URL("https://lh3.googleusercontent.com/**")],
+    remotePatterns: [
+      { protocol: "https", hostname: "lh3.googleusercontent.com" },
+      { protocol: "https", hostname: "uxfkvbvtmwjfzwlgelbf.supabase.co" },
+      { protocol: "https", hostname: "**.vercel.app" },
+    ],
   },
   async redirects() {
     return [
+      {
+        source: "/stacks",
+        destination: "/about#toolbox",
+        permanent: true,
+      },
       {
         source: "/:path*",
         has: [{ type: "host", value: "mayowadevv.vercel.app" }],
@@ -63,6 +72,16 @@ const nextConfig: NextConfig = {
           {
             key: "Cache-Control",
             value: "public, max-age=86400, stale-while-revalidate=604800",
+          },
+        ],
+      },
+      // sw.js must never be cached — browsers check it for updates on every load
+      {
+        source: "/sw.js",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-cache, no-store, must-revalidate",
           },
         ],
       },
