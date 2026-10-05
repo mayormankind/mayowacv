@@ -1,10 +1,49 @@
 import nodemailer from "nodemailer";
 import { NextRequest } from "next/server";
+import {
+  MESSAGE_MAX_LENGTH,
+  MESSAGE_MIN_LENGTH,
+  NAME_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+  PROJECT_TYPES,
+} from "@/lib/data/contact";
+import { supabase } from "@/lib/supabase/server";
 
 const SITE_URL = "https://mayowamakinde.dev";
 const AUTHOR_NAME = "Mayowa Makinde";
 const AUTHOR_TITLE = "Full-Stack Product Engineer";
 const LOGO_URL = `${SITE_URL}/images/logo.png`;
+
+// Escape user input before interpolating into email HTML
+function esc(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// Basic per-IP rate limit (5 submissions/hour). In-memory — resets on cold
+// start; sufficient for this traffic level. [OWNER] move to KV/Upstash if needed.
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 60 * 60 * 1000;
+const rateBuckets = new Map<string, { count: number; resetAt: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const bucket = rateBuckets.get(ip);
+  if (!bucket || bucket.resetAt < now) {
+    rateBuckets.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  bucket.count += 1;
+  return bucket.count > RATE_LIMIT;
+}
+
+function validEmail(email: string): boolean {
+  return email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
 function emailShell(content: string): string {
   return `<!DOCTYPE html>
@@ -194,7 +233,7 @@ function buildOwnerNotificationEmail(
             </td>
           </tr>
           <tr>
-            <td style="padding:11px 0;font-size:12px;color:#555555;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;vertical-align:top;">Service</td>
+            <td style="padding:11px 0;border-bottom:1px solid #1a1a1a;font-size:12px;color:#555555;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;vertical-align:top;">Service</td>
             <td style="padding:11px 0;font-size:14px;color:#cccccc;vertical-align:top;">${projectType || "Not specified"}</td>
           </tr>
         </table>
@@ -229,13 +268,53 @@ function buildOwnerNotificationEmail(
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, projectType, message } = body;
 
-    if (!name || !email || !message) {
+    // Honeypot: real users never see this field — bots fill it.
+    if (body.company_website) {
+      return Response.json({ success: true });
+    }
+
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    if (isRateLimited(ip)) {
       return Response.json(
-        { error: "Name, email, and message are required." },
+        { error: "Too many requests. Please try again later." },
+        { status: 429 },
+      );
+    }
+
+    const name = String(body.name ?? "").trim();
+    const email = String(body.email ?? "").trim();
+    const projectType = String(body.projectType ?? "").trim();
+    const message = String(body.message ?? "").trim();
+
+    const invalid =
+      name.length < NAME_MIN_LENGTH ||
+      name.length > NAME_MAX_LENGTH ||
+      !validEmail(email) ||
+      message.length < MESSAGE_MIN_LENGTH ||
+      message.length > MESSAGE_MAX_LENGTH ||
+      !PROJECT_TYPES.includes(projectType as (typeof PROJECT_TYPES)[number]);
+
+    if (invalid) {
+      return Response.json(
+        { error: "Please check the form and try again." },
         { status: 400 },
       );
+    }
+
+    // Best-effort backup store — never blocks delivery. [OWNER] ensure a
+    // `contact_messages` table exists in Supabase (columns: name, email,
+    // project_type, message).
+    try {
+      await supabase.from("contact_messages").insert({
+        name,
+        email,
+        project_type: projectType,
+        message,
+      });
+    } catch (storeErr) {
+      console.error("Failed to store contact message:", storeErr);
     }
 
     const transporter = nodemailer.createTransport({
@@ -255,21 +334,31 @@ export async function POST(req: NextRequest) {
         from: process.env.SMTP_FROM,
         to: process.env.SMTP_USER,
         replyTo: email,
-        subject: `New Inquiry: ${projectType || "General"} from ${name}`,
-        html: buildOwnerNotificationEmail(name, email, projectType, message),
+        subject: `New Inquiry: ${projectType} from ${name}`,
+        html: buildOwnerNotificationEmail(
+          esc(name),
+          esc(email),
+          esc(projectType),
+          esc(message),
+        ),
       }),
       transporter.sendMail({
         from: process.env.SMTP_FROM,
         to: email,
         replyTo: process.env.SMTP_USER,
         subject: `Message Received — ${AUTHOR_NAME}`,
-        html: buildConfirmationEmail(name, email, projectType, message),
+        html: buildConfirmationEmail(
+          esc(name),
+          esc(email),
+          esc(projectType),
+          esc(message),
+        ),
       }),
     ]);
 
     return Response.json({ success: true });
   } catch (err) {
-    console.error("Email send error:", err);
+    console.error("Contact form error:", err);
     return Response.json(
       { error: "Failed to send message. Please try again." },
       { status: 500 },
