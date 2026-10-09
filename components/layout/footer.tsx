@@ -6,7 +6,7 @@ import React from "react";
 export default function Footer() {
   return (
     <footer className="px-6 md:px-20 py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-      <div className="flex items-center gap-6">
+      <div className="flex flex-col items-center gap-6 md:flex-row">
         <p className="text-white/60 text-[10px] font-bold uppercase tracking-[0.2em]">
           Based in {SITE.location}
         </p>
