@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { BASE_URL, OG_IMAGE } from "@/lib/seo";
+import { BASE_URL, OG_IMAGE, buildBreadcrumbSchema } from "@/lib/seo";
 import { SITE } from "@/lib/site-config";
 import { supabase } from "@/lib/supabase/server";
 import AnimateIn from "@/components/ui/AnimateIn";
@@ -49,14 +49,27 @@ export default async function ContactPage() {
   return (
     <>
       <JsonLd
+        schema={buildBreadcrumbSchema([
+          { name: "Home", url: BASE_URL },
+          { name: "Contact", url: `${BASE_URL}/contact` },
+        ])}
+      />
+      <JsonLd
         schema={{
           "@context": "https://schema.org",
           "@type": "ContactPage",
           name: `Contact ${SITE.name}`,
           url: `${BASE_URL}/contact`,
+          inLanguage: "en",
+          isPartOf: {
+            "@type": "WebSite",
+            "@id": `${BASE_URL}/#website`,
+          },
           about: {
             "@type": "Person",
+            "@id": `${BASE_URL}/#person`,
             name: SITE.name,
+            url: BASE_URL,
             email: SITE.email,
             telephone: SITE.phoneHref,
             jobTitle: SITE.role,

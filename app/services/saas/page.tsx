@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { BASE_URL } from "@/lib/seo";
+import {
+  BASE_URL,
+  OG_IMAGE,
+  buildBreadcrumbSchema,
+  buildServiceSchema,
+} from "@/lib/seo";
 import AnimateIn from "@/components/ui/AnimateIn";
+import JsonLd from "@/components/ui/JsonLd";
 import { ArrowRight, Zap, Users, BarChart3, Shield, Clock, CheckCircle2 } from "lucide-react";
 import { TechIconCard } from "@/components/ui/TechStack";
 
@@ -11,6 +17,27 @@ export const metadata: Metadata = {
     "Custom SaaS development services. Build scalable subscription-based platforms with multi-tenant architecture, billing integration, and real-time collaboration features.",
   alternates: {
     canonical: `${BASE_URL}/services/saas`,
+  },
+  openGraph: {
+    title: "SaaS Development Services | Mayowa Makinde",
+    description:
+      "Scalable subscription-based platforms with multi-tenant architecture, billing integration, and real-time collaboration.",
+    url: `${BASE_URL}/services/saas`,
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "SaaS Development Services — Mayowa Makinde",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SaaS Development Services | Mayowa Makinde",
+    description:
+      "Scalable subscription-based platforms with multi-tenant architecture, billing integration, and real-time collaboration.",
+    images: [OG_IMAGE],
   },
 };
 
@@ -96,6 +123,22 @@ const techStack = [
 export default function SaaSPage() {
   return (
     <>
+      <JsonLd
+        schema={buildBreadcrumbSchema([
+          { name: "Home", url: BASE_URL },
+          { name: "Services", url: `${BASE_URL}/services` },
+          { name: "SaaS Development", url: `${BASE_URL}/services/saas` },
+        ])}
+      />
+      <JsonLd
+        schema={buildServiceSchema({
+          name: "SaaS Development Services",
+          description:
+            "Custom SaaS development services. Build scalable subscription-based platforms with multi-tenant architecture, billing integration, and real-time collaboration features.",
+          path: "/services/saas",
+          serviceType: "SaaS Development",
+        })}
+      />
       <AnimateIn direction="up" delay={0.1} className="max-w-4xl mb-20 pt-12 md:pt-20">
         <div className="flex items-center gap-3 mb-6">
           <span className="w-8 h-px bg-primary" />

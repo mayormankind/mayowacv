@@ -15,6 +15,7 @@ import JsonLd from "@/components/ui/JsonLd";
 import {
   buildPersonSchema,
   buildProfilePageSchema,
+  buildBreadcrumbSchema,
   BASE_URL,
   OG_IMAGE,
 } from "@/lib/seo";
@@ -126,6 +127,12 @@ export default function AboutPage() {
     <>
       <JsonLd schema={buildPersonSchema()} />
       <JsonLd schema={buildProfilePageSchema()} />
+      <JsonLd
+        schema={buildBreadcrumbSchema([
+          { name: "Home", url: BASE_URL },
+          { name: "About", url: `${BASE_URL}/about` },
+        ])}
+      />
 
       {/* ─── Section 1 · Hero ─────────────────────────────────────────────── */}
       <section className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20 pt-12 md:pt-20 pb-24">

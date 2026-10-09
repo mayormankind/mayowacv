@@ -6,6 +6,8 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "Makinde.dev",
     description:
       "Portfolio of Mayowa Makinde — building scalable SaaS platforms, dashboards, and web applications with Next.js and React.",
+    id: "/",
+    dir: "ltr",
     start_url: "/",
     scope: "/",
     display: "standalone",

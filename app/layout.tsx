@@ -34,6 +34,17 @@ export const metadata: Metadata = {
   },
   description:
     "Mayowa Makinde — Full-Stack Product Engineer specializing in high-performance SaaS platforms, data-driven dashboards, and scalable web applications with Next.js and React.",
+  keywords: [
+    "Mayowa Makinde",
+    "Full-Stack Product Engineer",
+    "Full-Stack Developer Nigeria",
+    "Next.js Developer",
+    "React Engineer",
+    "TypeScript Engineer",
+    "SaaS Developer",
+    "Web Application Development",
+    "Freelance Software Engineer",
+  ],
   authors: [{ name: AUTHOR_NAME, url: BASE_URL }],
   creator: AUTHOR_NAME,
   publisher: AUTHOR_NAME,

@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { BASE_URL } from "@/lib/seo";
+import {
+  BASE_URL,
+  OG_IMAGE,
+  buildBreadcrumbSchema,
+  buildServiceSchema,
+} from "@/lib/seo";
 import AnimateIn from "@/components/ui/AnimateIn";
+import JsonLd from "@/components/ui/JsonLd";
 import { ArrowRight, Globe, ShoppingCart, CreditCard, Package, BarChart3, Zap, CheckCircle2 } from "lucide-react";
 import { TechIconCard } from "@/components/ui/TechStack";
 
@@ -11,6 +17,27 @@ export const metadata: Metadata = {
     "Custom e-commerce development services. Build high-performance storefronts with headless commerce, payment gateway integration, and inventory management.",
   alternates: {
     canonical: `${BASE_URL}/services/ecommerce`,
+  },
+  openGraph: {
+    title: "E-Commerce Development Services | Mayowa Makinde",
+    description:
+      "High-performance storefronts with headless commerce, payment gateway integration, and inventory management.",
+    url: `${BASE_URL}/services/ecommerce`,
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "E-Commerce Development Services — Mayowa Makinde",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "E-Commerce Development Services | Mayowa Makinde",
+    description:
+      "High-performance storefronts with headless commerce, payment gateway integration, and inventory management.",
+    images: [OG_IMAGE],
   },
 };
 
@@ -96,6 +123,22 @@ const techStack = [
 export default function EcommercePage() {
   return (
     <>
+      <JsonLd
+        schema={buildBreadcrumbSchema([
+          { name: "Home", url: BASE_URL },
+          { name: "Services", url: `${BASE_URL}/services` },
+          { name: "E-Commerce Development", url: `${BASE_URL}/services/ecommerce` },
+        ])}
+      />
+      <JsonLd
+        schema={buildServiceSchema({
+          name: "E-Commerce Development Services",
+          description:
+            "Custom e-commerce development services. Build high-performance storefronts with headless commerce, payment gateway integration, and inventory management.",
+          path: "/services/ecommerce",
+          serviceType: "E-Commerce Development",
+        })}
+      />
       <AnimateIn direction="up" delay={0.1} className="max-w-4xl mb-20 pt-12 md:pt-20">
         <div className="flex items-center gap-3 mb-6">
           <span className="w-8 h-px bg-primary" />

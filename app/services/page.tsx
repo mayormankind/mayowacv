@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { BASE_URL, OG_IMAGE } from "@/lib/seo";
+import { BASE_URL, OG_IMAGE, buildBreadcrumbSchema } from "@/lib/seo";
 import { STATS } from "@/lib/site-config";
 import AnimateIn from "@/components/ui/AnimateIn";
+import JsonLd from "@/components/ui/JsonLd";
 import { ArrowRight, Code2, GraduationCap, Monitor, Server, Zap } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -111,6 +112,12 @@ const services = [
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd
+        schema={buildBreadcrumbSchema([
+          { name: "Home", url: BASE_URL },
+          { name: "Services", url: `${BASE_URL}/services` },
+        ])}
+      />
       <AnimateIn direction="up" delay={0.1} className="max-w-4xl mb-20 pt-12 md:pt-20">
         <div className="flex items-center gap-3 mb-6">
           <span className="w-8 h-px bg-primary" />
