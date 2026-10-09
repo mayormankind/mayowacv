@@ -1,3 +1,4 @@
+//app/projects/[slug]/page.tsx
 import { Project } from "@/lib/data";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
@@ -13,6 +14,7 @@ import AnimateIn from "@/components/ui/AnimateIn";
 import JsonLd from "@/components/ui/JsonLd";
 import { BASE_URL, buildBreadcrumbSchema, buildSoftwareAppSchema } from "@/lib/seo";
 import MermaidDiagram from "@/components/ui/MermaidDiagram";
+import CaseStudyGrid from "@/components/sections/CaseStudyGrid";
 
 export async function generateStaticParams() {
   const { data: dbProjects } = await supabase
@@ -182,41 +184,7 @@ export default async function ProjectDetails({
       </section>
 
       <section className="py-24 border-b border-white/5">
-        <div className="max-w-7xl px-6 md:px-0 mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12">
-          <div className="space-y-6">
-            <p className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em]">
-              {project.details.challenge.subtitle}
-            </p>
-            <h3 className="text-2xl font-bold leading-tight">
-              {project.details.challenge.title}
-            </h3>
-            <p className="text-white/50 text-sm leading-loose">
-              {project.details.challenge.description}
-            </p>
-          </div>
-          <div className="space-y-6">
-            <p className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em]">
-              {project.details.strategy.subtitle}
-            </p>
-            <h3 className="text-2xl font-bold leading-tight">
-              {project.details.strategy.title}
-            </h3>
-            <p className="text-white/50 text-sm leading-loose">
-              {project.details.strategy.description}
-            </p>
-          </div>
-          <div className="space-y-6">
-            <p className="text-primary text-[10px] font-extrabold uppercase tracking-[0.3em]">
-              {project.details.impact.subtitle}
-            </p>
-            <h3 className="text-2xl font-bold leading-tight">
-              {project.details.impact.title}
-            </h3>
-            <p className="text-white/50 text-sm leading-loose">
-              {project.details.impact.description}
-            </p>
-          </div>
-        </div>
+        <CaseStudyGrid details={project.details} />
       </section>
 
       <section className="py-24">
@@ -231,13 +199,11 @@ export default async function ProjectDetails({
                   </h2>
                   <div className="h-1 w-20 bg-primary mb-8"></div>
                 </div>
-                <div className="bg-surface border border-white/10 rounded-xl p-8 mb-12">
-                  <MermaidDiagram
-                    syntax={project.architecture.diagramSyntax ?? ""}
-                    title={project.architecture.title}
-                    description={project.architecture.description}
-                  />
-                </div>
+                <MermaidDiagram
+                  syntax={project.architecture.diagramSyntax ?? ""}
+                  title={project.architecture.title}
+                  description={project.architecture.description}
+                />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                   {project.architecture.points.map(
                     (point: any, idx: number) => (
