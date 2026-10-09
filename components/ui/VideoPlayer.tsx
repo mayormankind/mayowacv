@@ -1,3 +1,4 @@
+//components/ui/VideoPlayer.tsx
 "use client";
 import { useState } from "react";
 import { Play } from "lucide-react";

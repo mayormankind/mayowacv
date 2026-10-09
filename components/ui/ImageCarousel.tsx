@@ -1,3 +1,4 @@
+//components/ui/ImageCarousel.tsx
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
