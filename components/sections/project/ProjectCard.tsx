@@ -2,67 +2,12 @@
 
 import { ArrowRight, ExternalLink, Plus } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AnimateIn from "@/components/ui/AnimateIn";
 
 import { Project } from "@/lib/data";
 
-export default function ProjectCard() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch("/api/projects");
-        const data = await response.json();
-
-        if (data.error) {
-          setError(data.error);
-          setProjects([]);
-        } else if (Array.isArray(data)) {
-          setProjects(data);
-        } else {
-          setProjects([]);
-        }
-      } catch (err) {
-        console.error("Failed to fetch projects:", err);
-        setError("Failed to load projects");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchProjects();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 animate-pulse">
-        {[1, 2, 3, 4, 5, 6].map((i) => (
-          <div
-            key={i}
-            className="h-72 bg-white/5 rounded-xl border border-white/5"
-          ></div>
-        ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-8 border border-red-500/20 bg-red-500/5 rounded-xl text-center text-red-500">
-        <p>Error: {error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-4 text-xs font-bold uppercase tracking-widest underline"
-        >
-          Try Again
-        </button>
-      </div>
-    );
-  }
-
+export default function ProjectCard({ projects }: { projects: Project[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       {projects.length === 0 && (
