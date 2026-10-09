@@ -4,12 +4,12 @@ import { SITE } from "@/lib/site-config";
 export const BASE_URL = "https://mayowamakinde.dev";
 export const SITE_NAME = "Mayowa Makinde";
 export const AUTHOR_NAME = "Mayowa Makinde";
-export const AUTHOR_HANDLE = "@RedMoonCoder";
+export const AUTHOR_HANDLE = "@mayowamakinde23";
 export const AUTHOR_EMAIL = SITE.email;
 export const AUTHOR_LINKEDIN =
   "https://www.linkedin.com/in/makinde-mayowa-4670a51bb";
 export const AUTHOR_GITHUB = "https://github.com/mayormankind";
-export const AUTHOR_TWITTER = "https://x.com/RedMoonCoder";
+export const AUTHOR_TWITTER = "https://x.com/mayowamakinde23";
 export const OG_IMAGE = `${BASE_URL}/images/og-image.png`;
 export const PROFILE_IMAGE = `${BASE_URL}/images/profile.png`;
 
@@ -24,14 +24,20 @@ export function buildPersonSchema() {
     alternateName: ["Makinde Mayowa", "Mayowa"],
     url: BASE_URL,
     email: AUTHOR_EMAIL,
+    telephone: SITE.phoneHref,
     jobTitle: "Full-Stack Product Engineer",
     description:
       "Full-Stack Engineer with 3+ years specializing in high-performance SaaS platforms, data-driven dashboards, and scalable web applications using Next.js and React.",
+    nationality: {
+      "@type": "Country",
+      name: "Nigeria",
+    },
+    knowsLanguage: ["en"],
     sameAs: [
       AUTHOR_LINKEDIN,
       AUTHOR_GITHUB,
       AUTHOR_TWITTER,
-      `https://twitter.com/RedMoonCoder`,
+      `https://twitter.com/mayowamakinde23`,
     ],
     address: {
       "@type": "PostalAddress",
@@ -84,21 +90,16 @@ export function buildWebsiteSchema() {
     "@id": `${BASE_URL}/#website`,
     name: SITE_NAME,
     url: BASE_URL,
+    inLanguage: "en",
     description:
       "Portfolio of Mayowa Makinde — Full-Stack Product Engineer building scalable SaaS platforms and web applications.",
     author: {
       "@type": "Person",
       "@id": `${BASE_URL}/#person`,
-      name: AUTHOR_NAME,
-      url: BASE_URL,
     },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${BASE_URL}/projects?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
+    publisher: {
+      "@type": "Person",
+      "@id": `${BASE_URL}/#person`,
     },
   };
 }
@@ -112,13 +113,16 @@ export function buildProfilePageSchema() {
     name: "About Mayowa Makinde — Full-Stack Product Engineer",
     description:
       "Learn about Mayowa Makinde, a Full-Stack Product Engineer based in Nigeria with 3+ years building SaaS platforms and scalable web applications.",
+    inLanguage: "en",
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+    },
     dateCreated: "2024-01-01",
     dateModified: new Date().toISOString().split("T")[0],
     mainEntity: {
       "@type": "Person",
       "@id": `${BASE_URL}/#person`,
-      name: AUTHOR_NAME,
-      url: BASE_URL,
     },
   };
 }
@@ -138,14 +142,62 @@ export function buildSoftwareAppSchema(project: {
     url: `${BASE_URL}/projects/${project.slug}`,
     applicationCategory: "WebApplication",
     operatingSystem: "Web",
+    inLanguage: "en",
     keywords: project.techStack.join(", "),
     author: {
       "@type": "Person",
       "@id": `${BASE_URL}/#person`,
-      name: AUTHOR_NAME,
-      url: BASE_URL,
+    },
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
     },
     ...(project.heroImage ? { image: project.heroImage } : {}),
+  };
+}
+
+export function buildServiceSchema(service: {
+  name: string;
+  description: string;
+  path: string;
+  serviceType?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.name,
+    description: service.description,
+    url: `${BASE_URL}${service.path}`,
+    serviceType: service.serviceType ?? "Software Development",
+    inLanguage: "en",
+    provider: {
+      "@type": "Person",
+      "@id": `${BASE_URL}/#person`,
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Worldwide (Remote)",
+    },
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+    },
+  };
+}
+
+export function buildItemListSchema(
+  items: { name: string; url: string; description?: string }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+      ...(item.description ? { description: item.description } : {}),
+    })),
   };
 }
 
