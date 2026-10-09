@@ -192,7 +192,7 @@ The recommended deployment target is **Vercel**. Connect the GitHub repository a
 - [Portfolio](https://www.mayowamakinde.dev)
 - [LinkedIn](https://www.linkedin.com/in/makinde-mayowa-4670a51bb)
 - [GitHub](https://github.com/mayormankind)
-- [Twitter / X](https://x.com/RedMoonCoder)
+- [Twitter / X](https://x.com/mayowamakinde23)
 
 ## License
 

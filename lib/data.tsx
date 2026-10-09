@@ -78,7 +78,7 @@ export const socials: Social[] = [
     label: "LinkedIn",
     ref: "https://www.linkedin.com/in/makinde-mayowa-4670a51bb",
   },
-  { id: "x", label: "X (Twitter)", ref: "https://x.com/RedMoonCoder" },
+  { id: "x", label: "X (Twitter)", ref: "https://x.com/mayowamakinde23" },
   { id: "github", label: "GitHub", ref: "https://github.com/mayormankind" },
   {
     id: "instagram",
