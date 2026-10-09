@@ -1,0 +1,30 @@
+# Mayowa Makinde — Full-Stack Product Engineer
+
+> Portfolio of Mayowa Makinde, a Full-Stack Product Engineer based in Nigeria
+> with 3+ years of experience building high-performance SaaS platforms,
+> data-driven dashboards, and scalable web applications using Next.js, React,
+> TypeScript, Node.js, and Supabase/PostgreSQL. Available for freelance,
+> contract, and full-time product engineering work, working worldwide (WAT, UTC+1).
+
+## Pages
+
+- [Home](https://mayowamakinde.dev/): Overview, featured case studies, and testimonials
+- [About](https://mayowamakinde.dev/about): Background, engineering principles, tools of the trade, and career timeline
+- [Projects](https://mayowamakinde.dev/projects): Full-stack portfolio — SaaS platforms, ERP systems, and e-commerce engines
+- [Services](https://mayowamakinde.dev/services): Full-stack engineering, backend development, SaaS products, frontend engineering, and consultation
+- [SaaS Development](https://mayowamakinde.dev/services/saas): Multi-tenant architecture, subscription billing, analytics, and real-time collaboration
+- [E-Commerce Development](https://mayowamakinde.dev/services/ecommerce): Headless commerce, custom checkout flows, payment integration, and inventory management
+- [Contact](https://mayowamakinde.dev/contact): Project inquiries — replies within 24 hours
+- [Resume (PDF)](https://mayowamakinde.dev/assets/mayowa-makinde-cv.pdf)
+
+## Profiles
+
+- [LinkedIn](https://www.linkedin.com/in/makinde-mayowa-4670a51bb)
+- [GitHub](https://github.com/mayormankind)
+- [X / Twitter](https://x.com/mayowamakinde23)
+- [Instagram](https://www.instagram.com/mankind_dev)
+
+## Contact
+
+- Email: mayowamakinde23@gmail.com
+- Phone / WhatsApp: +234 704 082 9383
