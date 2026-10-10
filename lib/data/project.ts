@@ -1,7 +1,4 @@
 // lib/data/project.ts
-// Server-side data access + normalization for portfolio projects.
-// Rows come from the "projects" Supabase table (managed by dashboard4redmoon).
-
 import { cache } from "react";
 import { supabase } from "@/lib/supabase/server";
 import { keysToCamel } from "@/lib/utils/case-transform";
@@ -98,9 +95,7 @@ function list<T>(value: unknown, map: (v: unknown) => T | null): T[] {
 }
 
 /**
- * Guarantees a safe Project shape regardless of what the DB row contains —
- * every optional section normalizes to null/empty arrays and "#" links to
- * undefined, so the page never crashes on sparse rows.
+ * Guarantees a safe Project shape regardless of what the DB row contains
  */
 export function normalizeProject(row: Record<string, any>): Project {
   const links =
