@@ -1,20 +1,34 @@
 //app/projects/[slug]/page.tsx
-import { Project } from "@/lib/data";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
 import { Metadata } from "next";
 import { supabase } from "@/lib/supabase/server";
-import { keysToCamel } from "@/lib/utils/case-transform";
 import Icon from "@/components/ui/Icon";
 import VideoPlayer from "@/components/ui/VideoPlayer";
 import ImageCarousel from "@/components/ui/ImageCarousel";
 import AnimateIn from "@/components/ui/AnimateIn";
 import JsonLd from "@/components/ui/JsonLd";
-import { BASE_URL, buildBreadcrumbSchema, buildSoftwareAppSchema } from "@/lib/seo";
+import SectionHeader from "@/components/ui/SectionHeader";
+import Button from "@/components/ui/Button";
+import OnThisPage, { type TocSection } from "@/components/ui/OnThisPage";
+import {
+  BASE_URL,
+  OG_IMAGE,
+  buildBreadcrumbSchema,
+  buildSoftwareAppSchema,
+} from "@/lib/seo";
 import MermaidDiagram from "@/components/ui/MermaidDiagram";
 import CaseStudyGrid from "@/components/sections/CaseStudyGrid";
+import CTASection from "@/components/sections/CTASection";
+import {
+  fetchProject,
+  fetchPublishedProjectList,
+} from "@/lib/data/project";
+
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const { data: dbProjects } = await supabase
@@ -23,20 +37,6 @@ export async function generateStaticParams() {
     .eq("status", "published");
 
   return (dbProjects || []).map((p) => ({ slug: p.slug }));
-}
-
-async function fetchProject(slug: string): Promise<Project | undefined> {
-  const { data } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("slug", slug)
-    .single();
-
-  if (data) {
-    return keysToCamel(data) as Project;
-  }
-
-  return undefined;
 }
 
 export async function generateMetadata({
@@ -63,21 +63,39 @@ export async function generateMetadata({
       title: `${project.title} | Mayowa Makinde — Case Study`,
       description: project.shortDescription,
       url: `${BASE_URL}/projects/${project.slug}`,
-      images: [
-        {
-          url: project.heroImage,
-          width: 1200,
-          height: 630,
-          alt: `${project.title} — Project by Mayowa Makinde`,
-        },
-      ],
+      images: project.heroImage
+        ? [
+            {
+              url: project.heroImage,
+              alt: `${project.title} — Project by Mayowa Makinde`,
+            },
+          ]
+        : [
+            {
+              url: OG_IMAGE,
+              width: 1200,
+              height: 630,
+              alt: "Mayowa Makinde — Full-Stack Portfolio",
+            },
+          ],
     },
     twitter: {
+      card: "summary_large_image",
       title: `${project.title} | Mayowa Makinde`,
       description: project.shortDescription,
-      images: [project.heroImage],
+      images: [project.heroImage || OG_IMAGE],
     },
   };
+}
+
+/** First couple of sentences of a text, for the hero summary. */
+function firstSentences(text: string, count = 2): string {
+  const trimmed = text.trim();
+  if (!trimmed) return "";
+  const sentences = trimmed.match(/[^.!?]+[.!?]+(?=\s|$)/g);
+  if (!sentences) return trimmed;
+  const picked = sentences.slice(0, count).join(" ").trim();
+  return picked.length < trimmed.length ? picked : trimmed;
 }
 
 export default async function ProjectDetails({
@@ -86,26 +104,43 @@ export default async function ProjectDetails({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = await fetchProject(slug);
+  const [project, allProjects] = await Promise.all([
+    fetchProject(slug),
+    fetchPublishedProjectList(),
+  ]);
 
   if (!project) {
     notFound();
   }
 
-  // Find next project for the bottom CTA (circular)
-  const { data: dbProjects } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("status", "published");
-  const allProjects: Project[] = dbProjects
-    ? (keysToCamel(dbProjects) as Project[])
-    : [];
-
+  // Next project, circular, matching the /projects listing order.
   const currentIndex = allProjects.findIndex((p) => p.slug === slug);
   const nextProject =
-    currentIndex !== -1 && currentIndex < allProjects.length - 1
-      ? allProjects[currentIndex + 1]
-      : allProjects[0];
+    allProjects.length > 1 && currentIndex !== -1
+      ? allProjects[(currentIndex + 1) % allProjects.length]
+      : undefined;
+
+  const summary = firstSentences(
+    project.shortDescription || project.longDescription,
+  );
+  const hasCaseStudy = Boolean(
+    project.details &&
+      (project.details.challenge ||
+        project.details.strategy ||
+        project.details.impact),
+  );
+  const videoUrl = project.demoVideoUrl || project.links.demo;
+  const topStack = project.techStack.slice(0, 5);
+  const extraStack = project.techStack.length - topStack.length;
+  const category = project.category || project.subtitle;
+
+  const toc: TocSection[] = [
+    project.longDescription && { id: "overview", label: "Overview" },
+    project.images.length > 0 && { id: "screenshots", label: "Screenshots" },
+    hasCaseStudy && { id: "case-study", label: "Case study" },
+    project.architecture && { id: "architecture", label: "Architecture" },
+    project.lessons.length > 0 && { id: "lessons", label: "Lessons" },
+  ].filter(Boolean) as TocSection[];
 
   return (
     <>
@@ -120,142 +155,235 @@ export default async function ProjectDetails({
         slug: project.slug,
         techStack: project.techStack,
         heroImage: project.heroImage,
+        dateCreated: project.createdAt,
       })} />
+
+      {/* Hero */}
       <section className="py-16 md:py-24 border-b border-white/5">
         <div className="max-w-7xl mx-auto">
-          <AnimateIn direction="up" delay={0.1}>
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-              <div className="max-w-3xl">
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.2em] rounded">
-                    {project.subtitle}
-                  </span>
-                  <span className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em]">
-                    {project.period}
-                  </span>
-                </div>
-                <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight leading-[0.9] mb-6">
-                  {project.title}
-                </h1>
-                <p className="text-white/50 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
-                  {project.longDescription}
-                </p>
-              </div>
-              {project.links.live && project.links.live !== "#" && (
-                <div className="flex flex-col gap-4">
-                  <Link
-                    className="flex items-center gap-3 text-white group"
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/40 transition-colors hover:text-white mb-10"
+          >
+            <ArrowLeft className="size-4" aria-hidden />
+            All projects
+          </Link>
+
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-4 mb-6">
+              {project.subtitle && (
+                <span className="px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-[0.2em] rounded">
+                  {project.subtitle}
+                </span>
+              )}
+              {project.period && (
+                <span className="text-white/40 text-xs font-bold uppercase tracking-[0.2em]">
+                  {project.period}
+                </span>
+              )}
+            </div>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-[-0.03em] text-balance mb-6">
+              {project.title}
+            </h1>
+            {summary && (
+              <p className="text-white/60 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
+                {summary}
+              </p>
+            )}
+
+            {(project.links.live || project.links.repo) && (
+              <div className="flex flex-wrap gap-4 mt-8">
+                {project.links.live && (
+                  <Button
                     href={project.links.live}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest">
-                      Live Experience
-                    </span>
-                    <ArrowUpRight className="text-primary group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <div className="h-px w-full bg-linear-to-r from-primary to-transparent" />
-                </div>
-              )}
-            </div>
-          </AnimateIn>
-
-          {/* Demo Video */}
-          <AnimateIn direction="up" delay={0.2}>
-            <VideoPlayer
-              videoUrl={project.demoVideoUrl || project.links.demo}
-              posterUrl={project.heroImage}
-            />
-          </AnimateIn>
-
-          {/* Screenshots Carousel */}
-          {project.images && project.images.length > 0 && (
-            <AnimateIn direction="up" delay={0.1} className="mt-16">
-              <div className="mb-6">
-                <h2 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-2">
-                  Project Screenshots
-                </h2>
-                <div className="h-px w-16 bg-primary" />
+                    View live app
+                    <ArrowUpRight className="w-4 h-4" aria-hidden />
+                  </Button>
+                )}
+                {project.links.repo && (
+                  <Button
+                    href={project.links.repo}
+                    variant="secondary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View code
+                    <ArrowUpRight className="w-4 h-4" aria-hidden />
+                  </Button>
+                )}
               </div>
-              <ImageCarousel images={project.images} title={project.title} />
+            )}
+
+            {/* Quick facts */}
+            {(category || project.period || topStack.length > 0) && (
+              <dl className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/5 pt-8">
+                {category && (
+                  <div>
+                    <dt className="text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                      Category
+                    </dt>
+                    <dd className="mt-1.5 text-sm text-white/80">{category}</dd>
+                  </div>
+                )}
+                {project.period && (
+                  <div>
+                    <dt className="text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                      Timeline
+                    </dt>
+                    <dd className="mt-1.5 text-sm text-white/80">
+                      {project.period}
+                    </dd>
+                  </div>
+                )}
+                {topStack.length > 0 && (
+                  <div className="col-span-2">
+                    <dt className="text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                      Stack
+                    </dt>
+                    <dd className="mt-2 flex flex-wrap items-center gap-2">
+                      {topStack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 bg-white/5 text-xs text-white/80 rounded-md"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {extraStack > 0 && (
+                        <a
+                          href="#tech-stack"
+                          className="text-xs font-bold text-primary-soft hover:text-white transition-colors"
+                        >
+                          +{extraStack} more
+                        </a>
+                      )}
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            )}
+          </div>
+
+          {/* Full overview, collapsed so it stays out of the way */}
+          {project.longDescription && (
+            <details id="overview" className="group scroll-mt-32 mt-12 border border-white/5 rounded-lg bg-surface/50">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 text-xs font-bold uppercase tracking-widest text-white/60 transition-colors hover:text-white [&::-webkit-details-marker]:hidden">
+                Overview — read the full write-up
+                <ChevronDown
+                  className="size-4 transition-transform group-open:rotate-180"
+                  aria-hidden
+                />
+              </summary>
+              <p className="max-w-prose px-6 pb-6 text-white/70 text-base leading-relaxed">
+                {project.longDescription}
+              </p>
+            </details>
+          )}
+
+          {/* Demo video — renders nothing when there is no playable URL */}
+          {videoUrl && (
+            <div className="mt-12">
+              <VideoPlayer
+                videoUrl={videoUrl}
+                posterUrl={project.heroImage}
+                title={project.title}
+              />
+            </div>
+          )}
+
+          {/* Screenshots */}
+          {project.images.length > 0 && (
+            <AnimateIn direction="up" delay={0.1} className="mt-16">
+              <div id="screenshots" className="scroll-mt-32">
+                <SectionHeader
+                  eyebrow="Screenshots"
+                  title="The product in action"
+                  className="mb-10"
+                />
+                <ImageCarousel images={project.images} title={project.title} />
+              </div>
             </AnimateIn>
           )}
         </div>
       </section>
 
-      <section className="py-24 border-b border-white/5">
-        <CaseStudyGrid details={project.details} />
-      </section>
+      {/* Case study */}
+      {hasCaseStudy && (
+        <section
+          id="case-study"
+          className="py-24 border-b border-white/5 scroll-mt-32"
+        >
+          <CaseStudyGrid details={project.details} />
+        </section>
+      )}
 
+      {/* Body + sidebar */}
       <section className="py-24">
         <div className="max-w-7xl px-6 md:px-0 mx-auto grid grid-cols-1 lg:grid-cols-12 gap-20">
           <div className="lg:col-span-8 space-y-32">
-            {/* Architecture Section */}
+            {/* Architecture */}
             {project.architecture && (
               <div className="scroll-mt-32" id="architecture">
-                <div className="mb-12">
-                  <h2 className="text-3xl font-extrabold mb-4 tracking-tight">
-                    {project.architecture.subtitle}
-                  </h2>
-                  <div className="h-1 w-20 bg-primary mb-8"></div>
-                </div>
+                <SectionHeader
+                  eyebrow="Architecture"
+                  title={project.architecture.subtitle || "How it’s built"}
+                  className="mb-12"
+                />
                 <MermaidDiagram
                   syntax={project.architecture.diagramSyntax ?? ""}
                   title={project.architecture.title}
                   description={project.architecture.description}
                 />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  {project.architecture.points.map(
-                    (point: any, idx: number) => (
+                {project.architecture.points.length > 0 && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    {project.architecture.points.map((point, idx) => (
                       <div key={idx} className="space-y-4">
-                        <h4 className="text-sm font-extrabold uppercase tracking-widest text-white/80 flex items-center gap-2">
-                          {typeof point.icon === "string" || point.iconName ? (
-                            <Icon
-                              name={point.iconName || point.icon}
-                              className="text-primary text-lg"
-                            />
-                          ) : (
-                            <point.icon className="text-primary text-lg" />
-                          )}
+                        <h3 className="text-sm font-extrabold uppercase tracking-widest text-white/80 flex items-center gap-2">
+                          <Icon
+                            name={point.iconName}
+                            className="text-primary text-lg"
+                          />
                           {point.title}
-                        </h4>
-                        <p className="text-white/50 text-sm leading-relaxed">
+                        </h3>
+                        <p className="text-white/60 text-sm leading-relaxed">
                           {point.description}
                         </p>
                       </div>
-                    ),
-                  )}
-                </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Lessons Section */}
-            {project.lessons && project.lessons.length > 0 && (
+            {/* Lessons */}
+            {project.lessons.length > 0 && (
               <div className="scroll-mt-32" id="lessons">
-                <div className="mb-12">
-                  <h2 className="text-3xl font-extrabold mb-4 tracking-tight">
-                    Lessons & Trade-offs
-                  </h2>
-                  <div className="h-1 w-20 bg-primary mb-8"></div>
-                </div>
+                <SectionHeader
+                  eyebrow="Takeaways"
+                  title="Lessons & trade-offs"
+                  className="mb-12"
+                />
                 <div className="space-y-12">
-                  {project.lessons.map((lesson: any, idx: number) => (
-                    <div key={idx} className="flex gap-8 group">
+                  {project.lessons.map((lesson, idx) => (
+                    <div key={idx} className="flex gap-8">
                       <div className="flex-none">
-                        <div className="size-12 rounded bg-surface border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                          {typeof lesson.icon === "string" ||
-                          lesson.iconName ? (
-                            <Icon name={lesson.iconName || lesson.icon} />
-                          ) : (
-                            <lesson.icon />
-                          )}
+                        <div className="size-12 rounded-md bg-surface border border-white/10 flex items-center justify-center text-primary">
+                          <Icon name={lesson.iconName} />
                         </div>
                       </div>
                       <div className="space-y-3">
-                        <h4 className="text-xl font-bold">{lesson.title}</h4>
-                        <p className="text-white/50 text-base leading-relaxed">
+                        <h3 className="text-xl font-bold">{lesson.title}</h3>
+                        <p className="text-white/60 text-base leading-relaxed max-w-prose">
                           {lesson.description}
                         </p>
+                        {lesson.highlight && (
+                          <p className="border-l-2 border-primary/40 pl-4 text-sm font-semibold text-primary-soft">
+                            {lesson.highlight}
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -265,28 +393,30 @@ export default async function ProjectDetails({
           </div>
 
           <aside className="lg:col-span-4">
-            <div className="sticky top-32 space-y-12">
+            <div className="sticky top-32 max-h-[calc(100vh-9rem)] overflow-y-auto no-scrollbar space-y-12">
+              <OnThisPage sections={toc} />
+
               {/* Metrics */}
-              {project.metrics && project.metrics.length > 0 && (
-                <div className="bg-surface-light border border-white/10 p-8 rounded-xl relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl"></div>
-                  <h4 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-8">
+              {project.metrics.length > 0 && (
+                <div className="bg-surface border border-white/10 p-8 rounded-xl relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl" aria-hidden />
+                  <h3 className="text-white/40 text-xs font-bold uppercase tracking-[0.3em] mb-8">
                     Product Metrics
-                  </h4>
+                  </h3>
                   <div className="space-y-8">
                     {project.metrics.map((metric, idx) => (
                       <div key={idx}>
-                        <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest mb-1">
+                        <p className="text-white/40 text-xs uppercase font-bold tracking-widest mb-1">
                           {metric.label}
                         </p>
                         <p className="text-3xl font-extrabold text-primary tracking-tighter">
-                          {metric.value}{" "}
-                          {metric.subtext && (
-                            <span className="text-xs uppercase font-medium text-white/40">
-                              {metric.subtext}
-                            </span>
-                          )}
+                          {metric.value}
                         </p>
+                        {metric.subtext && (
+                          <p className="mt-1 text-xs uppercase font-medium text-white/40">
+                            {metric.subtext}
+                          </p>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -294,78 +424,109 @@ export default async function ProjectDetails({
               )}
 
               {/* Documentation */}
-              {project.docs && project.docs.length > 0 && (
+              {project.docs.length > 0 && (
                 <div className="space-y-6">
-                  <h4 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">
+                  <h3 className="text-white/40 text-xs font-bold uppercase tracking-[0.3em]">
                     Documentation
-                  </h4>
+                  </h3>
                   <div className="flex flex-col gap-3">
-                    {project.docs.map((doc: any, idx: number) => (
+                    {project.docs.map((doc, idx) => (
                       <a
                         key={idx}
-                        className="flex items-center justify-between p-4 bg-surface border border-white/5 rounded hover:border-white/20 transition-all group"
+                        className="flex items-center justify-between p-4 bg-surface border border-white/5 rounded-md hover:border-white/20 transition-all group"
                         href={doc.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${doc.title} (opens in a new tab)`}
                       >
                         <span className="text-sm font-bold">{doc.title}</span>
-                        {typeof doc.icon === "string" || doc.iconName ? (
-                          <Icon
-                            name={doc.iconName || doc.icon}
-                            className="text-white/30 group-hover:text-primary transition-colors"
-                          />
-                        ) : (
-                          <doc.icon className="text-white/30 group-hover:text-primary transition-colors" />
-                        )}
+                        <Icon
+                          name={doc.iconName}
+                          className="text-white/30 group-hover:text-primary transition-colors"
+                        />
                       </a>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Tech Stack */}
-              <div className="pt-8 border-t border-white/5">
-                <h4 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
-                  Core Tech Stack
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.techStack.map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2 py-1 bg-white/5 text-[10px] font-bold rounded"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+              {/* Tech stack */}
+              {project.techStack.length > 0 && (
+                <div className="pt-8 border-t border-white/5 scroll-mt-32" id="tech-stack">
+                  <h3 className="text-white/40 text-xs font-bold uppercase tracking-[0.3em] mb-4">
+                    Full tech stack
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {project.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2.5 py-1 bg-white/5 text-xs font-bold text-white/80 rounded-md"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </aside>
         </div>
       </section>
 
-      <section className="px-6 md:px-20 py-32 border-t border-white/5 bg-surface/30">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
-          <div>
-            <h2 className="text-4xl font-extrabold tracking-tight mb-4">
-              Ready for the next deep dive?
-            </h2>
-            <p className="text-white/50 max-w-md">
-              Check out {nextProject.title}, a {nextProject.subtitle} project.
-            </p>
-          </div>
-          <div className="flex gap-6 flex-col ">
-            <Link href={`/projects/${nextProject.slug}`}>
-              <button className="px-8 py-4 bg-primary text-white text-xs font-bold uppercase tracking-widest rounded hover:brightness-110 transition-all">
-                Next: {nextProject.title}
-              </button>
+      {/* Contact CTA */}
+      <CTASection
+        eyebrow="Start a project"
+        headline="Want something like this"
+        accent="built?"
+        body={`${project.title} is one example of how I work — from architecture to shipped product. If you have a problem that needs this kind of thinking, let’s talk.`}
+        primaryLabel="Start a Project"
+        primaryHref="/contact"
+        secondaryLabel="View all projects"
+        secondaryHref="/projects"
+      />
+
+      {/* Next project */}
+      {nextProject && (
+        <section className="px-6 md:px-20 py-24 border-t border-white/5 bg-surface/30">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-10">
+            <Link
+              href={`/projects/${nextProject.slug}`}
+              className="group flex items-center gap-6"
+            >
+              {nextProject.heroImage && (
+                <div className="relative hidden sm:block w-28 aspect-video shrink-0 overflow-hidden rounded-md border border-white/10">
+                  <Image
+                    src={nextProject.heroImage}
+                    alt=""
+                    fill
+                    sizes="112px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+              )}
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary-soft mb-2">
+                  Next case study
+                </p>
+                <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight transition-colors group-hover:text-primary-soft">
+                  {nextProject.title}
+                </h2>
+                <p className="text-white/50 mt-1 max-w-md">
+                  {nextProject.subtitle}
+                </p>
+              </div>
             </Link>
-            <Link href="/projects">
-              <button className="px-8 py-4 border border-white/10 text-white text-xs font-bold uppercase tracking-widest rounded hover:bg-white hover:text-black transition-all">
-                All Projects
-              </button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button href={`/projects/${nextProject.slug}`}>
+                Next project
+              </Button>
+              <Button href="/projects" variant="secondary">
+                All projects
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 }

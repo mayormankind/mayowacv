@@ -82,6 +82,15 @@ button:focus-visible,
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* Lets a <details> card show a clamped preview while closed —
+   overrides the UA rule that hides non-summary children. */
+.details-clamp:not([open]) > .details-clamp-content {
+  content-visibility: visible;
+}
 
 .glow-dot {
   box-shadow: 0 0 10px #de1b1b;
