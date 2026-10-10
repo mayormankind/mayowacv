@@ -2,10 +2,12 @@
 "use client";
 import { useState } from "react";
 import { Play } from "lucide-react";
+import Image from "next/image";
 
 interface VideoPlayerProps {
   videoUrl?: string;
   posterUrl?: string;
+  title?: string;
 }
 
 function getEmbedUrl(url: string): string | null {
@@ -17,25 +19,38 @@ function getEmbedUrl(url: string): string | null {
   return null;
 }
 
+// Direct playback is limited to formats that work reliably across browsers.
 function isDirectVideo(url: string): boolean {
-  return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url);
+  return /\.(mp4|webm)(\?.*)?$/i.test(url);
 }
 
-export default function VideoPlayer({ videoUrl, posterUrl }: VideoPlayerProps) {
+/**
+ * Renders nothing when there is no playable URL — callers should let
+ * screenshots lead the media section in that case.
+ */
+export default function VideoPlayer({
+  videoUrl,
+  posterUrl,
+  title = "Project",
+}: VideoPlayerProps) {
   const [playing, setPlaying] = useState(false);
 
   const embedUrl = videoUrl ? getEmbedUrl(videoUrl) : null;
   const isDirect = videoUrl ? isDirectVideo(videoUrl) : false;
-  const hasVideo = embedUrl || isDirect;
+  const hasVideo = Boolean(embedUrl || isDirect);
+
+  if (!hasVideo) return null;
 
   return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-surface group">
-      {playing && hasVideo ? (
+    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-black/40">
+      {playing ? (
         isDirect ? (
           <video
             src={videoUrl}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-contain"
             autoPlay
+            playsInline
+            preload="metadata"
             controls
             poster={posterUrl}
           />
@@ -45,44 +60,31 @@ export default function VideoPlayer({ videoUrl, posterUrl }: VideoPlayerProps) {
             className="absolute inset-0 w-full h-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            title="Project Demo Video"
+            title={`${title} demo video`}
           />
         )
       ) : (
         <>
-          {/* Poster image */}
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-60"
-            style={{ backgroundImage: `url('${posterUrl}')` }}
-          />
-          {/* Play button */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <button
-              title="Play demo video"
-              onClick={() => hasVideo && setPlaying(true)}
-              className={`size-20 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center transition-colors group ${hasVideo ? "hover:bg-primary cursor-pointer" : "cursor-not-allowed opacity-60"}`}
-            >
-              <Play className="text-white text-4xl ml-1" />
-            </button>
-          </div>
-          {!hasVideo && (
-            <div className="absolute top-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-md rounded border border-white/10 text-[9px] font-bold uppercase tracking-widest text-white/40">
-              Demo coming soon
-            </div>
+          {posterUrl && (
+            <Image
+              src={posterUrl}
+              alt={`${title} preview`}
+              fill
+              className="object-contain"
+              sizes="(max-width: 1280px) 100vw, 1280px"
+            />
           )}
-        </>
-      )}
-
-      {/* Status badge */}
-      {!playing && (
-        <div className="absolute bottom-0 md:bottom-6 left-6 flex gap-3">
-          <div className="px-4 py-2 bg-black/60 backdrop-blur-md rounded border border-white/10 flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-            <span className="text-[10px] font-bold uppercase tracking-widest">
-              Stable Production Release
+          <button
+            type="button"
+            aria-label="Play demo video"
+            onClick={() => setPlaying(true)}
+            className="absolute inset-0 flex items-center justify-center group"
+          >
+            <span className="size-20 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center transition-colors group-hover:bg-primary">
+              <Play className="text-white size-8 ml-1" aria-hidden />
             </span>
-          </div>
-        </div>
+          </button>
+        </>
       )}
     </div>
   );
