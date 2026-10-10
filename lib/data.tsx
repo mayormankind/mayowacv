@@ -1,3 +1,43 @@
+export interface CaseStudySection {
+  subtitle: string;
+  title: string;
+  description: string;
+}
+
+export interface ProjectMetric {
+  label: string;
+  value: string;
+  subtext?: string;
+}
+
+export interface ArchitecturePoint {
+  iconName: string; // Name of a Lucide icon, e.g. "Settings2"
+  title: string;
+  description: string;
+}
+
+export interface ProjectArchitecture {
+  title: string;
+  subtitle: string;
+  diagramType: string; // e.g., "schema", "flow"
+  description: string;
+  diagramSyntax?: string; // Raw Mermaid syntax string
+  points: ArchitecturePoint[];
+}
+
+export interface LessonItem {
+  iconName: string; // Name of a Lucide icon
+  title: string;
+  description: string;
+  highlight?: string;
+}
+
+export interface DocItem {
+  title: string;
+  iconName: string; // Name of a Lucide icon
+  href: string;
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -9,60 +49,31 @@ export interface Project {
   heroImage: string;
   logoImage?: string;
   tags: string[];
-  images?: string[];
+  images: string[];
   demoVideoUrl?: string;
   links: {
-    live: string;
+    live?: string;
     repo?: string;
     demo?: string;
   };
   details: {
-    challenge: {
-      subtitle: string;
-      title: string;
-      description: string;
-    };
-    strategy: {
-      subtitle: string;
-      title: string;
-      description: string;
-    };
-    impact: {
-      subtitle: string;
-      title: string;
-      description: string;
-    };
-  };
-  metrics: {
-    label: string;
-    value: string;
-    subtext?: string;
-  }[];
-  architecture: {
-    title: string;
-    subtitle: string;
-    diagramType: string; // e.g., "schema", "flow"
-    description: string;
-    diagramSyntax?: string; // Raw Mermaid syntax string
-    points: {
-      icon: any; // using any for Icon component type simplicity here
-      title: string;
-      description: string;
-    }[];
-  };
-  lessons: {
-    icon: any;
-    title: string;
-    description: string;
-    highlight?: string;
-  }[];
-  docs: {
-    title: string;
-    icon: any;
-    href: string;
-  }[];
+    challenge: CaseStudySection | null;
+    strategy: CaseStudySection | null;
+    impact: CaseStudySection | null;
+  } | null;
+  metrics: ProjectMetric[];
+  architecture: ProjectArchitecture | null;
+  lessons: LessonItem[];
+  docs: DocItem[];
   techStack: string[];
+  createdAt?: string;
+  updatedAt?: string;
 }
+
+export type ProjectListItem = Pick<
+  Project,
+  "slug" | "title" | "subtitle" | "heroImage"
+>;
 
 export type SocialId = "linkedin" | "x" | "github" | "instagram";
 

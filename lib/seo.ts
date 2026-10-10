@@ -133,6 +133,7 @@ export function buildSoftwareAppSchema(project: {
   slug: string;
   techStack: string[];
   heroImage?: string;
+  dateCreated?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -153,6 +154,7 @@ export function buildSoftwareAppSchema(project: {
       "@id": `${BASE_URL}/#website`,
     },
     ...(project.heroImage ? { image: project.heroImage } : {}),
+    ...(project.dateCreated ? { dateCreated: project.dateCreated } : {}),
   };
 }
 
