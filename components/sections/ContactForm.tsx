@@ -2,7 +2,13 @@
 import { AlertCircle, CheckCircle2, Loader2, SendHorizonal } from "lucide-react";
 import React, { useEffect, useId, useRef, useState } from "react";
 import Button from "@/components/ui/Button";
-import { MESSAGE_MIN_LENGTH, PROJECT_TYPES } from "@/lib/data/contact";
+import {
+  MESSAGE_MAX_LENGTH,
+  MESSAGE_MIN_LENGTH,
+  NAME_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+  PROJECT_TYPES,
+} from "@/lib/data/contact";
 import { SITE } from "@/lib/site-config";
 
 const inputClasses =
@@ -19,15 +25,72 @@ const emptyForm = {
   companyWebsite: "",
 };
 
+type FormFields = keyof typeof emptyForm;
+type FieldErrors = Partial<Record<FormFields, string>>;
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateForm(form: typeof emptyForm): FieldErrors {
+  const errors: FieldErrors = {};
+
+  const name = form.name.trim();
+  if (!name) {
+    errors.name = "Tell me your name.";
+  } else if (name.length < NAME_MIN_LENGTH) {
+    errors.name = `Name needs at least ${NAME_MIN_LENGTH} characters.`;
+  } else if (name.length > NAME_MAX_LENGTH) {
+    errors.name = `Name is too long — keep it under ${NAME_MAX_LENGTH} characters.`;
+  }
+
+  const email = form.email.trim();
+  if (!email) {
+    errors.email = "I need an email address to reply to.";
+  } else if (!EMAIL_PATTERN.test(email)) {
+    errors.email = "That doesn’t look like a valid email address.";
+  }
+
+  if (!form.projectType) {
+    errors.projectType = "Pick the closest option for what you need help with.";
+  }
+
+  const message = form.message.trim();
+  if (!message) {
+    errors.message = "Tell me a bit about your project first.";
+  } else if (message.length < MESSAGE_MIN_LENGTH) {
+    errors.message = `A little more detail helps — the message needs at least ${MESSAGE_MIN_LENGTH} characters.`;
+  } else if (message.length > MESSAGE_MAX_LENGTH) {
+    errors.message = `That’s a bit long — keep it under ${MESSAGE_MAX_LENGTH} characters.`;
+  }
+
+  return errors;
+}
+
 export default function ContactForm({ featuredSlug }: { featuredSlug?: string }) {
   const [form, setForm] = useState(emptyForm);
+  const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [submittedEmail, setSubmittedEmail] = useState("");
   const successRef = useRef<HTMLHeadingElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
   const typeRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const uid = useId();
   const fieldId = (name: string) => `${uid}-${name}`;
+  const errorId = (name: string) => `${uid}-${name}-error`;
+
+  const fieldError = (name: string, message?: string) =>
+    message ? (
+      <p
+        id={errorId(name)}
+        role="alert"
+        className="flex items-center gap-1.5 text-xs text-red-400"
+      >
+        <AlertCircle className="size-3.5 flex-none" aria-hidden="true" />
+        {message}
+      </p>
+    ) : null;
 
   const handleTypeKeyDown = (e: React.KeyboardEvent, index: number) => {
     const last = PROJECT_TYPES.length - 1;
@@ -41,6 +104,12 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
     }
     e.preventDefault();
     setForm((prev) => ({ ...prev, projectType: PROJECT_TYPES[next] }));
+    setErrors((prev) => {
+      if (!prev.projectType) return prev;
+      const nextErrors = { ...prev };
+      delete nextErrors.projectType;
+      return nextErrors;
+    });
     typeRefs.current[next]?.focus();
   };
 
@@ -51,23 +120,32 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => {
+      if (!prev[name as FormFields]) return prev;
+      const next = { ...prev };
+      delete next[name as FormFields];
+      return next;
+    });
+  };
+
+  const focusFirstError = (errs: FieldErrors) => {
+    if (errs.name) nameRef.current?.focus();
+    else if (errs.email) emailRef.current?.focus();
+    else if (errs.projectType) typeRefs.current[0]?.focus();
+    else if (errs.message) messageRef.current?.focus();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
+    setStatus("idle");
 
-    if (!form.projectType) {
-      setStatus("error");
-      setErrorMsg("Pick the closest option for what you need help with.");
-      return;
-    }
-    if (form.message.trim().length < MESSAGE_MIN_LENGTH) {
-      setStatus("error");
-      setErrorMsg(
-        `Tell me a bit more — the message needs at least ${MESSAGE_MIN_LENGTH} characters. A few sentences is plenty.`,
-      );
+    const errs = validateForm(form);
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      focusFirstError(errs);
       return;
     }
 
@@ -91,6 +169,7 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
       setSubmittedEmail(form.email);
       setStatus("success");
       setForm(emptyForm);
+      setErrors({});
     } catch (err: unknown) {
       setStatus("error");
       setErrorMsg(
@@ -144,6 +223,7 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
       ) : (
         <form
           onSubmit={handleSubmit}
+          noValidate
           aria-busy={status === "loading"}
           className="space-y-5"
         >
@@ -156,15 +236,18 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
                 <input
                   id={fieldId("name")}
                   name="name"
+                  ref={nameRef}
                   value={form.name}
                   onChange={handleChange}
-                  required
                   aria-required="true"
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? errorId("name") : undefined}
                   autoComplete="name"
                   className={inputClasses}
                   placeholder="Your name"
                   type="text"
                 />
+                {fieldError("name", errors.name)}
               </div>
               <div className="space-y-2">
                 <label htmlFor={fieldId("email")} className={labelClasses}>
@@ -173,16 +256,19 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
                 <input
                   id={fieldId("email")}
                   name="email"
+                  ref={emailRef}
                   value={form.email}
                   onChange={handleChange}
-                  required
                   aria-required="true"
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? errorId("email") : undefined}
                   autoComplete="email"
                   inputMode="email"
                   className={inputClasses}
                   placeholder="you@company.com"
                   type="email"
                 />
+                {fieldError("email", errors.email)}
               </div>
             </div>
 
@@ -191,6 +277,10 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
               <div
                 role="radiogroup"
                 aria-label="How can I help?"
+                aria-invalid={Boolean(errors.projectType)}
+                aria-describedby={
+                  errors.projectType ? errorId("projectType") : undefined
+                }
                 className="grid grid-cols-2 md:grid-cols-3 gap-2"
               >
                 {PROJECT_TYPES.map((type, index) => {
@@ -207,9 +297,15 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
                       ref={(el) => {
                         typeRefs.current[index] = el;
                       }}
-                      onClick={() =>
-                        setForm((prev) => ({ ...prev, projectType: type }))
-                      }
+                      onClick={() => {
+                        setForm((prev) => ({ ...prev, projectType: type }));
+                        setErrors((prev) => {
+                          if (!prev.projectType) return prev;
+                          const next = { ...prev };
+                          delete next.projectType;
+                          return next;
+                        });
+                      }}
                       onKeyDown={(e) => handleTypeKeyDown(e, index)}
                       className={`flex items-center justify-center h-14 px-3 text-center border rounded-md text-xs font-semibold uppercase tracking-widest transition-all cursor-pointer focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-soft/40 ${
                         selected
@@ -222,6 +318,7 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
                   );
                 })}
               </div>
+              {fieldError("projectType", errors.projectType)}
             </fieldset>
 
             <div className="space-y-2">
@@ -231,16 +328,18 @@ export default function ContactForm({ featuredSlug }: { featuredSlug?: string })
               <textarea
                 id={fieldId("message")}
                 name="message"
+                ref={messageRef}
                 value={form.message}
                 onChange={handleChange}
-                required
                 aria-required="true"
-                aria-describedby={fieldId("message-hint")}
+                aria-invalid={Boolean(errors.message)}
+                aria-describedby={`${fieldId("message-hint")}${errors.message ? ` ${errorId("message")}` : ""}`}
                 minLength={MESSAGE_MIN_LENGTH}
                 className={`${inputClasses} resize-none`}
                 placeholder="What are you trying to build or fix? A few sentences is plenty."
                 rows={5}
               />
+              {fieldError("message", errors.message)}
               <p id={fieldId("message-hint")} className="text-xs text-white/50">
                 Minimum {MESSAGE_MIN_LENGTH} characters.
               </p>
