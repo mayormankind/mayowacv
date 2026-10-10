@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import AnimateIn from "@/components/ui/AnimateIn";
 import SectionHeader from "@/components/ui/SectionHeader";
+import Modal from "@/components/ui/Modal";
 import { Quote, X, Play } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const testimonials = [
   {
@@ -21,16 +22,6 @@ const testimonials = [
   },
 ];
 
-function initialsOf(name: string) {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("");
-}
-
-const FOCUSABLE =
-  'a[href], button:not([disabled]), video[controls], [tabindex]:not([tabindex="-1"])';
-
 function VideoModal({
   isOpen,
   onClose,
@@ -40,51 +31,7 @@ function VideoModal({
   onClose: () => void;
   videoUrl: string;
 }) {
-  const modalRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const previousFocusRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    previousFocusRef.current = document.activeElement as HTMLElement;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    modalRef.current?.focus();
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        videoRef.current?.pause();
-        onClose();
-        return;
-      }
-      if (e.key !== "Tab" || !modalRef.current) return;
-
-      const focusable = Array.from(
-        modalRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)
-      );
-      if (focusable.length === 0) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = previousOverflow;
-      previousFocusRef.current?.focus();
-    };
-  }, [isOpen, onClose]);
 
   const handleClose = () => {
     videoRef.current?.pause();
@@ -92,54 +39,31 @@ function VideoModal({
   };
 
   return (
-    <AnimatePresence>
+    <Modal
+      open={isOpen}
+      onClose={handleClose}
+      ariaLabel="Testimonial video"
+      className="relative w-full max-w-3xl mx-4 aspect-video bg-surface rounded-lg overflow-hidden border border-white/10"
+    >
+      <button
+        onClick={handleClose}
+        aria-label="Close video"
+        className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all duration-200"
+      >
+        <X className="w-4 h-4" />
+      </button>
+
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          onClick={handleClose}
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
-
-          {/* Modal content */}
-          <motion.div
-            ref={modalRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Testimonial video"
-            tabIndex={-1}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="relative w-full max-w-3xl aspect-video bg-surface rounded-lg overflow-hidden border border-white/10 outline-none"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close button */}
-            <button
-              onClick={handleClose}
-              aria-label="Close video"
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all duration-200"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            <video
-              ref={videoRef}
-              src={videoUrl}
-              controls
-              autoPlay
-              playsInline
-              className="h-full w-full bg-black"
-            />
-          </motion.div>
-        </motion.div>
+        <video
+          ref={videoRef}
+          src={videoUrl}
+          controls
+          autoPlay
+          playsInline
+          className="h-full w-full bg-black"
+        />
       )}
-    </AnimatePresence>
+    </Modal>
   );
 }
 
